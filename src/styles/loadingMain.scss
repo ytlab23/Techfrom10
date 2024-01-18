@@ -1,16 +1,18 @@
 @import "./styles.scss";
+
 @keyframes skeleton-loading {
     0% {
-        background-position: 0% 50%;
+        background-position: -200% 50%;
     }
     100% {
-        background-position: 100% 50%;
+        background-position: 200% 50%;
     }
 }
+
 @mixin skeleton-animation {
-    background: linear-gradient(100deg, #e0e0e0 0%, #c0c0c0 50%, #e0e0e0 100%);
+    background: linear-gradient(270deg, #f0f0f0 0%, #e0e0e0 50%, #f0f0f0 100%);
     background-size: 200% 100%;
-    animation: skeleton-loading 1.5s infinite;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
 }
 
 .skeleton-container-wrap {
@@ -21,6 +23,8 @@
     padding-top: 20vh;
     padding-left: 5vw;
     min-height: 100vh;
+    overflow: hidden;
+
     .skeleton-fixed {
         position: fixed;
         right: 0;
@@ -33,18 +37,19 @@
 
         .skeleton-search-bar {
             width: 32vw;
-            height: 40px;
-            border-radius: 20px;
-            @include skeleton-animation; // Apply animation
+            height: 45px;
+            border-radius: 25px;
+            @include skeleton-animation;
             margin-bottom: 2vh;
         }
 
         .skeleton-card {
             width: 80%;
-            height: 200px;
-            border-radius: 10px;
-            @include skeleton-animation; // Apply animation
+            height: 220px;
+            border-radius: 15px;
+            @include skeleton-animation;
             padding: 2vh 1vw;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
     }
 
@@ -53,43 +58,43 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 2vh;
-        border: 2px solid black;
-        background: #f3f3f3;
         width: 55vw;
         border-radius: 1vw;
         padding: 3vh 2vw;
         box-shadow: 0.5vw 1vh 0 black;
+        background: #f9f9f9;
+
         .skeleton-head {
             width: 80%;
-            height: 42px;
-            border-radius: 4px;
-            margin-bottom: 1vh;
-            @include skeleton-animation; // Apply animation
+            height: 48px;
+            border-radius: 8px;
+            margin-bottom: 2vh;
+            @include skeleton-animation;
         }
 
         .skeleton-image {
-            width: 250px;
-            height: 150px;
-            border-radius: 4px;
-            margin-bottom: 2vh;
-            @include skeleton-animation; // Apply animation
+            width: 280px;
+            height: 160px;
+            border-radius: 8px;
+            margin-bottom: 3vh;
+            @include skeleton-animation;
         }
 
         .skeleton-lines {
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 1vh;
+            gap: 1.5vh;
 
             .skeleton-line {
-                height: 20px;
-                border-radius: 4px;
-                @include skeleton-animation; // Apply animation
+                height: 24px;
+                border-radius: 8px;
+                @include skeleton-animation;
             }
         }
     }
+
     @media (max-width: 768px) {
-        @include flex-center(column);
         flex-direction: column-reverse;
         padding: 0 5vw;
         .skeleton-fixed {
