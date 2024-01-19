@@ -1,18 +1,19 @@
 "use client";
-import next, { NextPage } from "next";
+import { NextPage } from "next";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import { useEffect, useState, useMemo, useRef } from "react";
 import moment from "moment";
 import { DateRange } from "react-day-picker";
 import { useToast } from "@/components/ui/use-toast";
-import { FaExternalLinkAlt, FaEye } from "react-icons/fa";
-import CancelIcon from "@mui/icons-material/Cancel";
 import { Switch } from "@/components/ui/switch";
 import dynamic from "next/dynamic";
 import DefaultView from "@/components/defaultView/defaultView";
 import UnifiedView from "@/components/uniifiedView/unifiedView";
-import { removeAsterisks } from "@/helper/slugFormat.js";
+import { SearchBar } from "@/components/searchbar/searchBar";
+import { NewsCard } from "@/components/newsCard/newsCard";
+import { TopicsCard } from "@/components/topicsCard/topicsCard";
+import { useDataFetching } from "@/hooks/useDataFetching";
+import { DataProps } from "@/types";
 
 const Footer = dynamic(() => import("@/components/footer/footer"));
 const DatePickerComponent = dynamic(
@@ -23,27 +24,10 @@ const DatePickerComponent = dynamic(
 );
 const Loading = dynamic(() => import("./loading.js"));
 
-interface Props {}
-
-interface dataprop {
-  _id: string;
-  title: string;
-  slugtitle: string;
-  headlines: string[];
-  slugheadlines: string[];
-  summary: string[];
-  sources: string[];
-  published: string[];
-  hashtags: string[];
-  img_url: string;
-  date: string;
-}
-
-const Page: NextPage<Props> = ({}) => {
-  const [data, setData] = useState<dataprop[]>([]);
+const Page: NextPage = ({}) => {
+  const { data, loading } = useDataFetching();
   const [selectedTags, setSelectedTags] = useState<string[]>(["uncategorized"]);
-  const [filteredData, setFilteredData] = useState<dataprop[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [filteredData, setFilteredData] = useState<DataProps[]>([]);
   const [filteredDate, setFilteredDate] = useState<DateRange | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [unifiedView, setUnifiedView] = useState<boolean>(false);
@@ -92,24 +76,6 @@ const Page: NextPage<Props> = ({}) => {
       window.removeEventListener("resize", updateHeight);
     };
   }, [filteredData, unifiedView]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`
-      );
-      const data: dataprop[] = await res.json();
-      const sortedData = [...data].sort(
-        (a, b) =>
-          moment(b.date, "MMM D, YYYY").valueOf() -
-          moment(a.date, "MMM D, YYYY").valueOf()
-      );
-      setLoading(false);
-      setData(sortedData);
-      setFilteredData(sortedData);
-    };
-    fetchData();
-  }, []);
 
   const handleTagSelection = (hashtag: string) => {
     if (hashtag === "others") {
@@ -190,7 +156,6 @@ const Page: NextPage<Props> = ({}) => {
   );
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLoading(true);
     setTimeout(() => {
       if (searchQuery) {
         const newFilteredData = data
@@ -213,7 +178,6 @@ const Page: NextPage<Props> = ({}) => {
           setFilteredData(newFilteredData);
         }
       }
-      setLoading(false);
     }, 500);
   };
 
@@ -250,7 +214,7 @@ const Page: NextPage<Props> = ({}) => {
               ))
             )}
           </div>
-          <div className="hero-container-fixed" ref={containerFixedRef}>
+          {/* <div className="hero-container-fixed" ref={containerFixedRef}>
             <div className="hero-search">
               <form onSubmit={handleSearch}>
                 <input
@@ -319,6 +283,20 @@ const Page: NextPage<Props> = ({}) => {
                 ))}
               </div>
             </div>
+          </div> */}
+          <div className="hero-container-fixed" ref={containerFixedRef}>
+            <SearchBar
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              handleSearch={handleSearch}
+              handleSearchReset={handleSearchReset}
+            />
+            <NewsCard data={data} />
+            <TopicsCard
+              uniqueHashtags={uniqueHashtags}
+              selectedTags={selectedTags}
+              handleTagSelection={handleTagSelection}
+            />
           </div>
         </div>
       )}
