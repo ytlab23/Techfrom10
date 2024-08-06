@@ -1,0 +1,19 @@
+$--16px: 1rem;
+$--12px: 0.75rem;
+$--14px: 0.875rem;
+$--18px: 1.125rem;
+$--24px: 1.5rem;
+$--26px: 1.625rem;
+$--32px: 2rem;
+$--34px: 2.125rem;
+$--38px: 2.375rem;
+$--42px: 2.625rem;
+$--48px: 3rem;
+$--64px: 4rem;
+$color-theme: #ffc617;
+@mixin flex-center($direction: row) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+}
