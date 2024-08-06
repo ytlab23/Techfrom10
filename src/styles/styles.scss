@@ -10,7 +10,7 @@ $--38px: 2.375rem;
 $--42px: 2.625rem;
 $--48px: 3rem;
 $--64px: 4rem;
-$color-theme: #ffc617;
+$poppins: var(--font-poppins);
 @mixin flex-center($direction: row) {
     display: flex;
     justify-content: center;
