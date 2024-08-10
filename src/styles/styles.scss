@@ -60,13 +60,16 @@ $nunito: var(--font-nunito);
     border-radius: 1vw;
     backdrop-filter: blur(5px);
     ul {
-        list-style-type: decimal;
+        list-style-type: circle;
         padding: 0 2vw;
+        @include flex-center(column);
+        align-items: flex-start;
+        gap: 1vh;
     }
     li {
         font-family: $nunito;
         font-size: $--18px;
-        font-weight: 700;
+        font-weight: 600;
     }
     .hero-container-head {
         @include flex-center(column);
@@ -89,7 +92,37 @@ $nunito: var(--font-nunito);
     position: fixed;
     right: 1vw;
     width: 35%;
-    @include flex-center();
+    @include flex-center(column);
+    gap: 2vh;
+    .hero-search {
+        width: 100%;
+        form {
+            @include flex-center();
+            gap: 0.5vw;
+        }
+        input {
+            border: 2px solid black;
+            width: 60%;
+            border-radius: 2vw;
+            padding: 0 1vw;
+            &::placeholder {
+                text-align: center;
+            }
+        }
+        button {
+            border: 2px solid black;
+            padding: 0 1vw;
+            color: white;
+            background-color: black;
+            font-weight: 700;
+            border-radius: 2vw;
+            width: 6vw;
+            transition: all 0.2s ease-in-out;
+            &:hover {
+                width: 7vw;
+            }
+        }
+    }
     .hero-card1 {
         border-radius: 1vw;
         width: 80%;

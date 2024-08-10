@@ -43,6 +43,12 @@ const Page: NextPage<Props> = async ({}) => {
         ))}
       </div>{" "}
       <div className="hero-container-fixed">
+        <div className="hero-search">
+          <form action="submit">
+            <input type="text" placeholder="search" />
+            <button>search</button>
+          </form>
+        </div>
         <div className="hero-card1">
           <h3>Hashtags</h3>
           <div className="hero-card1-items">
