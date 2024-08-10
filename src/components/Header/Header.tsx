@@ -15,7 +15,9 @@ const Header: NextPage<Props> = ({}) => {
     <div className="nav-parent">
       <div className="nav-container">
         <div className="nav-left">
-          <h1>TechFrom10</h1>
+          <h1>
+            <Link href="/">TechFrom10 </Link>
+          </h1>
           <ul>
             {navList.map((val, index) => (
               <Link href={val.path} key={index}>
