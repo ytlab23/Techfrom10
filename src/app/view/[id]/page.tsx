@@ -20,6 +20,7 @@ const Page: NextPage<Props> = async ({ params }) => {
   return (
     <div>
       <RenderBlog
+        title={data.title}
         headline={data.headlines}
         summary={data.summary}
         source={data.source}
