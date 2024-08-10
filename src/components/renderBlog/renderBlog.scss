@@ -1,0 +1,69 @@
+@import "@/styles/styles.scss";
+
+.renderBlog-parent {
+    padding: 0 5vw;
+    padding-top: 14vh;
+    padding-bottom: 5vh;
+    @include flex-center(column);
+    align-items: center;
+    gap: 2vh;
+    h1 {
+        font-size: $--38px;
+        font-weight: 900;
+    }
+}
+.render-wrap {
+    @include flex-center(column);
+    align-items: flex-start;
+    gap: 3vh;
+    width: 65%;
+    padding: 4vh 1vw;
+    border-radius: 2vw;
+    box-shadow: 0 0 1vw black;
+}
+.render-container {
+    width: 100%;
+    @include flex-center(column);
+    align-items: flex-start;
+    padding: 0 2vw;
+    list-style-type: none;
+    h2 {
+        font-size: $--18px;
+        font-weight: 700;
+    }
+    div {
+        @include flex-center(column);
+        align-items: flex-start;
+        gap: 2vh;
+        padding-left: 2vw;
+    }
+    h3 {
+        font-size: $--14px;
+        font-family:
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            Oxygen,
+            Ubuntu,
+            Cantarell,
+            "Open Sans",
+            "Helvetica Neue",
+            sans-serif;
+    }
+    p {
+        display: flex;
+        gap: 3vw;
+        span {
+            font-size: $--14px;
+            font-weight: 700;
+        }
+    }
+    a {
+        text-decoration: underline;
+        font-weight: 700;
+        font-size: $--14px;
+        color: violet;
+    }
+}
