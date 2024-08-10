@@ -1,5 +1,5 @@
 import clientPromise from "@/lib/db";
-
+import { ObjectId } from "mongodb";
 const getDB = async () => {
   const client = await clientPromise;
   const db = client.db(process.env.mongo_db_name);
@@ -21,7 +21,8 @@ export const POST = async (req: Request) => {
   const db = await getDB();
   const { id } = await req.json();
   const collections = db.collection(`${process.env.mongo_collec}`);
-  const doc = await collections.findOne({ _id: id });
+
+  const doc = await collections.findOne(ObjectId.createFromHexString(id));
   return new Response(JSON.stringify(doc), {
     headers: { "Content-Type": "application/json" },
   });
