@@ -1,24 +1,51 @@
 import { NextPage } from "next";
-import Image from "next/image";
+import "./renderBlog.scss";
+import Link from "next/link";
 
 interface Props {
+  title: string;
   headline: string[];
   summary: string[];
   source: string[];
   time: string[];
 }
 
-const RenderBlog: NextPage<Props> = ({ headline, summary, source, time }) => {
+const RenderBlog: NextPage<Props> = ({
+  title,
+  headline,
+  summary,
+  source,
+  time,
+}) => {
   return (
-    <div>
-      {headline.map((title, index) => (
-        <div key={index + 3}>
-          <h1>{title}</h1>
-          <p>{summary[index]}</p>
-          <p>Source: {source[index]}</p>
-          <p>Published: {time[index]}</p>
-        </div>
-      ))}
+    <div className="renderBlog-parent">
+      <h1>{title}</h1>
+      <div className="render-wrap">
+        {headline.map((title, index) => (
+          <div key={index + 3} className="render-container">
+            <h2>
+              <li>
+                {index + 1}. {title}
+              </li>
+            </h2>
+            <div>
+              <h3>{summary[index]}</h3>
+
+              <p>
+                {" "}
+                <Link
+                  href={source[index]}
+                  target="_blank"
+                  rel="noreferrer nofollow noopener"
+                >
+                  Read More
+                </Link>{" "}
+                <span>{time[index]}</span>
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
