@@ -2,14 +2,15 @@
 
 .renderBlog-parent {
     padding: 0 5vw;
-    padding-top: 18vh;
+    padding-top: 15vh;
     padding-bottom: 5vh;
     @include flex-center(column);
     align-items: center;
     gap: 2vh;
     h1 {
-        font-size: $--38px;
+        font-size: $--42px;
         font-weight: 900;
+        padding-bottom: 1vh;
     }
 }
 .render-wrap {
@@ -20,6 +21,7 @@
     padding: 4vh 1vw;
     border-radius: 2vw;
     box-shadow: 0 0 1vw black;
+    backdrop-filter: blur(5px);
 }
 .render-container {
     width: 100%;
