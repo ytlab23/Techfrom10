@@ -3,7 +3,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "www.researchgate.net",
+        hostname: "**",
       },
     ],
   },

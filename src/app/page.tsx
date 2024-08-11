@@ -15,6 +15,7 @@ interface dataprop {
   source: string[];
   published: string[];
   hashtags: string[];
+  imgUrl: string;
 }
 
 const Page: NextPage<Props> = ({}) => {
@@ -67,18 +68,21 @@ const Page: NextPage<Props> = ({}) => {
               <Link href={"/view/" + val._id.toString()}>
                 <h2>{val.title}</h2>
               </Link>
+            </div>
+            <div className="hero-content-wrap">
+              {" "}
               <Image
-                src={"/test.jpg"}
+                src={val.imgUrl ? `${val.imgUrl}` : "/test.jpg"}
                 width={250}
                 height={1024}
                 alt={val.title}
               />
+              <ul>
+                {val.headlines.map((h, hindex) => (
+                  <li key={hindex}>{h}</li>
+                ))}
+              </ul>
             </div>
-            <ul>
-              {val.headlines.map((h, hindex) => (
-                <li key={hindex}>{h}</li>
-              ))}
-            </ul>
             <Link href={"/view/" + val._id.toString()} className="view-in-full">
               View in Full
             </Link>
