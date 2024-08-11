@@ -163,7 +163,6 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
             color: black;
 
             div {
-                background-color: white;
                 font-size: $--14px;
                 font-weight: 700;
                 transition: all 0.1s ease-in-out;
@@ -175,4 +174,11 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
             }
         }
     }
+}
+
+.unselected-hashtag {
+    background-color: white;
+}
+.selected-hashtag {
+    background-color: $pri-col;
 }
