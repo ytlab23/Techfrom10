@@ -7,6 +7,7 @@ interface NewsContent {
   source: string[];
   tag: string[];
   time: string[];
+  url: string;
 }
 
 const prompt = `
@@ -29,7 +30,7 @@ source: <Link to news>
 Tag: ""
 Time: 12 hours ago
 
-Act Like a api. This data is being dispayed in website so dont include ** or Wrap link inside text just follow the above format. Also only one tag for each.
+Act Like a api. Include emojis in summary. This data is being dispayed in website so dont include ** or Wrap link inside text just follow the above format. Also only one tag for each and try to use repeated tags. Make sure the Title is catchy and emoji
 `;
 
 const getDB = async () => {
@@ -38,7 +39,7 @@ const getDB = async () => {
 
   return db;
 };
-const updateDB = async (content: NewsContent) => {
+const updateDB = async (content: NewsContent, image: NewsContent) => {
   const db = await getDB();
   const collections = db.collection(`${process.env.mongo_collec}`);
 
@@ -49,6 +50,7 @@ const updateDB = async (content: NewsContent) => {
     source: content.source,
     hashtags: content.tag,
     published: content.time,
+    imgUrl: image.url,
   };
 
   const doc = await collections.insertOne(data);
@@ -73,6 +75,25 @@ const formatData = async (content: string): Promise<NewsContent> => {
   return result as NewsContent;
 };
 
+const generateFeaturedImage = async (content: any) => {
+  const res = await fetch("https://api.openai.com/v1/images/generations", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: "dall-e-3",
+      prompt: `Title: ${content.title}, Headlines: ${content.headline}\n This is my News Blog I need Featured Image`,
+      n: 1,
+      size: "1024x1024",
+    }),
+    // next: { revalidate: 3600 },
+  });
+
+  const image = await res.json();
+  return image.data[0];
+};
 export const GET = async () => {
   const res = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
@@ -89,13 +110,15 @@ export const GET = async () => {
         },
       ],
     }),
-    next: { revalidate: 3600 },
+    // next: { revalidate: 3600 },
   });
 
   const data = await res.json();
-  const formattedData = await formatData(data.choices[0].message.content);
-  await updateDB(formattedData);
-  //   console.log(formattedData);
+  const messageContent = data.choices[0].message.content;
+
+  const formattedData = await formatData(messageContent);
+  const featuredImage = await generateFeaturedImage(formattedData);
+  await updateDB(formattedData, featuredImage);
   return new Response("", { status: 200 });
 };
 
