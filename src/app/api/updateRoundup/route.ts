@@ -42,7 +42,9 @@ const getDB = async () => {
 const updateDB = async (content: NewsContent, image: NewsContent) => {
   const db = await getDB();
   const collections = db.collection(`${process.env.mongo_collec}`);
-
+  const now = new Date();
+  const ttlInSeconds = 5 * 24 * 60 * 60;
+  const expireAt = new Date(now.getTime() + ttlInSeconds * 1000);
   const data = {
     title: content.title[0],
     headlines: content.headline,
@@ -51,6 +53,7 @@ const updateDB = async (content: NewsContent, image: NewsContent) => {
     hashtags: content.tag,
     published: content.time,
     imgUrl: image.url,
+    expireAt: expireAt,
   };
 
   const doc = await collections.insertOne(data);
@@ -94,32 +97,42 @@ const generateFeaturedImage = async (content: any) => {
   const image = await res.json();
   return image.data[0];
 };
-export const GET = async () => {
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: "gpt-4o",
-      messages: [
-        {
-          role: "system",
-          content: prompt,
-        },
-      ],
-    }),
-    // next: { revalidate: 3600 },
+
+const sendImmediateResponse = () => {
+  return new Response("Request received. Processing in the background...", {
+    status: 202,
   });
+};
 
-  const data = await res.json();
-  const messageContent = data.choices[0].message.content;
+export const GET = async () => {
+  const immediateResponse = sendImmediateResponse();
+  (async () => {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-4o",
+        messages: [
+          {
+            role: "system",
+            content: prompt,
+          },
+        ],
+      }),
+      // next: { revalidate: 3600 },
+    });
 
-  const formattedData = await formatData(messageContent);
-  const featuredImage = await generateFeaturedImage(formattedData);
-  await updateDB(formattedData, featuredImage);
-  return new Response("", { status: 200 });
+    const data = await res.json();
+    const messageContent = data.choices[0].message.content;
+
+    const formattedData = await formatData(messageContent);
+    const featuredImage = await generateFeaturedImage(formattedData);
+    await updateDB(formattedData, featuredImage);
+  })();
+  return immediateResponse;
 };
 
 export const POST = () => {};
