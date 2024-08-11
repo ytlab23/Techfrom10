@@ -25,7 +25,9 @@ const Page: NextPage<Props> = async ({}) => {
           <div key={index + 1} className="hero-container">
             <div className="hero-container-head">
               {" "}
-              <h2>{val.title}</h2>
+              <Link href={"/view/" + val._id.toString()}>
+                <h2>{val.title}</h2>
+              </Link>
               <Image
                 src={"/test.jpg"}
                 width={250}
@@ -37,8 +39,10 @@ const Page: NextPage<Props> = async ({}) => {
               {val.headlines.map((h, hindex) => (
                 <li key={hindex + 2}>{h}</li>
               ))}
-              <Link href={"/view/" + val._id.toString()}>View in Full</Link>
-            </ul>
+            </ul>{" "}
+            <Link href={"/view/" + val._id.toString()} className="view-in-full">
+              View in Full
+            </Link>
           </div>
         ))}
       </div>{" "}

@@ -1,14 +1,13 @@
 @import "@/styles/styles.scss";
 
 .nav-parent {
-    padding: 1vh 2vw;
+    padding: 0vh 2vw;
     backdrop-filter: blur(10px);
     position: fixed;
     z-index: 1000;
     width: 100%;
-    height: 12vh;
     background-color: rgb(255, 255, 255, 0.3);
-    border-bottom: 5px solid black;
+    border-bottom: 2px solid black;
 }
 .nav-container {
     @include flex-center();
@@ -22,15 +21,15 @@
             gap: 1vw;
 
             a {
-                font-weight: 600;
-                font-size: $--18px;
+                font-weight: 700;
+                font-size: 1.2rem;
 
                 &:hover {
                     animation: bottomLine 0.3s ease-in forwards;
                 }
                 @keyframes bottomLine {
                     100% {
-                        border-bottom: 3px solid black;
+                        border-bottom: 3px solid $pri-col;
                         border-width: 100%;
                     }
                 }
@@ -39,7 +38,8 @@
 
         h1 {
             font-weight: 800;
-            font-size: $--34px;
+            font-size: 3.5rem;
+            text-shadow: 4px 0vh 0 $pri-col;
         }
     }
 

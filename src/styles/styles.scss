@@ -10,8 +10,10 @@ $--38px: 2.375rem;
 $--42px: 2.625rem;
 $--48px: 3rem;
 $--64px: 4rem;
+$pri-col: #fd79a8;
 $poppins: var(--font-poppins);
 $nunito: var(--font-nunito);
+$grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 @mixin flex-center($direction: row) {
     display: flex;
     justify-content: center;
@@ -21,7 +23,7 @@ $nunito: var(--font-nunito);
 
 .hero-parent {
     padding: 0 2vw;
-    padding-top: 15vh;
+    padding-top: 16vh;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -40,10 +42,10 @@ $nunito: var(--font-nunito);
         }
     }
     img {
-        width: 100%;
-        height: 250px;
+        width: 200px;
+        height: 200px;
         object-fit: cover;
-        border-radius: 1vw;
+        border-radius: 0.5vw;
     }
 }
 
@@ -52,15 +54,13 @@ $nunito: var(--font-nunito);
     @include flex-center(column);
     align-items: flex-start;
     gap: 5vh;
-    border-left: 5px solid black;
-    border-right: 5px solid black;
-    border-top: 1px solid rgb(0, 0, 0);
-    border-bottom: 1px solid rgb(0, 0, 0);
-    width: 75%;
+    border: 2px solid black;
+    box-shadow: 0.5vw 1vh 0 black;
+    width: 60vw;
     border-radius: 1vw;
     backdrop-filter: blur(5px);
     ul {
-        list-style-type: circle;
+        list-style-type: decimal;
         padding: 0 2vw;
         @include flex-center(column);
         align-items: flex-start;
@@ -68,16 +68,25 @@ $nunito: var(--font-nunito);
     }
     li {
         font-family: $nunito;
-        font-size: $--18px;
-        font-weight: 600;
+        font-size: $--16px;
+        font-weight: 700;
+    }
+    .view-in-full {
+        font-weight: 700;
+        text-decoration: underline;
+        color: $pri-col;
     }
     .hero-container-head {
         @include flex-center(column);
         gap: 2vh;
         h2 {
-            text-align: center;
-            font-size: $--32px;
+            // text-align: center;
+            font-size: $--26px;
             font-weight: 800;
+            transition: all 0.5s ease-in-out;
+            &:hover {
+                color: #fd79a8;
+            }
         }
     }
 }
@@ -119,7 +128,8 @@ $nunito: var(--font-nunito);
             width: 6vw;
             transition: all 0.2s ease-in-out;
             &:hover {
-                width: 7vw;
+                width: 6.5vw;
+                background: $grady-color;
             }
         }
     }
@@ -138,11 +148,10 @@ $nunito: var(--font-nunito);
             font-weight: 900;
             line-height: 5vh;
             border-bottom: 2px solid black;
-            background-color: rgb(255, 255, 255);
-            color: black;
             border-radius: 2vw;
             width: 100%;
             text-align: center;
+            background: $grady-color;
         }
 
         .hero-card1-items {
@@ -160,7 +169,7 @@ $nunito: var(--font-nunito);
                 &:hover {
                     scale: 1.1;
                     cursor: pointer;
-                    background-color: violet;
+                    background-color: $pri-col;
                 }
             }
         }

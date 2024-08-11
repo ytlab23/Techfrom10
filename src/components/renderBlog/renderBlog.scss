@@ -2,7 +2,7 @@
 
 .renderBlog-parent {
     padding: 0 5vw;
-    padding-top: 14vh;
+    padding-top: 18vh;
     padding-bottom: 5vh;
     @include flex-center(column);
     align-items: center;
@@ -64,6 +64,6 @@
         text-decoration: underline;
         font-weight: 700;
         font-size: $--14px;
-        color: violet;
+        color: $pri-col;
     }
 }
