@@ -23,6 +23,9 @@
             font-family: $bebas;
             font-weight: 800;
             letter-spacing: 1px;
+            &:hover {
+                color: $pri-col;
+            }
         }
         p {
             font-size: $--12px;
@@ -36,6 +39,10 @@
         li {
             font-size: $--18px;
             letter-spacing: 1px;
+
+            &:hover {
+                color: $pri-col;
+            }
         }
     }
 }
@@ -47,12 +54,18 @@
 .footer-icons-container {
     @include flex-center();
     gap: 0.5vw;
+    transition: all 0.2s ease-in-out;
     a {
         &:first-child {
             color: #4267b2;
         }
         &:nth-child(2) {
             color: #e1306c;
+        }
+
+        &:hover {
+            scale: 1.1;
+            color: $pri-col;
         }
     }
 
