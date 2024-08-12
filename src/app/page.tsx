@@ -117,7 +117,7 @@ const Page: NextPage<Props> = ({}) => {
                   </ul>
                 </div>
                 <Link
-                  href={"/view/" + val._id.toString()}
+                  href={"/article/" + val._id.toString()}
                   className="view-in-full"
                 >
                   Read Full Article

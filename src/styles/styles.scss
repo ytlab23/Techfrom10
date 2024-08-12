@@ -69,6 +69,8 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
         font-weight: 700;
         text-decoration: underline;
         color: $pri-col;
+        font-family: $josefin;
+        font-size: $--14px;
     }
     .hero-container-head {
         @include flex-center();
