@@ -20,7 +20,7 @@ interface dataprop {
 
 const Page: NextPage<Props> = ({}) => {
   const [data, setData] = useState<dataprop[]>([]);
-  const [tag, setTag] = useState<string | null>(null);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [filteredData, setFilteredData] = useState<dataprop[]>([]);
 
   useEffect(() => {
@@ -31,33 +31,40 @@ const Page: NextPage<Props> = ({}) => {
       );
       const data: dataprop[] = await res.json();
       setData(data);
-      setTag("Uncategorized");
       setFilteredData(data);
     };
     fetchData();
   }, []);
 
-  const handleTag = (hashtag: string) => {
-    setTag(hashtag);
+  const handleTagSelection = (hashtag: string) => {
+    if (hashtag === "uncategorized") {
+      setSelectedTags(["uncategorized"]);
+    } else {
+      setSelectedTags((prevTags) =>
+        prevTags.includes(hashtag)
+          ? prevTags.filter((tag) => tag !== hashtag)
+          : [...prevTags.filter((tag) => tag !== "uncategorized"), hashtag]
+      );
+    }
   };
 
   useEffect(() => {
-    if (tag) {
-      if (tag == "Uncategorized") return setFilteredData(data);
+    if (selectedTags.includes("uncategorized") || selectedTags.length === 0) {
+      setSelectedTags(["uncategorized"]);
+      setFilteredData(data);
+    } else {
       const newFilteredData = data
         .map((item) => ({
           ...item,
-          headlines: item.headlines.filter(
-            (_, idx) => item.hashtags[idx] === tag
+          headlines: item.headlines.filter((_, idx) =>
+            selectedTags.includes(item.hashtags[idx])
           ),
         }))
         .filter((item) => item.headlines.length > 0);
 
       setFilteredData(newFilteredData);
-    } else {
-      setFilteredData(data);
     }
-  }, [tag, data]);
+  }, [selectedTags, data]);
 
   return (
     <div className="hero-parent">
@@ -101,9 +108,9 @@ const Page: NextPage<Props> = ({}) => {
           <div className="hero-card1-items">
             <Badge
               key="uncategorized"
-              onClick={() => handleTag("Uncategorized")}
+              onClick={() => handleTagSelection("uncategorized")}
               className={
-                tag === "Uncategorized"
+                selectedTags.includes("uncategorized")
                   ? "selected-hashtag"
                   : "unselected-hashtag"
               }
@@ -119,9 +126,11 @@ const Page: NextPage<Props> = ({}) => {
             ).map((hashtag, index) => (
               <Badge
                 key={index}
-                onClick={() => handleTag(hashtag)}
+                onClick={() => handleTagSelection(hashtag)}
                 className={
-                  tag === hashtag ? "selected-hashtag" : "unselected-hashtag"
+                  selectedTags.includes(hashtag)
+                    ? "selected-hashtag"
+                    : "unselected-hashtag"
                 }
               >
                 #{hashtag}
