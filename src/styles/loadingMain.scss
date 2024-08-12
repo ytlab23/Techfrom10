@@ -1,0 +1,96 @@
+@import "./styles.scss";
+
+// Define the animation keyframes
+@keyframes skeleton-loading {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+// Mixin for skeleton loading animation
+@mixin skeleton-animation {
+    background: linear-gradient(100deg, #e0e0e0 0%, #c0c0c0 50%, #e0e0e0 100%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+.skeleton-container-wrap {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 2vw;
+    padding-top: 16vh;
+    padding-left: 5vw;
+
+    .skeleton-fixed {
+        position: fixed;
+        right: 0;
+        width: 45vw;
+        padding-right: 5vw;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2vh;
+
+        .skeleton-search-bar {
+            width: 32vw;
+            height: 40px;
+            border-radius: 20px;
+            @include skeleton-animation; // Apply animation
+            margin-bottom: 2vh;
+        }
+
+        .skeleton-card {
+            width: 80%;
+            height: 200px;
+            border-radius: 10px;
+            @include skeleton-animation; // Apply animation
+            padding: 2vh 1vw;
+        }
+    }
+
+    .skeleton-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2vh;
+        border: 2px solid black;
+        background: #f3f3f3;
+        width: 55vw;
+        border-radius: 1vw;
+        padding: 3vh 2vw;
+        box-shadow: 0.5vw 1vh 0 black;
+
+        .skeleton-head {
+            width: 80%;
+            height: 42px;
+            border-radius: 4px;
+            margin-bottom: 1vh;
+            @include skeleton-animation; // Apply animation
+        }
+
+        .skeleton-image {
+            width: 250px;
+            height: 150px;
+            border-radius: 4px;
+            margin-bottom: 2vh;
+            @include skeleton-animation; // Apply animation
+        }
+
+        .skeleton-lines {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1vh;
+
+            .skeleton-line {
+                height: 20px;
+                border-radius: 4px;
+                @include skeleton-animation; // Apply animation
+            }
+        }
+    }
+}
