@@ -58,7 +58,11 @@ const getDB = async () => {
 
   return db;
 };
-const updateDB = async (content: NewsContent, image: NewsContent) => {
+const updateDB = async (
+  content: NewsContent,
+  image: NewsContent,
+  formattedDate: string
+) => {
   const db = await getDB();
   const collections = db.collection(`${process.env.mongo_collec}`);
   const now = new Date();
@@ -72,6 +76,7 @@ const updateDB = async (content: NewsContent, image: NewsContent) => {
     hashtags: content.tag,
     published: content.time,
     imgUrl: image.url,
+    date: formattedDate,
     expireAt: expireAt,
   };
 
@@ -106,7 +111,7 @@ const generateFeaturedImage = async (content: any) => {
     },
     body: JSON.stringify({
       model: "dall-e-3",
-      prompt: `Title: ${content.title}, Headlines: ${content.headline}\n This is my News Blog I need Featured Image`,
+      prompt: `Title: ${content.title}, Headlines: ${content.headline}\n Generate Featured Image for the News title based upon the provided Headlines`,
       n: 1,
       size: "1024x1024",
     }),
@@ -123,6 +128,29 @@ const sendImmediateResponse = () => {
   });
 };
 
+const getFormattedDate = async (): Promise<string> => {
+  const monthNames: string[] = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const currentDate: Date = new Date();
+
+  const day: number = currentDate.getDate();
+  const month: string = monthNames[currentDate.getMonth()];
+  const year: number = currentDate.getFullYear();
+  const date = `${month} ${day}, ${year}`;
+  return date;
+};
 export const GET = async () => {
   const immediateResponse = sendImmediateResponse();
   (async () => {
@@ -149,7 +177,8 @@ export const GET = async () => {
 
     const formattedData = await formatData(messageContent);
     const featuredImage = await generateFeaturedImage(formattedData);
-    await updateDB(formattedData, featuredImage);
+    const formattedDate = await getFormattedDate();
+    await updateDB(formattedData, featuredImage, formattedDate);
   })();
   return immediateResponse;
 };

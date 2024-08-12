@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState, useMemo } from "react";
 import Loading from "./loading.js";
+import { FaClock } from "react-icons/fa";
+
 interface Props {}
 
 interface dataprop {
@@ -16,6 +18,7 @@ interface dataprop {
   published: string[];
   hashtags: string[];
   imgUrl: string;
+  date: string;
 }
 
 const Page: NextPage<Props> = ({}) => {
@@ -28,7 +31,7 @@ const Page: NextPage<Props> = ({}) => {
     const fetchData = async () => {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`,
-        { cache: "no-cache" }
+        { next: { revalidate: 3600 } }
       );
       const data: dataprop[] = await res.json();
       setData(data);
@@ -94,6 +97,10 @@ const Page: NextPage<Props> = ({}) => {
                   <Link href={"/view/" + val._id.toString()}>
                     <h2>{val.title}</h2>
                   </Link>
+                  <span>
+                    <FaClock className="text-base" />
+                    {val.date}
+                  </span>
                 </div>
                 <div className="hero-content-wrap">
                   {" "}
@@ -113,7 +120,7 @@ const Page: NextPage<Props> = ({}) => {
                   href={"/view/" + val._id.toString()}
                   className="view-in-full"
                 >
-                  View in Full
+                  Read Full Article
                 </Link>
               </div>
             ))}
