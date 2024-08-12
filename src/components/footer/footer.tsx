@@ -15,8 +15,8 @@ const Footer: NextPage<Props> = ({}) => {
           <h3 className="footer-title">TechFrom10</h3>
           <p>All the Tech Talk You Need, Right Here</p>
         </div>
-        <div>
-          <h3>Useful Links</h3>
+        <div className="footer-links">
+          <h3>Links</h3>
           <ul>
             <li>
               <a href="#">Home</a>
@@ -28,6 +28,13 @@ const Footer: NextPage<Props> = ({}) => {
               <a href="#">Contact</a>
             </li>
           </ul>
+        </div>
+        <div className="footer-newsletter">
+          <h3>Newsletter</h3>
+          <form action="">
+            <input type="text" placeholder="Email ID" />
+            <button>subscribe</button>
+          </form>
         </div>
         <div className="footer-icons-parent">
           <h3>Follow Us</h3>

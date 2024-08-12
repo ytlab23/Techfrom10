@@ -10,7 +10,7 @@
     width: 100%;
     .footer-container {
         @include flex-center();
-        align-items: flex-start;
+        align-items: center;
         justify-content: space-between;
         width: 100%;
         color: white;
@@ -23,9 +23,6 @@
             font-family: $bebas;
             font-weight: 800;
             letter-spacing: 1px;
-            &:hover {
-                color: $pri-col;
-            }
         }
         p {
             font-size: $--12px;
@@ -33,13 +30,14 @@
         }
         ul {
             list-style-type: disc;
-            padding-left: 2vw;
             font-family: $bebas;
+            @include flex-center();
+            gap: 2vw;
         }
         li {
             font-size: $--18px;
             letter-spacing: 1px;
-
+            color: rgb(255, 255, 255, 0.9);
             &:hover {
                 color: $pri-col;
             }
@@ -71,5 +69,35 @@
 
     .footer-icon {
         font-size: $--32px;
+    }
+}
+
+.footer-newsletter {
+    form {
+        @include flex-center();
+        gap: 1vw;
+        font-size: $--16px;
+        input {
+            border: 2px solid $pri-col;
+            background-color: transparent;
+            border-radius: 1vw;
+            font-family: $josefin;
+            padding: 0 1vw;
+            &::placeholder {
+                text-align: center;
+                font-size: $--14px;
+            }
+        }
+
+        button {
+            padding: 0 1vw;
+            background-color: #4267b2;
+            border-radius: 5vw;
+            font-family: $josefin;
+            transition: all 0.2s ease;
+            &:hover {
+                background-color: $pri-col;
+            }
+        }
     }
 }
