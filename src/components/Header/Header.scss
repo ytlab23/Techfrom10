@@ -6,8 +6,15 @@
     position: fixed;
     z-index: 1000;
     width: 100%;
-    background-color: rgb(255, 255, 255, 0.3);
+    color: white;
+    transition: background-color 0.3s ease;
     border-bottom: 2px solid black;
+}
+.nav-parent-default {
+    background-color: rgba(0, 0, 0, 1);
+}
+.nav-parent-scrolled {
+    background-color: rgba(0, 0, 0, 0.7);
 }
 .nav-container {
     @include flex-center();
@@ -39,7 +46,7 @@
         h1 {
             font-weight: 800;
             font-size: 3rem;
-            text-shadow: 4px 0vh 0 $pri-col;
+            // text-shadow: 4px 0vh 0 $pri-col;
         }
     }
 

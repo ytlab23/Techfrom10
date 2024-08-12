@@ -1,9 +1,11 @@
+"use client";
 import "./Header.scss";
 import { NextPage } from "next";
 import Link from "next/link";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import Image from "next/image";
 import msgIcon from "@/assets/icons/msg.svg";
+import { useEffect } from "react";
 interface Props {}
 
 const navList = [
@@ -11,8 +13,26 @@ const navList = [
   { name: "Newsletter", path: "/newsletter" },
 ];
 const Header: NextPage<Props> = ({}) => {
+  useEffect(() => {
+    const handleScroll = () => {
+      const navbar = document.querySelector(".nav-parent");
+      if (window.scrollY > 10) {
+        navbar?.classList.add("nav-parent-scrolled");
+        navbar?.classList.remove("nav-parent-default");
+      } else {
+        navbar?.classList.remove("nav-parent-scrolled");
+        navbar?.classList.add("nav-parent-default");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
-    <div className="nav-parent">
+    <div className="nav-parent nav-parent-default">
       <div className="nav-container">
         <div className="nav-left">
           <h1>
