@@ -1,0 +1,62 @@
+@import "@/styles/styles.scss";
+
+.footer-parent {
+    position: relative;
+    bottom: 0;
+    @include flex-center();
+    padding: 3vh 2vw;
+    background: black;
+    border-radius: 1vw 1vw 0 0;
+    width: 100%;
+    .footer-container {
+        @include flex-center();
+        align-items: flex-start;
+        justify-content: space-between;
+        width: 100%;
+        color: white;
+        text-transform: uppercase;
+        // .footer-title {
+        //     text-shadow: 5px 0 0 $pri-col;
+        // }
+        h3 {
+            font-size: $--38px;
+            font-family: $bebas;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        p {
+            font-size: $--12px;
+            font-family: $josefin;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 2vw;
+            font-family: $bebas;
+        }
+        li {
+            font-size: $--18px;
+            letter-spacing: 1px;
+        }
+    }
+}
+
+.footer-icons-parent {
+    @include flex-center(column);
+    gap: 1vh;
+}
+.footer-icons-container {
+    @include flex-center();
+    gap: 0.5vw;
+    a {
+        &:first-child {
+            color: #4267b2;
+        }
+        &:nth-child(2) {
+            color: #e1306c;
+        }
+    }
+
+    .footer-icon {
+        font-size: $--32px;
+    }
+}

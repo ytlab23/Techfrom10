@@ -13,6 +13,8 @@ $--64px: 4rem;
 $pri-col: #fd79a8;
 $poppins: var(--font-poppins);
 $nunito: var(--font-nunito);
+$josefin: var(--font-josefin);
+$bebas: var(--font-bebas);
 $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 @mixin flex-center($direction: row) {
     display: flex;
@@ -23,6 +25,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 .hero-parent {
     padding-left: 5vw;
     padding-top: 16vh;
+    padding-bottom: 10vh;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
