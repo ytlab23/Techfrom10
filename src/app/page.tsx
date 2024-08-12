@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Loading from "./loading.js";
 interface Props {}
 
@@ -20,9 +20,10 @@ interface dataprop {
 
 const Page: NextPage<Props> = ({}) => {
   const [data, setData] = useState<dataprop[]>([]);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>(["uncategorized"]);
   const [filteredData, setFilteredData] = useState<dataprop[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
@@ -39,7 +40,10 @@ const Page: NextPage<Props> = ({}) => {
 
   const handleTagSelection = (hashtag: string) => {
     if (hashtag === "uncategorized") {
-      setSelectedTags(["uncategorized"]);
+      // Only set state if it's not already set to 'uncategorized'
+      if (!selectedTags.includes("uncategorized")) {
+        setSelectedTags(["uncategorized"]);
+      }
     } else {
       setSelectedTags((prevTags) =>
         prevTags.includes(hashtag)
@@ -51,7 +55,6 @@ const Page: NextPage<Props> = ({}) => {
 
   useEffect(() => {
     if (selectedTags.includes("uncategorized") || selectedTags.length === 0) {
-      setSelectedTags(["uncategorized"]);
       setFilteredData(data);
     } else {
       const newFilteredData = data
@@ -66,6 +69,17 @@ const Page: NextPage<Props> = ({}) => {
       setFilteredData(newFilteredData);
     }
   }, [selectedTags, data]);
+
+  // Memoize unique hashtags to prevent recalculations
+  const uniqueHashtags = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          data.flatMap((item) => item.hashtags.map((tag) => tag.toLowerCase()))
+        )
+      ),
+    [data]
+  );
 
   return (
     <div>
@@ -125,13 +139,7 @@ const Page: NextPage<Props> = ({}) => {
                 >
                   #Uncategorized
                 </Badge>
-                {Array.from(
-                  new Set(
-                    data.flatMap((item) =>
-                      item.hashtags.map((tag) => tag.toLowerCase())
-                    )
-                  )
-                ).map((hashtag, index) => (
+                {uniqueHashtags.map((hashtag, index) => (
                   <Badge
                     key={index}
                     onClick={() => handleTagSelection(hashtag)}
