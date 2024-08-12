@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { useEffect, useState, useMemo } from "react";
 import Loading from "./loading.js";
 import { FaClock } from "react-icons/fa";
+import DatePicker from "@/components/datePicker";
 
 interface Props {}
 
@@ -91,6 +92,10 @@ const Page: NextPage<Props> = ({}) => {
       ) : (
         <div className="hero-parent">
           <div className="hero-container-wrap">
+            <div className="hero-container-title">
+              <h3>Filter</h3>
+              <DatePicker />
+            </div>
             {filteredData.map((val) => (
               <div key={val._id} className="hero-container">
                 <div className="hero-container-head">
@@ -132,6 +137,7 @@ const Page: NextPage<Props> = ({}) => {
                 <button>search</button>
               </form>
             </div>
+
             <div className="hero-card1">
               <h3>Hashtags</h3>
               <div className="hero-card1-items">
