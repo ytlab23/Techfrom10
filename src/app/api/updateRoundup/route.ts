@@ -30,6 +30,25 @@ source: <Link to news>
 Tag: ""
 Time: 12 hours ago
 
+Tags collection:
+AI
+Space
+Mobile
+Videogames
+Biotechnology
+Robotics
+Nanotechnology
+Social Media
+Cybersecurity
+Gadgets
+Software
+Startups
+Reviews
+Coding
+Hardware
+Innovations
+Tutorials
+
 Act Like a api. Include emojis in summary. This data is being dispayed in website so dont include ** or Wrap link inside text just follow the above format. Also only one tag for each and try to use repeated tags. Make sure the Title is catchy and emoji
 `;
 
