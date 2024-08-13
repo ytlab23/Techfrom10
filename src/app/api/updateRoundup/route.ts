@@ -1,5 +1,6 @@
 import clientPromise from "@/lib/db";
-
+import getS3Client from "@/lib/s3";
+import { PutObjectCommand, ObjectCannedACL } from "@aws-sdk/client-s3";
 interface NewsContent {
   title: string[];
   headline: string[];
@@ -51,7 +52,19 @@ Tutorials
 
 Act Like a api. Include emojis in summary. This data is being dispayed in website so dont include ** or Wrap link inside text just follow the above format. Also only one tag for each and try to use repeated tags. Make sure the Title is catchy and emoji
 `;
+const updateS3 = async (fileName: string, buffer: any) => {
+  const s3Client = getS3Client();
 
+  const params = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: fileName,
+    Body: buffer,
+    ACL: "public-read" as ObjectCannedACL,
+  };
+  const command = new PutObjectCommand(params);
+  const result = await s3Client.send(command);
+  return `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
+};
 const getDB = async () => {
   const client = await clientPromise;
   const db = client.db(process.env.mongo_db_name);
@@ -60,7 +73,7 @@ const getDB = async () => {
 };
 const updateDB = async (
   content: NewsContent,
-  image: NewsContent,
+  image: string,
   formattedDate: string
 ) => {
   const db = await getDB();
@@ -75,13 +88,13 @@ const updateDB = async (
     source: content.source,
     hashtags: content.tag,
     published: content.time,
-    imgUrl: image.url,
+    imgUrl: image,
     date: formattedDate,
     expireAt: expireAt,
   };
 
   const doc = await collections.insertOne(data);
-  console.log(doc);
+  return doc;
 };
 const formatData = async (content: string): Promise<NewsContent> => {
   const sections = content.split("\n\n");
@@ -151,6 +164,13 @@ const getFormattedDate = async (): Promise<string> => {
   const date = `${month} ${day}, ${year}`;
   return date;
 };
+const fetchAndUploadImage = async (imageUrl: string, fileName: string) => {
+  const response = await fetch(imageUrl);
+  const arrayBuffer = await response.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+  const s3ImageUrl = await updateS3(fileName, buffer);
+  return s3ImageUrl;
+};
 export const GET = async () => {
   const immediateResponse = sendImmediateResponse();
   (async () => {
@@ -174,11 +194,14 @@ export const GET = async () => {
 
     const data = await res.json();
     const messageContent = data.choices[0].message.content;
-
     const formattedData = await formatData(messageContent);
     const featuredImage = await generateFeaturedImage(formattedData);
     const formattedDate = await getFormattedDate();
-    await updateDB(formattedData, featuredImage, formattedDate);
+    const s3ImageUrl = await fetchAndUploadImage(
+      featuredImage.url,
+      `featured-images/${formattedData.title[0]}-${formattedDate}.png`
+    );
+    console.log(await updateDB(formattedData, s3ImageUrl, formattedDate));
   })();
   return immediateResponse;
 };
