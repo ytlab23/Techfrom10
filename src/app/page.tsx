@@ -6,8 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { useEffect, useState, useMemo } from "react";
 import Loading from "./loading.js";
 import { FaClock } from "react-icons/fa";
-import DatePicker from "@/components/datePicker";
-
+import DatePickerComponent from "@/components/dataPicker/datePicker";
+import moment from "moment";
+import { DateRange } from "react-day-picker";
 interface Props {}
 
 interface dataprop {
@@ -27,7 +28,11 @@ const Page: NextPage<Props> = ({}) => {
   const [selectedTags, setSelectedTags] = useState<string[]>(["uncategorized"]);
   const [filteredData, setFilteredData] = useState<dataprop[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [filteredDate, setFilteredDate] = useState<DateRange | null>(null);
 
+  const handleDateChange = (date) => {
+    setFilteredDate(date);
+  };
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
@@ -58,10 +63,21 @@ const Page: NextPage<Props> = ({}) => {
   };
 
   useEffect(() => {
+    const selectedDateRange = filteredDate
+      ? {
+          from: moment(filteredDate.from).startOf("day"),
+          to: filteredDate.to
+            ? moment(filteredDate.to).endOf("day")
+            : moment(filteredDate.from).endOf("day"),
+        }
+      : null;
+
+    let newFilteredData = data;
+
     if (selectedTags.includes("uncategorized") || selectedTags.length === 0) {
-      setFilteredData(data);
+      newFilteredData = data;
     } else {
-      const newFilteredData = data
+      newFilteredData = data
         .map((item) => ({
           ...item,
           headlines: item.headlines.filter((_, idx) =>
@@ -69,11 +85,21 @@ const Page: NextPage<Props> = ({}) => {
           ),
         }))
         .filter((item) => item.headlines.length > 0);
-
-      setFilteredData(newFilteredData);
     }
-  }, [selectedTags, data]);
 
+    if (selectedDateRange) {
+      newFilteredData = newFilteredData.filter((item) =>
+        moment(item.date).isBetween(
+          selectedDateRange.from,
+          selectedDateRange.to,
+          null,
+          "[]"
+        )
+      );
+    }
+
+    setFilteredData(newFilteredData);
+  }, [selectedTags, filteredDate, data]);
   // Memoize unique hashtags to prevent recalculations
   const uniqueHashtags = useMemo(
     () =>
@@ -94,7 +120,7 @@ const Page: NextPage<Props> = ({}) => {
           <div className="hero-container-wrap">
             <div className="hero-container-title">
               <h3>Filter</h3>
-              <DatePicker />
+              <DatePickerComponent onDateChange={handleDateChange} />
             </div>
             {filteredData.map((val) => (
               <div key={val._id} className="hero-container">

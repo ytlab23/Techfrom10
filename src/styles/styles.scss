@@ -139,13 +139,13 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 .hero-container-fixed {
     position: fixed;
     right: 0;
-    width: 45vw;
+    width: 35vw;
     padding-right: 5vw;
     @include flex-center(column);
     align-items: flex-end;
     gap: 2vh;
     .hero-search {
-        width: 32vw;
+        width: 100%;
         form {
             @include flex-center();
             justify-content: flex-end;
@@ -177,7 +177,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     }
     .hero-card1 {
         border-radius: 1vw;
-        width: 80%;
+        width: 100%;
         @include flex-center(column);
         gap: 2vh;
         padding: 2vh 1vw;
