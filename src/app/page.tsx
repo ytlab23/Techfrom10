@@ -3,13 +3,14 @@ import { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import Loading from "./loading.js";
 import { FaClock } from "react-icons/fa";
 import DatePickerComponent from "@/components/dataPicker/datePicker";
 import moment from "moment";
 import { DateRange } from "react-day-picker";
 import { useToast } from "@/components/ui/use-toast";
+
 interface Props {}
 
 interface dataprop {
@@ -34,9 +35,12 @@ const Page: NextPage<Props> = ({}) => {
     to: new Date(),
   });
   const { toast } = useToast();
+  const hasReset = useRef(false); // Track if the state has been reset
+
   const handleDateChange = (date: DateRange | null) => {
     setFilteredDate(date);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
@@ -101,7 +105,8 @@ const Page: NextPage<Props> = ({}) => {
       );
     }
 
-    if (newFilteredData.length === 0 && data.length > 0) {
+    if (newFilteredData.length === 0 && data.length > 0 && !hasReset.current) {
+      hasReset.current = true; // Mark as reset
       toast({
         title: "No results found for the selected date range.",
       });
@@ -109,8 +114,9 @@ const Page: NextPage<Props> = ({}) => {
         from: new Date(),
         to: new Date(),
       });
-      newFilteredData = data;
+      setFilteredData(data);
     } else {
+      hasReset.current = false; // Reset the flag
       setFilteredData(newFilteredData);
     }
   }, [selectedTags, filteredDate, data, toast]);
@@ -148,7 +154,6 @@ const Page: NextPage<Props> = ({}) => {
                   </span>
                 </div>
                 <div className="hero-content-wrap">
-                  {" "}
                   <Image
                     src={val.imgUrl ? `${val.imgUrl}` : "/test.jpg"}
                     width={250}
