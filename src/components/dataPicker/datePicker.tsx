@@ -35,7 +35,7 @@ const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
     <Popover>
       <PopoverTrigger asChild>
         <Button id="date" className="calendar-button">
-          <CalendarIcon className="mr-2 h-4 w-4" />
+          <CalendarIcon className="mr-2" />
           {date?.from ? (
             date.to ? (
               <>

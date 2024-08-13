@@ -114,7 +114,6 @@ const generateFeaturedImage = async (content: any) => {
       prompt: `Title: ${content.title}, Headlines: ${content.headline}\n Generate Featured Image for the News title based upon the provided Headlines`,
       n: 1,
       size: "1024x1024",
-      quality: "hd",
     }),
     // next: { revalidate: 3600 },
   });

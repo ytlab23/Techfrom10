@@ -8,9 +8,11 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import "@/styles/styles.scss";
+import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/footer/footer";
 const inter = Inter({ subsets: ["latin"] });
+
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["100", "200", "400", "500", "600", "800"],
@@ -49,6 +51,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <Toaster />
       </body>
     </html>
   );

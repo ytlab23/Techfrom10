@@ -9,6 +9,7 @@ import { FaClock } from "react-icons/fa";
 import DatePickerComponent from "@/components/dataPicker/datePicker";
 import moment from "moment";
 import { DateRange } from "react-day-picker";
+import { useToast } from "@/components/ui/use-toast";
 interface Props {}
 
 interface dataprop {
@@ -28,9 +29,12 @@ const Page: NextPage<Props> = ({}) => {
   const [selectedTags, setSelectedTags] = useState<string[]>(["uncategorized"]);
   const [filteredData, setFilteredData] = useState<dataprop[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [filteredDate, setFilteredDate] = useState<DateRange | null>(null);
-
-  const handleDateChange = (date) => {
+  const [filteredDate, setFilteredDate] = useState<DateRange | null>({
+    from: new Date(),
+    to: new Date(),
+  });
+  const { toast } = useToast();
+  const handleDateChange = (date: DateRange | null) => {
     setFilteredDate(date);
   };
   useEffect(() => {
@@ -49,7 +53,6 @@ const Page: NextPage<Props> = ({}) => {
 
   const handleTagSelection = (hashtag: string) => {
     if (hashtag === "uncategorized") {
-      // Only set state if it's not already set to 'uncategorized'
       if (!selectedTags.includes("uncategorized")) {
         setSelectedTags(["uncategorized"]);
       }
@@ -98,9 +101,20 @@ const Page: NextPage<Props> = ({}) => {
       );
     }
 
-    setFilteredData(newFilteredData);
-  }, [selectedTags, filteredDate, data]);
-  // Memoize unique hashtags to prevent recalculations
+    if (newFilteredData.length === 0 && data.length > 0) {
+      toast({
+        title: "No results found for the selected date range.",
+      });
+      setFilteredDate({
+        from: new Date(),
+        to: new Date(),
+      });
+      newFilteredData = data;
+    } else {
+      setFilteredData(newFilteredData);
+    }
+  }, [selectedTags, filteredDate, data, toast]);
+
   const uniqueHashtags = useMemo(
     () =>
       Array.from(

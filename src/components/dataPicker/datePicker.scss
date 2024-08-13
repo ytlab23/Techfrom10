@@ -32,3 +32,10 @@
 .day-range-middle {
     background-color: grey;
 }
+
+.calendar-button {
+    border: 2px solid white;
+    border-radius: 5vw;
+    padding: 1vh 1vw;
+    font-size: $--12px;
+}

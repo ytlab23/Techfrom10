@@ -58,16 +58,6 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     h3 {
         font-size: $--16px;
     }
-    button {
-        border: 2px solid white;
-        padding: 0vh 1vw;
-        border-radius: 5vw;
-        @include flex-center();
-        gap: 3px;
-        span {
-            font-size: 11px;
-        }
-    }
 }
 
 .hero-container {
@@ -222,4 +212,12 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 }
 .selected-hashtag {
     background-color: $pri-col;
+}
+
+.toast-parent {
+    background: black;
+    color: white;
+    padding: 2vh 1vw;
+    border-radius: 1vw;
+    border: 2px solid black;
 }
