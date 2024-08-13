@@ -165,45 +165,59 @@ const getFormattedDate = async (): Promise<string> => {
   return date;
 };
 const fetchAndUploadImage = async (imageUrl: string, fileName: string) => {
-  const response = await fetch(imageUrl);
-  const arrayBuffer = await response.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-  const s3ImageUrl = await updateS3(fileName, buffer);
-  return s3ImageUrl;
+  try {
+    const response = await fetch(imageUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image: ${response.statusText}`);
+    }
+    const arrayBuffer = await response.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const s3ImageUrl = await updateS3(fileName, buffer);
+    return s3ImageUrl;
+  } catch (error) {
+    console.error("Error in fetchAndUploadImage:", error);
+    throw error;
+  }
 };
+
 export const GET = async () => {
   const immediateResponse = sendImmediateResponse();
   (async () => {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-4o",
-        messages: [
-          {
-            role: "system",
-            content: prompt,
-          },
-        ],
-      }),
-      // next: { revalidate: 3600 },
-    });
+    try {
+      const res = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-4o",
+          messages: [
+            {
+              role: "system",
+              content: prompt,
+            },
+          ],
+        }),
+      });
 
-    const data = await res.json();
-    const messageContent = data.choices[0].message.content;
-    const formattedData = await formatData(messageContent);
-    const featuredImage = await generateFeaturedImage(formattedData);
-    const formattedDate = await getFormattedDate();
-    const s3ImageUrl = await fetchAndUploadImage(
-      featuredImage.url,
-      `featured-images/${formattedData.title[0]}-${formattedDate}.png`
-    );
-    console.log(await updateDB(formattedData, s3ImageUrl, formattedDate));
+      if (!res.ok) {
+        throw new Error(`OpenAI API error: ${res.statusText}`);
+      }
+
+      const data = await res.json();
+      const messageContent = data.choices[0].message.content;
+      const formattedData = await formatData(messageContent);
+      const featuredImage = await generateFeaturedImage(formattedData);
+      const formattedDate = await getFormattedDate();
+      const s3ImageUrl = await fetchAndUploadImage(
+        featuredImage.url,
+        `featured-images/${formattedData.title[0]}-${formattedDate}.png`
+      );
+      console.log(await updateDB(formattedData, s3ImageUrl, formattedDate));
+    } catch (error) {
+      console.error("Error in GET handler:", error);
+    }
   })();
   return immediateResponse;
 };
-
-export const POST = () => {};
