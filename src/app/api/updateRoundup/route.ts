@@ -1,6 +1,9 @@
 import clientPromise from "@/lib/db";
 import getS3Client from "@/lib/s3";
 import { PutObjectCommand, ObjectCannedACL } from "@aws-sdk/client-s3";
+export const config = {
+  maxDuration: 60,
+};
 interface NewsContent {
   title: string[];
   headline: string[];
