@@ -183,41 +183,36 @@ const fetchAndUploadImage = async (imageUrl: string, fileName: string) => {
 export const GET = async () => {
   const immediateResponse = sendImmediateResponse();
   (async () => {
-    try {
-      const res = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: "gpt-4o",
-          messages: [
-            {
-              role: "system",
-              content: prompt,
-            },
-          ],
-        }),
-      });
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-4o",
+        messages: [
+          {
+            role: "system",
+            content: prompt,
+          },
+        ],
+      }),
+      // next: { revalidate: 3600 },
+    });
 
-      if (!res.ok) {
-        throw new Error(`OpenAI API error: ${res.statusText}`);
-      }
-
-      const data = await res.json();
-      const messageContent = data.choices[0].message.content;
-      const formattedData = await formatData(messageContent);
-      const featuredImage = await generateFeaturedImage(formattedData);
-      const formattedDate = await getFormattedDate();
-      const s3ImageUrl = await fetchAndUploadImage(
-        featuredImage.url,
-        `featured-images/${formattedData.title[0]}-${formattedDate}.png`
-      );
-      console.log(await updateDB(formattedData, s3ImageUrl, formattedDate));
-    } catch (error) {
-      console.error("Error in GET handler:", error);
-    }
+    const data = await res.json();
+    const messageContent = data.choices[0].message.content;
+    const formattedData = await formatData(messageContent);
+    const featuredImage = await generateFeaturedImage(formattedData);
+    const formattedDate = await getFormattedDate();
+    const s3ImageUrl = await fetchAndUploadImage(
+      featuredImage.url,
+      `featured-images/${formattedData.title[0]}-${formattedDate}.png`
+    );
+    console.log(await updateDB(formattedData, s3ImageUrl, formattedDate));
   })();
   return immediateResponse;
 };
+
+export const POST = () => {};
