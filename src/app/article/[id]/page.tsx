@@ -1,19 +1,31 @@
 import RenderBlog from "@/components/renderBlog/renderBlog";
-import { NextPage } from "next";
+import { NextPage, Metadata } from "next";
 
 interface Props {
   params: {
     id: string;
   };
 }
-
-const Page: NextPage<Props> = async ({ params }) => {
+export const generateMetadata = async ({ params }: { params: string }) => {
   const res = await fetch(
     process.env.NEXT_PUBLIC_API_BASE_URL + "/api/fetchRoundup",
     {
       method: "POST",
       body: JSON.stringify(params),
       cache: "no-cache",
+    }
+  );
+  const data = await res.json();
+  return {
+    title: `TechRoundup | ${data.title}`,
+  };
+};
+const Page: NextPage<Props> = async ({ params }) => {
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/fetchRoundup",
+    {
+      method: "POST",
+      body: JSON.stringify(params),
     }
   );
   const data = await res.json();
