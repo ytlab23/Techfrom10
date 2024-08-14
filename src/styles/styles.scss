@@ -221,3 +221,21 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     border-radius: 1vw;
     border: 2px solid black;
 }
+
+.success-toast {
+    background: rgb(0, 255, 0, 0.7);
+    backdrop-filter: blur(3px);
+    color: black;
+    padding: 2vh 1vw;
+    border-radius: 1vw;
+    border: 2px solid black;
+}
+
+.destructive-toast {
+    background: rgb(255, 0, 0, 0.7);
+    backdrop-filter: blur(3px);
+    color: white;
+    padding: 2vh 1vw;
+    border-radius: 1vw;
+    border: 2px solid black;
+}

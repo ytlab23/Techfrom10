@@ -4,6 +4,7 @@ import { FaFacebook } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { AiFillInstagram } from "react-icons/ai";
 import "./footer.scss";
+import SubscribeNewsletter from "./subscribeNewsletter";
 
 interface Props {}
 
@@ -31,10 +32,7 @@ const Footer: NextPage<Props> = ({}) => {
         </div>
         <div className="footer-newsletter">
           <h3>Newsletter</h3>
-          <form action="">
-            <input type="text" placeholder="Email ID" />
-            <button>subscribe</button>
-          </form>
+          <SubscribeNewsletter />
         </div>
         <div className="footer-icons-parent">
           <h3>Follow Us</h3>
