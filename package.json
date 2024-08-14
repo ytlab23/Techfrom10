@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "email": "email dev --dir src/components/emails"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.629.0",
@@ -16,6 +17,7 @@
     "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.1",
+    "@react-email/components": "0.0.22",
     "aws-sdk": "^2.1673.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -30,6 +32,7 @@
     "react-datepicker": "^7.3.0",
     "react-day-picker": "8.10.1",
     "react-dom": "^18",
+    "react-email": "2.1.6",
     "react-icons": "^5.2.1",
     "sass": "^1.77.8",
     "shadcn-ui": "^0.8.0",
