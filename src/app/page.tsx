@@ -10,6 +10,7 @@ import DatePickerComponent from "@/components/dataPicker/datePicker";
 import moment from "moment";
 import { DateRange } from "react-day-picker";
 import { useToast } from "@/components/ui/use-toast";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 interface Props {}
 
@@ -33,11 +34,47 @@ const Page: NextPage<Props> = ({}) => {
   const [filteredDate, setFilteredDate] = useState<DateRange | null>(null);
   const { toast } = useToast();
   const hasReset = useRef(false); // Track if the state has been reset
+  const heroContainerWrapRef = useRef<HTMLDivElement>(null);
+  const heroContainerFixedRef = useRef<HTMLDivElement>(null);
+  const heroContainerRefs = useRef<HTMLDivElement[]>([]);
 
   const handleDateChange = (date: DateRange | null) => {
     setFilteredDate(date);
   };
 
+  useEffect(() => {
+    const heroContainerWrap = heroContainerWrapRef.current;
+    const heroContainerFixed = heroContainerFixedRef.current;
+
+    if (!heroContainerWrap || !heroContainerFixed) return;
+    // heroContainerRefs.current = [];
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          console.log("Intersection");
+          heroContainerFixed.classList.add("scrolled-to-bottom");
+        } else {
+          console.log("not Intersection");
+          heroContainerFixed.classList.remove("scrolled-to-bottom");
+        }
+      },
+      {
+        rootMargin: "1%",
+        threshold: 1,
+      }
+    );
+
+    const lastElement = heroContainerRefs.current.slice(-1)[0];
+    if (lastElement) {
+      observer.observe(lastElement);
+    }
+    return () => {
+      if (lastElement) {
+        observer.unobserve(lastElement);
+      }
+      observer.disconnect();
+    };
+  }, [filteredData]);
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
@@ -131,13 +168,19 @@ const Page: NextPage<Props> = ({}) => {
         <Loading />
       ) : (
         <div className="hero-parent">
-          <div className="hero-container-wrap">
+          <div className="hero-container-wrap" ref={heroContainerWrapRef}>
             <div className="hero-container-title">
-              <h3>Filter</h3>
+              <h3>Your Tech Round-Up!</h3>
               <DatePickerComponent onDateChange={handleDateChange} />
             </div>
-            {filteredData.map((val) => (
-              <div key={val._id} className="hero-container">
+            {filteredData.map((val, index) => (
+              <div
+                key={val._id}
+                className="hero-container"
+                ref={(el) => {
+                  if (el) heroContainerRefs.current[index] = el;
+                }}
+              >
                 <div className="hero-container-head">
                   <Link href={"/article/" + val._id.toString()}>
                     <h2>{val.title}</h2>
@@ -169,7 +212,7 @@ const Page: NextPage<Props> = ({}) => {
               </div>
             ))}
           </div>
-          <div className="hero-container-fixed">
+          <div className="hero-container-fixed" ref={heroContainerFixedRef}>
             <div className="hero-search">
               <form action="submit">
                 <input type="text" placeholder="search" />
@@ -203,6 +246,16 @@ const Page: NextPage<Props> = ({}) => {
                   >
                     #{hashtag}
                   </Badge>
+                ))}
+              </div>
+            </div>
+            <div className="hero-card2">
+              <h3>Recent Posts</h3>
+              <div className="hero-card-items2">
+                {data.slice(-3).map((element) => (
+                  <Link href={"/article/" + element._id} target="_blank">
+                    {element.title} <FaExternalLinkAlt className="link-icon" />
+                  </Link>
                 ))}
               </div>
             </div>
