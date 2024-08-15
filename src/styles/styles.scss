@@ -67,7 +67,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     gap: 5vh;
     border: 2px solid black;
     box-shadow: 0.5vw 1vh 0 black;
-    width: 55vw;
+    width: 100%;
     border-radius: 1vw;
     backdrop-filter: blur(5px);
     ul {
@@ -120,7 +120,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     @include flex-center(column);
     align-items: flex-start;
     gap: 5vh;
-
+    width: 55vw;
     div:nth-child(2) {
         margin-top: -3vh;
     }

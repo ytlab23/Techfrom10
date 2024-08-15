@@ -30,10 +30,7 @@ const Page: NextPage<Props> = ({}) => {
   const [selectedTags, setSelectedTags] = useState<string[]>(["uncategorized"]);
   const [filteredData, setFilteredData] = useState<dataprop[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [filteredDate, setFilteredDate] = useState<DateRange | null>({
-    from: new Date(),
-    to: new Date(),
-  });
+  const [filteredDate, setFilteredDate] = useState<DateRange | null>(null);
   const { toast } = useToast();
   const hasReset = useRef(false); // Track if the state has been reset
 
@@ -106,17 +103,14 @@ const Page: NextPage<Props> = ({}) => {
     }
 
     if (newFilteredData.length === 0 && data.length > 0 && !hasReset.current) {
-      hasReset.current = true; // Mark as reset
+      hasReset.current = true;
       toast({
         title: "No results found for the selected date range.",
       });
-      setFilteredDate({
-        from: new Date(),
-        to: new Date(),
-      });
+      setFilteredDate(null);
       setFilteredData(data);
     } else {
-      hasReset.current = false; // Reset the flag
+      hasReset.current = false;
       setFilteredData(newFilteredData);
     }
   }, [selectedTags, filteredDate, data, toast]);
@@ -145,7 +139,7 @@ const Page: NextPage<Props> = ({}) => {
             {filteredData.map((val) => (
               <div key={val._id} className="hero-container">
                 <div className="hero-container-head">
-                  <Link href={"/view/" + val._id.toString()}>
+                  <Link href={"/article/" + val._id.toString()}>
                     <h2>{val.title}</h2>
                   </Link>
                   <span>

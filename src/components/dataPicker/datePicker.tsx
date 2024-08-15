@@ -21,10 +21,7 @@ interface DatePickerComponentProps {
 const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
   onDateChange,
 }) => {
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(),
-    to: addDays(new Date(), 7),
-  });
+  const [date, setDate] = React.useState<DateRange | undefined>(undefined);
 
   const handleDateRangeChange = (selectedDate: DateRange | undefined) => {
     setDate(selectedDate);
