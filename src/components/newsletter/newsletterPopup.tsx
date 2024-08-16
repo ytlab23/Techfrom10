@@ -9,9 +9,14 @@ import { useEffect } from "react";
 interface Props {
   onClose: () => void;
   isOpen: boolean;
+  setIsNewsletterOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const NewsletterPopup: NextPage<Props> = ({ onClose, isOpen }) => {
+const NewsletterPopup: NextPage<Props> = ({
+  onClose,
+  isOpen,
+  setIsNewsletterOpen,
+}) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -49,7 +54,7 @@ const NewsletterPopup: NextPage<Props> = ({ onClose, isOpen }) => {
               insights, and trends directly in your inbox. Don't miss out—sign
               up today and be the first to know!
             </p>
-            <SubscribeNewsletter />
+            <SubscribeNewsletter setIsNewsletterOpen={setIsNewsletterOpen} />
           </div>
         </div>
       </Modal>

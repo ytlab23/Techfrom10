@@ -3,9 +3,11 @@ import { useState } from "react";
 import { NextPage } from "next";
 import { useToast } from "../ui/use-toast";
 
-interface Props {}
+interface Props {
+  setIsNewsletterOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const SubscribeNewsletter: NextPage<Props> = ({}) => {
+const SubscribeNewsletter: NextPage<Props> = ({ setIsNewsletterOpen }) => {
   const { toast } = useToast();
   const [email, setEmail] = useState<string>("");
 
@@ -47,6 +49,7 @@ const SubscribeNewsletter: NextPage<Props> = ({}) => {
         variant: "success",
       });
       setEmail("");
+      setIsNewsletterOpen(false);
     }
   };
 

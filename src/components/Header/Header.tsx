@@ -57,6 +57,7 @@ const Header: NextPage<Props> = ({}) => {
         <NewsletterPopup
           onClose={() => setIsNewsletterOpen(false)}
           isOpen={isNewsletterOpen}
+          setIsNewsletterOpen={setIsNewsletterOpen}
         />
       )}
     </div>
