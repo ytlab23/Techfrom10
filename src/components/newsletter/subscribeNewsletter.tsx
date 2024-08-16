@@ -49,7 +49,7 @@ const SubscribeNewsletter: NextPage<Props> = ({ setIsNewsletterOpen }) => {
         variant: "success",
       });
       setEmail("");
-      setIsNewsletterOpen(false);
+      setIsNewsletterOpen ? setIsNewsletterOpen(false) : "";
     }
   };
 
