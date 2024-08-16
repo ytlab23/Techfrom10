@@ -1,0 +1,86 @@
+@import "@/styles/styles.scss";
+
+.newsletterPopup-parent {
+}
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(2px);
+    @include flex-center();
+}
+.modalContent {
+    @include flex-center();
+    border-radius: 1vw;
+    color: white;
+    position: relative;
+    width: 60%;
+    box-shadow: 0 3px 10px 1px white;
+    .modal-close-button {
+        position: absolute;
+        top: 2vh;
+        right: 1vw;
+        background: none;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+        z-index: 10;
+
+        &:hover {
+            color: $pri-col;
+        }
+    }
+    div {
+        background-color: black;
+        @include flex-center();
+        gap: 1vw;
+        border-radius: 1vw;
+        padding: 3vh 1vw;
+        h2 {
+            font-family: $bebas;
+            font-size: $--48px;
+            line-height: 6vh;
+        }
+        p {
+            font-size: $--12px;
+        }
+
+        img {
+            border-radius: 1vw;
+        }
+        div {
+            @include flex-center(column);
+            gap: 1vh;
+            align-items: flex-start;
+            form {
+                @include flex-center();
+                gap: 1vw;
+                font-size: $--16px;
+                input {
+                    border: 2px solid $pri-col;
+                    background-color: transparent;
+                    border-radius: 1vw;
+                    font-family: $josefin;
+                    padding: 2px 1vw;
+                    width: 20vw;
+                    &::placeholder {
+                        text-align: center;
+                        font-size: $--14px;
+                    }
+                }
+
+                button {
+                    padding: 2px 1vw;
+                    background-color: #4267b2;
+                    border-radius: 5vw;
+                    font-family: $josefin;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        background-color: $pri-col;
+                    }
+                }
+            }
+        }
+    }
+}

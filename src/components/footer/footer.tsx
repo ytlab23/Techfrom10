@@ -4,7 +4,7 @@ import { FaFacebook } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { AiFillInstagram } from "react-icons/ai";
 import "./footer.scss";
-import SubscribeNewsletter from "./subscribeNewsletter";
+import SubscribeNewsletter from "../newsletter/subscribeNewsletter";
 
 interface Props {}
 

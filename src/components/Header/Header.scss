@@ -27,10 +27,11 @@
             @include flex-center();
             gap: 1vw;
 
-            a {
+            a,
+            li {
                 font-weight: 700;
                 font-size: 1.2rem;
-
+                cursor: pointer;
                 &:hover {
                     animation: bottomLine 0.3s ease-in forwards;
                 }

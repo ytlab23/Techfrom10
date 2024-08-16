@@ -5,14 +5,12 @@ import Link from "next/link";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import Image from "next/image";
 import msgIcon from "@/assets/icons/msg.svg";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import NewsletterPopup from "../newsletter/newsletterPopup";
 interface Props {}
 
-const navList = [
-  { name: "Home", path: "/" },
-  { name: "Newsletter", path: "/newsletter" },
-];
 const Header: NextPage<Props> = ({}) => {
+  const [isNewsletterOpen, setIsNewsletterOpen] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       const navbar = document.querySelector(".nav-parent");
@@ -39,11 +37,8 @@ const Header: NextPage<Props> = ({}) => {
             <Link href="/">TechFrom10 </Link>
           </h1>
           <ul>
-            {navList.map((val, index) => (
-              <Link href={val.path} key={index}>
-                {val.name}
-              </Link>
-            ))}
+            <Link href="/">Home</Link>
+            <li onClick={() => setIsNewsletterOpen(true)}>Newsletter</li>
           </ul>
         </div>
         <div className="nav-right">
@@ -58,6 +53,12 @@ const Header: NextPage<Props> = ({}) => {
           </Avatar>
         </div>
       </div>
+      {isNewsletterOpen && (
+        <NewsletterPopup
+          onClose={() => setIsNewsletterOpen(false)}
+          isOpen={isNewsletterOpen}
+        />
+      )}
     </div>
   );
 };
