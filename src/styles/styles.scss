@@ -43,6 +43,12 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     @include flex-center();
     width: 100%;
     gap: 3vw;
+    img {
+        flex: 3;
+    }
+    ul {
+        flex: 7;
+    }
 }
 
 .hero-container-title {

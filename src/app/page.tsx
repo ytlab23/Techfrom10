@@ -32,6 +32,7 @@ const Page: NextPage<Props> = ({}) => {
   const [filteredData, setFilteredData] = useState<dataprop[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [filteredDate, setFilteredDate] = useState<DateRange | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const { toast } = useToast();
   const hasReset = useRef(false); // Track if the state has been reset
   const heroContainerWrapRef = useRef<HTMLDivElement>(null);
@@ -47,7 +48,6 @@ const Page: NextPage<Props> = ({}) => {
     const heroContainerFixed = heroContainerFixedRef.current;
 
     if (!heroContainerWrap || !heroContainerFixed) return;
-    // heroContainerRefs.current = [];
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -75,6 +75,7 @@ const Page: NextPage<Props> = ({}) => {
       observer.disconnect();
     };
   }, [filteredData]);
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
@@ -142,7 +143,7 @@ const Page: NextPage<Props> = ({}) => {
     if (newFilteredData.length === 0 && data.length > 0 && !hasReset.current) {
       hasReset.current = true;
       toast({
-        title: "No results found for the selected date range.",
+        title: "No results found for the selected Filter.",
       });
       setFilteredDate(null);
       setFilteredData(data);
@@ -150,7 +151,7 @@ const Page: NextPage<Props> = ({}) => {
       hasReset.current = false;
       setFilteredData(newFilteredData);
     }
-  }, [selectedTags, filteredDate, data, toast]);
+  }, [selectedTags, filteredDate, toast, data, loading]);
 
   const uniqueHashtags = useMemo(
     () =>
@@ -161,6 +162,32 @@ const Page: NextPage<Props> = ({}) => {
       ),
     [data]
   );
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+    setTimeout(() => {
+      if (searchQuery) {
+        const newFilteredData = data
+          .map((item) => {
+            const matchingHeadlines = item.headlines.filter((headline) =>
+              headline.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            return { ...item, headlines: matchingHeadlines };
+          })
+          .filter((item) => item.headlines.length > 0);
+
+        setData(newFilteredData);
+
+        if (newFilteredData.length === 0 && data.length > 0) {
+          toast({
+            title: "No results found for the search query.",
+          });
+          setData(data);
+        }
+      }
+      setLoading(false);
+    }, 500);
+  };
 
   return (
     <div>
@@ -170,7 +197,9 @@ const Page: NextPage<Props> = ({}) => {
         <div className="hero-parent">
           <div className="hero-container-wrap" ref={heroContainerWrapRef}>
             <div className="hero-container-title">
-              <h3>Your Tech Round-Up!</h3>
+              <Link href="/#">
+                <h3>Your Tech Round-Up!</h3>
+              </Link>
               <DatePickerComponent onDateChange={handleDateChange} />
             </div>
             {filteredData.map((val, index) => (
@@ -214,8 +243,14 @@ const Page: NextPage<Props> = ({}) => {
           </div>
           <div className="hero-container-fixed" ref={heroContainerFixedRef}>
             <div className="hero-search">
-              <form action="submit">
-                <input type="text" placeholder="search" />
+              <form onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  placeholder="search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  required
+                />
                 <button>search</button>
               </form>
             </div>
