@@ -4,7 +4,7 @@ import { NextPage } from "next";
 import { useToast } from "../ui/use-toast";
 
 interface Props {
-  setIsNewsletterOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsNewsletterOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SubscribeNewsletter: NextPage<Props> = ({ setIsNewsletterOpen }) => {

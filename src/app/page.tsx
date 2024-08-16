@@ -182,9 +182,8 @@ const Page: NextPage<Props> = ({}) => {
                 }}
               >
                 <div className="hero-container-head">
-                  <Link href={"/article/" + val._id.toString()}>
-                    <h2>{val.title}</h2>
-                  </Link>
+                  <h2>{val.title}</h2>
+
                   <span>
                     <FaClock className="text-base" />
                     {val.date}
@@ -206,6 +205,7 @@ const Page: NextPage<Props> = ({}) => {
                 <Link
                   href={"/article/" + val._id.toString()}
                   className="view-in-full"
+                  target="_blank"
                 >
                   Read Full Article
                 </Link>
