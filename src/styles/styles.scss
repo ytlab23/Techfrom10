@@ -173,6 +173,12 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
                 background: $grady-color;
             }
         }
+        .cancel-icon {
+            cursor: pointer;
+            &:hover {
+                color: $pri-col;
+            }
+        }
     }
     .hero-card1 {
         border-radius: 1vw;

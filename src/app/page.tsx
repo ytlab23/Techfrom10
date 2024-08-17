@@ -12,6 +12,7 @@ import { DateRange } from "react-day-picker";
 import { useToast } from "@/components/ui/use-toast";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import CancelIcon from "@mui/icons-material/Cancel";
+import Footer from "@/components/footer/footer";
 
 interface Props {}
 
@@ -35,41 +36,34 @@ const Page: NextPage<Props> = ({}) => {
   const [filteredDate, setFilteredDate] = useState<DateRange | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const { toast } = useToast();
-  const hasReset = useRef(false); // Track if the state has been reset
-  const heroContainerWrapRef = useRef<HTMLDivElement>(null);
+  const hasReset = useRef(false);
   const heroContainerFixedRef = useRef<HTMLDivElement>(null);
-  const heroContainerRefs = useRef<HTMLDivElement[]>([]);
+  const footerRef = useRef(null);
 
   const handleDateChange = (date: DateRange | null) => {
     setFilteredDate(date);
   };
 
   useEffect(() => {
-    const heroContainerWrap = heroContainerWrapRef.current;
+    const footerElement = footerRef.current;
     const heroContainerFixed = heroContainerFixedRef.current;
-
-    if (!heroContainerWrap || !heroContainerFixed) return;
+    if (!footerElement || !heroContainerFixed) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
+        console.log(heroContainerFixed);
         if (entry.isIntersecting) {
-          heroContainerFixed.classList.add("scrolled-to-bottom");
+          heroContainerFixed?.classList.add("scrolled-to-bottom");
         } else {
-          heroContainerFixed.classList.remove("scrolled-to-bottom");
+          heroContainerFixed?.classList.remove("scrolled-to-bottom");
         }
       },
       {
-        rootMargin: "1%",
-        threshold: 1,
+        threshold: 0.9,
       }
     );
-    const lastElement = heroContainerRefs.current.slice(-1)[0];
-    if (lastElement) {
-      observer.observe(lastElement);
-    }
+
+    if (footerElement) observer.observe(footerElement);
     return () => {
-      if (lastElement) {
-        observer.unobserve(lastElement);
-      }
       observer.disconnect();
     };
   }, [filteredData]);
@@ -200,7 +194,7 @@ const Page: NextPage<Props> = ({}) => {
         <Loading />
       ) : (
         <div className="hero-parent">
-          <div className="hero-container-wrap" ref={heroContainerWrapRef}>
+          <div className="hero-container-wrap">
             <div className="hero-container-title">
               <Link href="/#">
                 <h3>Your Tech Round-Up!</h3>
@@ -208,13 +202,7 @@ const Page: NextPage<Props> = ({}) => {
               <DatePickerComponent onDateChange={handleDateChange} />
             </div>
             {filteredData.map((val, index) => (
-              <div
-                key={val._id}
-                className="hero-container"
-                ref={(el) => {
-                  if (el) heroContainerRefs.current[index] = el;
-                }}
-              >
+              <div key={val._id} className="hero-container">
                 <div className="hero-container-head">
                   <h2>{val.title}</h2>
 
@@ -256,7 +244,14 @@ const Page: NextPage<Props> = ({}) => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   required
                 />
-                {searchQuery ? <CancelIcon onClick={handleSearchReset} /> : ""}
+                {searchQuery ? (
+                  <CancelIcon
+                    onClick={handleSearchReset}
+                    className="cancel-icon"
+                  />
+                ) : (
+                  ""
+                )}
                 <button>search</button>
               </form>
             </div>
@@ -303,6 +298,7 @@ const Page: NextPage<Props> = ({}) => {
           </div>
         </div>
       )}
+      <Footer footerRef={footerRef} />
     </div>
   );
 };

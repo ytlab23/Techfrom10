@@ -5,12 +5,14 @@ import { FaXTwitter } from "react-icons/fa6";
 import { AiFillInstagram } from "react-icons/ai";
 import "./footer.scss";
 import SubscribeNewsletter from "../newsletter/subscribeNewsletter";
+import { MutableRefObject } from "react";
+interface Props {
+  footerRef: MutableRefObject<HTMLDivElement | null>;
+}
 
-interface Props {}
-
-const Footer: NextPage<Props> = ({}) => {
+const Footer: NextPage<Props> = ({ footerRef }) => {
   return (
-    <div className="footer-parent">
+    <div className="footer-parent" ref={footerRef}>
       <div className="footer-container">
         <div>
           <h3 className="footer-title">TechFrom10</h3>

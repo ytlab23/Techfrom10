@@ -10,7 +10,6 @@ import "./globals.css";
 import "@/styles/styles.scss";
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/Header/Header";
-import Footer from "@/components/footer/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 const poppins = Poppins({
@@ -50,7 +49,6 @@ export default function RootLayout({
       >
         <Header />
         {children}
-        <Footer />
         <Toaster />
       </body>
     </html>
