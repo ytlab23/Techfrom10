@@ -11,6 +11,7 @@ import moment from "moment";
 import { DateRange } from "react-day-picker";
 import { useToast } from "@/components/ui/use-toast";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 interface Props {}
 
@@ -51,10 +52,8 @@ const Page: NextPage<Props> = ({}) => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          console.log("Intersection");
           heroContainerFixed.classList.add("scrolled-to-bottom");
         } else {
-          console.log("not Intersection");
           heroContainerFixed.classList.remove("scrolled-to-bottom");
         }
       },
@@ -63,7 +62,6 @@ const Page: NextPage<Props> = ({}) => {
         threshold: 1,
       }
     );
-
     const lastElement = heroContainerRefs.current.slice(-1)[0];
     if (lastElement) {
       observer.observe(lastElement);
@@ -151,7 +149,7 @@ const Page: NextPage<Props> = ({}) => {
       hasReset.current = false;
       setFilteredData(newFilteredData);
     }
-  }, [selectedTags, filteredDate, toast, data, loading]);
+  }, [selectedTags, filteredDate, data]);
 
   const uniqueHashtags = useMemo(
     () =>
@@ -172,21 +170,28 @@ const Page: NextPage<Props> = ({}) => {
             const matchingHeadlines = item.headlines.filter((headline) =>
               headline.toLowerCase().includes(searchQuery.toLowerCase())
             );
-            return { ...item, headlines: matchingHeadlines };
+            return matchingHeadlines.length > 0
+              ? { ...item, headlines: matchingHeadlines }
+              : null;
           })
-          .filter((item) => item.headlines.length > 0);
-
-        setData(newFilteredData);
+          .filter((item) => item !== null);
 
         if (newFilteredData.length === 0 && data.length > 0) {
           toast({
             title: "No results found for the search query.",
           });
-          setData(data);
+          setFilteredData(data);
+        } else {
+          setFilteredData(newFilteredData);
         }
       }
       setLoading(false);
     }, 500);
+  };
+
+  const handleSearchReset = () => {
+    setSearchQuery("");
+    setFilteredData(data);
   };
 
   return (
@@ -251,6 +256,7 @@ const Page: NextPage<Props> = ({}) => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   required
                 />
+                {searchQuery ? <CancelIcon onClick={handleSearchReset} /> : ""}
                 <button>search</button>
               </form>
             </div>
