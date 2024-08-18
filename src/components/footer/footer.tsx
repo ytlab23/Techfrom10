@@ -18,7 +18,7 @@ const Footer: NextPage<Props> = ({ footerRef }) => {
           <h3 className="footer-title">TechFrom10</h3>
           <p>All the Tech Talk You Need, Right Here</p>
         </div>
-        <div className="footer-links">
+        {/* <div className="footer-links">
           <h3>Links</h3>
           <ul>
             <li>
@@ -31,7 +31,7 @@ const Footer: NextPage<Props> = ({ footerRef }) => {
               <a href="#">Contact</a>
             </li>
           </ul>
-        </div>
+        </div> */}
         <div className="footer-newsletter">
           <h3>Newsletter</h3>
           <SubscribeNewsletter />
