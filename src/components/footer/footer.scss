@@ -52,23 +52,30 @@
 .footer-icons-container {
     @include flex-center();
     gap: 0.5vw;
-    transition: all 0.2s ease-in-out;
+
     a {
+        transition: all 0.2s ease-in-out;
+        padding: 8px;
+        font-size: 1.4rem;
+        border: 1px solid white;
+        border-radius: 100%;
         &:first-child {
-            color: #4267b2;
+            background-color: #4267b2;
         }
         &:nth-child(2) {
-            color: #e1306c;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
         }
-
+        &:nth-child(4) {
+            background-color: red;
+        }
+        &:nth-child(5) {
+            background-color: #24a1de;
+        }
         &:hover {
-            scale: 1.1;
+            scale: 1.02;
             color: $pri-col;
+            background: black;
         }
-    }
-
-    .footer-icon {
-        font-size: $--32px;
     }
 }
 

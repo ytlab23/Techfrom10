@@ -1,8 +1,10 @@
 import { NextPage } from "next";
 import Link from "next/link";
-import { FaFacebook } from "react-icons/fa";
+import { FaFacebookF } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { AiFillInstagram } from "react-icons/ai";
+import { FaYoutube } from "react-icons/fa6";
+import { FaTelegramPlane } from "react-icons/fa";
 import "./footer.scss";
 import SubscribeNewsletter from "../newsletter/subscribeNewsletter";
 import { MutableRefObject } from "react";
@@ -40,13 +42,19 @@ const Footer: NextPage<Props> = ({ footerRef }) => {
           <h3>Follow Us</h3>
           <div className="footer-icons-container">
             <Link href="" target="_blank">
-              <FaFacebook className="footer-icon" />
+              <FaFacebookF className="footer-icon" />
             </Link>
             <Link href="" target="_blank">
               <AiFillInstagram className="footer-icon" />
             </Link>
             <Link href="" target="_blank">
               <FaXTwitter className="footer-icon" />
+            </Link>
+            <Link href="" target="_blank">
+              <FaYoutube />
+            </Link>
+            <Link href="" target="_blank">
+              <FaTelegramPlane />
             </Link>
           </div>
         </div>
