@@ -12,47 +12,58 @@ interface NewsContent {
   url: string;
 }
 
-const prompt = `
-Write me 10 tech news from the last 24 hours.
+interface News {
+  title: string;
+  headlines: string[];
+}
 
-Include the following:
-A Overall title for all 10 news
+const generatePrompt = async (existingNews: News[] | null = null) => {
+  let response;
+  const data = `Write me 10 tech news from the last 24 hours.
 
-A Headline (rephrase it a bit with a simple grammar)
-A summary of minimum 50 words, maximum 100. (simple grammar). Minimum 50 words is essential
-A link to the source
-A tag for the news (e.g. AI, Cybersecurity, etc.)
-How many hours ago the news is from (circa)
+Include the following for each news item:
+Title: An overall title for all 10 news items (only once at the beginning)
+Headline: A headline for each news item (rephrase it with simple grammar)
+Summary: A summary of minimum 50 words, maximum 100 (simple grammar). Include emojis in the summary.
+Source: <Link to news>
+Tag: One tag for the news (e.g. AI, Cybersecurity, etc.)
+Time: How many hours ago the news is from (circa)
 
-Example: 
-Title: "",
-Headline: "",
-Summary: ""
-source: <Link to news>
-Tag: ""
-Time: 12 hours ago
+Use this exact format for each news item:
 
-Tags collection:
-AI
-Space
-Mobile
-Videogames
-Biotechnology
-Robotics
-Nanotechnology
-Social Media
-Cybersecurity
-Gadgets
-Software
-Startups
-Reviews
-Coding
-Hardware
-Innovations
-Tutorials
+Title: [Overall title for all news items]
 
-Act Like a api. Include emojis in summary. This data is being dispayed in website so dont include ** or Wrap link inside text just follow the above format. Also only one tag for each and try to use repeated tags. Make sure the Title is catchy and emoji
-`;
+Headline: [Headline for this news item]
+Summary: [Summary with emojis]
+Source: [Link to news]
+Tag: [One tag]
+Time: [X] hours ago
+
+[Repeat the above format for all 10 news items]
+
+Use tags from this collection:
+AI, Space, Mobile, Videogames, Biotechnology, Robotics, Nanotechnology, Social Media, Cybersecurity, Gadgets, Software, Startups, Reviews, Coding, Hardware, Innovations, Tutorials
+
+Act like an API. This data is being displayed on a website, so don't include ** or wrap links inside text. Follow the above format exactly. Use only one tag for each news item and try to use a variety of tags. Make sure the Title is catchy and includes an emoji.
+ `;
+  if (existingNews) {
+    const filteredNews = existingNews.map((news) => ({
+      title: news.title,
+      headlines: news.headlines,
+    }));
+
+    const data2 = `\n\nExisting Database: 
+    
+    ${JSON.stringify(filteredNews, null, 2)}
+    
+   Don't repeated the news from Existing Database`;
+
+    response = data + data2;
+  } else response = data;
+
+  return response;
+};
+
 const updateS3 = async (fileName: string, buffer: any) => {
   const s3Client = getS3Client();
 
@@ -104,15 +115,25 @@ const formatData = async (content: string): Promise<NewsContent> => {
   sections.forEach((section) => {
     const lines = section.split("\n");
     lines.forEach((line) => {
-      const [rawKey, value] = line.split(": ");
+      const separatorIndex = line.indexOf(": ");
+      if (separatorIndex === -1) return; // Skip lines without ": "
+
+      const rawKey = line.slice(0, separatorIndex);
+      const value = line.slice(separatorIndex + 2);
+
       const key = rawKey.toLowerCase();
       if (!(key in result)) (result as any)[key] = [];
-      (result as any)[key].push(value.replace(/^"|"$/g, ""));
+
+      if (value) {
+        (result as any)[key].push(value.replace(/^"|"$/g, ""));
+      }
     });
   });
+
   if (result.tag) {
     result.tag = result.tag.map((t) => t.toLowerCase());
   }
+
   return result as NewsContent;
 };
 
@@ -129,6 +150,7 @@ const generateFeaturedImage = async (content: any) => {
       n: 1,
       size: "1024x1024",
     }),
+    cache: "no-store",
     // next: { revalidate: 3600 },
   });
 
@@ -180,30 +202,46 @@ const fetchAndUploadImage = async (imageUrl: string, fileName: string) => {
     throw error;
   }
 };
+const fetchNews = async (prompt: string) => {
+  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: "gpt-4o",
+      messages: [
+        {
+          role: "system",
+          content: prompt,
+        },
+      ],
+    }),
+    cache: "no-cache",
+    // next: { revalidate: 3600 },
+  });
 
+  const data = await res.json();
+  return data.choices[0].message.content;
+};
+
+const checkPrevNews = async () => {
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/fetchRoundup"
+  );
+  const data = await res.json();
+  if (data.length > 0) return data;
+  else return false;
+};
 export const GET = async () => {
   const immediateResponse = sendImmediateResponse();
   (async () => {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-4o",
-        messages: [
-          {
-            role: "system",
-            content: prompt,
-          },
-        ],
-      }),
-      // next: { revalidate: 3600 },
-    });
-
-    const data = await res.json();
-    const messageContent = data.choices[0].message.content;
+    let prompt;
+    const prevNews = await checkPrevNews();
+    if (prevNews) prompt = await generatePrompt(prevNews);
+    else prompt = await generatePrompt();
+    const messageContent = await fetchNews(prompt);
     const formattedData = await formatData(messageContent);
     const featuredImage = await generateFeaturedImage(formattedData);
     const formattedDate = await getFormattedDate();
@@ -215,5 +253,3 @@ export const GET = async () => {
   })();
   return immediateResponse;
 };
-
-export const POST = () => {};
