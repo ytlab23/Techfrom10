@@ -202,7 +202,12 @@ const Page: NextPage<Props> = ({}) => {
               <DatePickerComponent onDateChange={handleDateChange} />
             </div>
             {filteredData.map((val, index) => (
-              <div key={val._id} className="hero-container">
+              <Link
+                className="hero-container"
+                href={"/article/" + val._id.toString()}
+                target="_blank"
+                key={val._id}
+              >
                 <div className="hero-container-head">
                   <h2>{val.title}</h2>
 
@@ -224,14 +229,8 @@ const Page: NextPage<Props> = ({}) => {
                     ))}
                   </ul>
                 </div>
-                <Link
-                  href={"/article/" + val._id.toString()}
-                  className="view-in-full"
-                  target="_blank"
-                >
-                  Read Full Article
-                </Link>
-              </div>
+                <p className="view-in-full">Read Full Article</p>
+              </Link>
             ))}
           </div>
           <div className="hero-container-fixed" ref={heroContainerFixedRef}>

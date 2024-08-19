@@ -56,3 +56,6 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+app.zip
+server.mjs
