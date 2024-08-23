@@ -138,6 +138,91 @@ const formatData = async (content: string): Promise<NewsContent> => {
 };
 
 const generateFeaturedImage = async (content: any) => {
+  const headline = content.headline[0];
+  const tag = content.tag[0].toLowerCase();
+
+  let promptBase = `Create a single, focused, high-quality image for a tech news article about ${tag}. The image should be modern, visually striking, and suitable for a professional tech news website. It should relate to the headline: "${headline}".`;
+
+  let styleGuide =
+    "Use a clean, futuristic style with a single dominant color scheme. The image should be simple yet impactful, avoiding cluttered or collage-like compositions.";
+
+  let tagSpecific = "";
+  switch (tag) {
+    case "ai":
+      tagSpecific =
+        "Show a sleek, abstract representation of an AI brain or neural network. Use cool blues or purples for a high-tech feel.";
+      break;
+    case "space":
+      tagSpecific =
+        "Depict a single, awe-inspiring celestial object like a planet, nebula, or spacecraft. Use deep blues and bright accents.";
+      break;
+    case "mobile":
+      tagSpecific =
+        "Present a minimalist, cutting-edge smartphone or a futuristic mobile interface. Use sleek lines and a touch of vibrant color.";
+      break;
+    case "videogames":
+      tagSpecific =
+        "Showcase a stylized, iconic gaming element like a controller or a abstract game world. Use rich, vivid colors.";
+      break;
+    case "biotechnology":
+      tagSpecific =
+        "Illustrate a futuristic lab setting or a stylized DNA helix. Use clean whites with accents of green or blue.";
+      break;
+    case "robotics":
+      tagSpecific =
+        "Display a sleek, modern robot or robotic arm. Use metallic silvers and blues for an advanced tech look.";
+      break;
+    case "nanotechnology":
+      tagSpecific =
+        "Visualize microscopic tech with an artistic representation of nanoparticles or molecular structures. Use a stark color contrast for impact.";
+      break;
+    case "social media":
+      tagSpecific =
+        "Create an abstract network of connections or a minimalist icon representing social interaction. Use warm, engaging colors.";
+      break;
+    case "cybersecurity":
+      tagSpecific =
+        "Depict a futuristic digital lock or shield. Use deep blues or greens with glowing elements to represent protection.";
+      break;
+    case "gadgets":
+      tagSpecific =
+        "Show a single, sleek, futuristic device with a unique design. Use clean lines and a touch of bright color.";
+      break;
+    case "software":
+      tagSpecific =
+        "Visualize elegant, flowing lines of code or a minimalist interface. Use a dark background with bright, neon-like accents.";
+      break;
+    case "startups":
+      tagSpecific =
+        "Illustrate a stylized rocket or an upward-trending graph. Use energetic, optimistic colors like orange or green.";
+      break;
+    case "reviews":
+      tagSpecific =
+        "Create a minimalist star rating or a sleek product silhouette. Use a clean white background with bold accent colors.";
+      break;
+    case "coding":
+      tagSpecific =
+        "Show an artistic interpretation of code structure or a programmer's workspace. Use a dark theme with bright, contrasting syntax highlights.";
+      break;
+    case "hardware":
+      tagSpecific =
+        "Depict a stylized, futuristic computer component or circuit board. Use cool metallic tones with traces of bright color.";
+      break;
+    case "innovations":
+      tagSpecific =
+        "Illustrate a abstract lightbulb or a futuristic invention. Use bright, inspiring colors to represent new ideas.";
+      break;
+    case "tutorials":
+      tagSpecific =
+        "Visualize a simplified, step-by-step process or a futuristic learning interface. Use a clean, organized layout with highlight colors.";
+      break;
+    default:
+      tagSpecific =
+        "Create a general tech-themed image with circuit-like patterns or data streams. Use a bold, futuristic color scheme.";
+  }
+
+  const prompt = `${promptBase} ${styleGuide} ${tagSpecific} Ensure the image is not a collage and focuses on a single, impactful visual concept and creative. Make it instantly evocative of ${tag} and the headline's theme.`;
+
   const res = await fetch("https://api.openai.com/v1/images/generations", {
     method: "POST",
     headers: {
@@ -146,12 +231,13 @@ const generateFeaturedImage = async (content: any) => {
     },
     body: JSON.stringify({
       model: "dall-e-3",
-      prompt: `Title: ${content.title}, Headlines: ${content.headline}\n Generate Featured Image for the News title based upon the provided Headlines`,
+      prompt: prompt,
       n: 1,
       size: "1024x1024",
+      quality: "hd",
+      style: "vivid",
     }),
     cache: "no-store",
-    // next: { revalidate: 3600 },
   });
 
   const image = await res.json();
