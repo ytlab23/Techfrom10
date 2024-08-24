@@ -45,7 +45,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     align-items: flex-start;
     gap: 5vh;
     width: 55vw;
-    div:nth-child(2) {
+    a:nth-child(2) {
         margin-top: -3vh;
     }
     @media (max-width: 768px) {
@@ -67,7 +67,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
         font-size: $--16px;
         font-family: $josefin;
         @media (max-width: 768px) {
-            font-size: $--14px;
+            font-size: $--16px;
         }
     }
     @media (max-width: 768px) {
@@ -167,8 +167,10 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     @media (max-width: 768px) {
         flex-direction: column;
         gap: 2vh;
+
         img {
             width: 250px;
+            height: 250px;
             border-radius: 2vw;
         }
         ul {
@@ -341,10 +343,10 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     padding: 2vh 1vw;
     border-radius: 1vw;
     border: 2px solid black;
-    @media screen {
+    @media (max-width: 768px) {
         position: absolute;
         top: 10vh;
-        padding: 0vh 2vw;
+        padding: 2vh 2vw;
     }
 }
 
@@ -355,7 +357,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     padding: 2vh 1vw;
     border-radius: 1vw;
     border: 2px solid black;
-    @media screen {
+    @media (max-width: 768px) {
         position: absolute;
         top: 10vh;
         padding: 0vh 2vw;
@@ -369,7 +371,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     padding: 2vh 1vw;
     border-radius: 1vw;
     border: 2px solid black;
-    @media screen {
+    @media (max-width: 768px) {
         position: absolute;
         top: 10vh;
         padding: 0vh 2vw;
@@ -377,5 +379,5 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 }
 
 .scrolled-to-bottom {
-    transform: translateY(-15vh);
+    transform: translateY(-25vh);
 }
