@@ -9,6 +9,9 @@
     color: white;
     transition: background-color 0.3s ease;
     border-bottom: 2px solid black;
+    @media (max-width: 767px) {
+        padding: 1vh 3vw;
+    }
 }
 .nav-parent-default {
     background-color: rgba(0, 0, 0, 1);
@@ -23,15 +26,25 @@
         @include flex-center();
         gap: 3vw;
         font-family: $poppins;
+
+        @media (max-width: 768px) {
+            gap: 5vw;
+        }
         ul {
             @include flex-center();
             gap: 1vw;
 
+            @media (max-width: 768px) {
+                gap: 2vw;
+            }
             a,
             li {
                 font-weight: 700;
                 font-size: 1.2rem;
                 cursor: pointer;
+                @media (max-width: 768px) {
+                    font-size: $--14px;
+                }
                 &:hover {
                     animation: bottomLine 0.3s ease-in forwards;
                 }
@@ -47,7 +60,9 @@
         h1 {
             font-weight: 800;
             font-size: $--42px;
-            // text-shadow: 4px 0vh 0 $pri-col;
+            @media (max-width: 768px) {
+                font-size: 1.8rem;
+            }
         }
     }
 
@@ -60,6 +75,10 @@
             border-radius: 100%;
             background-color: black;
             cursor: pointer;
+
+            @media (max-width: 768px) {
+                display: none;
+            }
         }
     }
 }

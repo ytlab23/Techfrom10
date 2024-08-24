@@ -25,9 +25,16 @@
         font-size: 1rem;
         cursor: pointer;
         z-index: 10;
-
         &:hover {
             color: $pri-col;
+        }
+    }
+
+    @media (max-width: 768px) {
+        width: 75%;
+        margin-top: 5vh;
+        .modal-close-button {
+            top: 2px;
         }
     }
     div {
@@ -39,7 +46,7 @@
         h2 {
             font-family: $bebas;
             font-size: $--48px;
-            line-height: 6vh;
+            line-height: 8vh;
         }
         p {
             font-size: $--12px;
@@ -47,6 +54,23 @@
 
         img {
             border-radius: 1vw;
+        }
+        @media (max-width: 768px) {
+            @include flex-center(column);
+            gap: 1vh;
+            padding: 1vh 2vw;
+            padding-top: 3vh;
+            h2 {
+                font-size: $--38px;
+                line-height: 5vh;
+            }
+            img {
+                width: 250px;
+                border-radius: 3vw;
+            }
+            p {
+                font-size: 0.8rem;
+            }
         }
         div {
             @include flex-center(column);
@@ -67,6 +91,10 @@
                         text-align: center;
                         font-size: $--14px;
                     }
+
+                    @media (max-width: 768px) {
+                        width: 100%;
+                    }
                 }
 
                 button {
@@ -75,10 +103,16 @@
                     border-radius: 5vw;
                     font-family: $josefin;
                     transition: all 0.2s ease;
-
                     &:hover {
                         background-color: $pri-col;
                     }
+                    @media (max-width: 768px) {
+                        border-radius: 1vw;
+                        padding: 0.2vh 2vw;
+                    }
+                }
+                @media (max-width: 768px) {
+                    gap: 2vw;
                 }
             }
         }

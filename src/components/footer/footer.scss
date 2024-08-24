@@ -15,9 +15,6 @@
         width: 100%;
         color: white;
         text-transform: uppercase;
-        // .footer-title {
-        //     text-shadow: 5px 0 0 $pri-col;
-        // }
         h3 {
             font-size: $--38px;
             font-family: $bebas;
@@ -43,16 +40,34 @@
             }
         }
     }
+
+    @media (max-width: 768px) {
+        padding: 2vh 5vw;
+        border-radius: 3vw 3vw 0 0;
+        .footer-container {
+            @include flex-center(column);
+            gap: 2vh;
+            align-items: flex-start;
+            p {
+                font-size: $--12px;
+            }
+        }
+    }
 }
 
 .footer-icons-parent {
     @include flex-center(column);
     gap: 1vh;
+
+    @media (max-width: 768px) {
+        align-items: flex-start;
+        gap: 0.5vh;
+        width: 100%;
+    }
 }
 .footer-icons-container {
     @include flex-center();
     gap: 0.5vw;
-
     a {
         transition: all 0.2s ease-in-out;
         padding: 8px;
@@ -76,6 +91,11 @@
             color: $pri-col;
             background: black;
         }
+    }
+    @media (max-width: 768px) {
+        width: 100%;
+        gap: 0;
+        justify-content: space-evenly;
     }
 }
 
@@ -105,6 +125,14 @@
             &:hover {
                 background-color: $pri-col;
             }
+            @media (max-width: 768px) {
+                border-radius: 1vw;
+                padding: 0.2vh 3vw;
+            }
+        }
+        @media (max-width: 768px) {
+            gap: 3vw;
+            font-size: $--18px;
         }
     }
 }

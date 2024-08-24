@@ -50,7 +50,6 @@ const Page: NextPage<Props> = ({}) => {
     if (!footerElement || !heroContainerFixed) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        console.log(heroContainerFixed);
         if (entry.isIntersecting) {
           heroContainerFixed?.classList.add("scrolled-to-bottom");
         } else {
@@ -210,7 +209,6 @@ const Page: NextPage<Props> = ({}) => {
               >
                 <div className="hero-container-head">
                   <h2>{val.title}</h2>
-
                   <span>
                     <FaClock className="text-base" />
                     {val.date}
