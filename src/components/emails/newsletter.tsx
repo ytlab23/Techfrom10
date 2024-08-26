@@ -286,6 +286,25 @@ export default async function Newsletter() {
               </td>
             </tr>
           </table>
+          <Text
+            style={{
+              marginTop: 20,
+              marginBottom: 0,
+              fontSize: 12,
+              lineHeight: "24px",
+              color: "rgb(107,114,128)",
+            }}
+          >
+            click here to{" "}
+            <Link
+              href="https://techfrom10.com/unsubscribe"
+              style={{
+                textDecoration: "underline",
+              }}
+            >
+              unsubscribe
+            </Link>
+          </Text>
         </Section>
       </Body>
     </Html>
