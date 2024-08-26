@@ -148,7 +148,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     img {
         flex: 3;
         width: 300px;
-        height: 250px;
+        height: auto;
         border-radius: 0.5vw;
         border: 5px solid violet;
     }
@@ -156,12 +156,12 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
         list-style-type: decimal;
         @include flex-center(column);
         align-items: flex-start;
-        gap: 1vh;
+        gap: 1.5vh;
         flex: 7;
     }
     li {
         font-family: $nunito;
-        font-size: 0.9rem;
+        font-size: $--16px;
         font-weight: 700;
     }
     @media (max-width: 768px) {
@@ -308,6 +308,8 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
             a {
                 font-family: $josefin;
                 display: flex;
+                width: 100%;
+                justify-content: space-between;
                 align-items: center;
                 gap: 0.5vw;
                 &:hover {
