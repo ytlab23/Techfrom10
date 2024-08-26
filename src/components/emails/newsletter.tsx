@@ -297,7 +297,7 @@ export default async function Newsletter() {
           >
             click here to{" "}
             <Link
-              href="https://techfrom10.com/unsubscribe"
+              href={process.env.NEXT_PUBLIC_API_BASE_URL + "/unsubscribe"}
               style={{
                 textDecoration: "underline",
               }}
