@@ -3,15 +3,6 @@ import "./unsubscribe.scss";
 import { NextPage } from "next";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
 interface Props {}
 
 const Page: NextPage<Props> = ({}) => {
