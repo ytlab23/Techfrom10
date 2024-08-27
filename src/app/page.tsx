@@ -45,6 +45,20 @@ const Page: NextPage<Props> = ({}) => {
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`,
+        { next: { revalidate: 3600 }, cache: "force-cache" }
+      );
+      const data: dataprop[] = await res.json();
+      setLoading(false);
+      setData(data);
+      setFilteredData(data);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     const footerElement = footerRef.current;
     const heroContainerFixed = heroContainerFixedRef.current;
     if (!footerElement || !heroContainerFixed) return;
@@ -66,20 +80,6 @@ const Page: NextPage<Props> = ({}) => {
       observer.disconnect();
     };
   }, [filteredData]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`,
-        { next: { revalidate: 3600 } }
-      );
-      const data: dataprop[] = await res.json();
-      setData(data);
-      setFilteredData(data);
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
 
   const handleTagSelection = (hashtag: string) => {
     if (hashtag === "uncategorized") {
