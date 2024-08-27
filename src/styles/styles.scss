@@ -45,12 +45,16 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     align-items: flex-start;
     gap: 2.5vh;
     width: 55vw;
-    a:nth-child(2) {
-        margin-top: -3vh;
+    div:nth-child(2) {
+        margin-top: -1vh;
     }
     @media (max-width: 768px) {
         width: 100%;
-        gap: 4vh;
+        gap: 2vh;
+
+        div:nth-child(2) {
+            margin-top: -1vh;
+        }
     }
 }
 
@@ -67,7 +71,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
         font-size: $--16px;
         font-family: $josefin;
         @media (max-width: 768px) {
-            font-size: $--16px;
+            font-size: $--14px;
         }
     }
     @media (max-width: 768px) {
@@ -139,6 +143,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
         box-shadow: 2vw 1vh 0 black;
         border-radius: 3vw;
         padding: 2vh 2vw;
+        gap: 2vh;
     }
 }
 .hero-content-wrap {
@@ -157,7 +162,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
         @include flex-center(column);
         align-items: flex-start;
         gap: 1.5vh;
-        flex: 9;
+        flex: 8;
     }
     li {
         width: 100%;
@@ -175,18 +180,17 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     @media (max-width: 768px) {
         flex-direction: column;
         gap: 2vh;
-
         img {
-            width: 250px;
-            height: 250px;
+            width: 200px;
+            height: 200px;
             border-radius: 2vw;
         }
         ul {
-            margin: 0 6vw;
-            gap: 2vh;
+            margin: 0 2vw;
+            gap: 1vh;
         }
         li {
-            font-size: $--16px;
+            font-size: $--14px;
         }
     }
 }

@@ -219,7 +219,9 @@ const Page: NextPage<Props> = ({}) => {
                   <ul>
                     {val.headlines.map((h, hindex) => (
                       <li key={hindex}>
-                        {h}
+                        <li>
+                          {hindex + 1}. {h}
+                        </li>
                         <Link
                           key={hindex}
                           href={"https://" + val.source[hindex]}

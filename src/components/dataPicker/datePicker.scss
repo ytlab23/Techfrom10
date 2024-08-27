@@ -23,8 +23,8 @@
 }
 .day-range-start,
 .day-range-end {
-    border-radius: 3px; /* Making the start and end dates circular */
-    background: $grady-color; /* Custom color for selected start and end dates */
+    border-radius: 3px;
+    background: $grady-color;
     color: black;
     font-weight: 700;
 }
@@ -40,5 +40,11 @@
     font-size: $--12px;
     @media (max-width: 768px) {
         padding: 0.5vh 2vw;
+        font-size: $--12px;
+        border: 1px solid white;
+        p {
+            @include flex-center();
+            font-size: 10px;
+        }
     }
 }

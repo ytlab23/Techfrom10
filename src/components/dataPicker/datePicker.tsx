@@ -32,13 +32,13 @@ const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
     <Popover>
       <PopoverTrigger asChild>
         <Button id="date" className="calendar-button">
-          <CalendarIcon className="mr-2" />
+          <CalendarIcon className="mr-1" />
           {date?.from ? (
             date.to ? (
-              <>
+              <p>
                 {format(date.from, "LLL dd, y")} -{" "}
                 {format(date.to, "LLL dd, y")}
-              </>
+              </p>
             ) : (
               format(date.from, "LLL dd, y")
             )
