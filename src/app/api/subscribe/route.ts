@@ -4,6 +4,10 @@ import clientPromise from "@/lib/db";
 interface Subscriber {
   email: string;
 }
+interface RequestBody {
+  email: string;
+  unsubscribe: boolean | null;
+}
 
 const getCollection = async (): Promise<Collection<Subscriber>> => {
   const client: MongoClient = await clientPromise;
@@ -19,12 +23,19 @@ const checkDuplicate = async (
   return !!document;
 };
 
-interface RequestBody {
-  email: string;
-}
-
+export const unsubscription = async (email: string): Promise<Response> => {
+  const collection = await getCollection();
+  const exists = await checkDuplicate(collection, email);
+  if (exists) {
+    await collection.deleteOne({ email });
+    return new Response("unsubscription Successful", { status: 200 });
+  } else {
+    return new Response("you are not subscribed", { status: 404 });
+  }
+};
 export const POST = async (req: Request): Promise<Response> => {
-  const { email }: RequestBody = await req.json();
+  const { email, unsubscribe }: RequestBody = await req.json();
+  if (unsubscribe) return await unsubscription(email);
 
   const collection = await getCollection();
   const exists = await checkDuplicate(collection, email);
