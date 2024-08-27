@@ -34,8 +34,10 @@ export const unsubscription = async (email: string): Promise<Response> => {
   }
 };
 export const POST = async (req: Request): Promise<Response> => {
-  const { email, unsubscribe }: RequestBody = await req.json();
-  if (unsubscribe) return await unsubscription(email);
+  const res: RequestBody = await req.json();
+  const { email } = res;
+
+  if (res.unsubscribe == true) return await unsubscription(email);
 
   const collection = await getCollection();
   const exists = await checkDuplicate(collection, email);
