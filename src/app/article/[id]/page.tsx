@@ -1,5 +1,5 @@
 import RenderBlog from "@/components/renderBlog/renderBlog";
-import { NextPage, Metadata } from "next";
+import { NextPage } from "next";
 
 interface Props {
   params: {
