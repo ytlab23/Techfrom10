@@ -6,7 +6,7 @@ interface Subscriber {
 }
 interface RequestBody {
   email: string;
-  unsubscribe: boolean | null;
+  unsubscribe: boolean;
 }
 
 const getCollection = async (): Promise<Collection<Subscriber>> => {
@@ -23,7 +23,7 @@ const checkDuplicate = async (
   return !!document;
 };
 
-export const unsubscription = async (email: string): Promise<Response> => {
+const unsubscription = async (email: string): Promise<Response> => {
   const collection = await getCollection();
   const exists = await checkDuplicate(collection, email);
   if (exists) {
@@ -34,10 +34,9 @@ export const unsubscription = async (email: string): Promise<Response> => {
   }
 };
 export const POST = async (req: Request): Promise<Response> => {
-  const res: RequestBody = await req.json();
-  const { email } = res;
+  const { email, unsubscribe }: RequestBody = await req.json();
 
-  if (res.unsubscribe == true) return await unsubscription(email);
+  if (unsubscribe) return await unsubscription(email);
 
   const collection = await getCollection();
   const exists = await checkDuplicate(collection, email);
