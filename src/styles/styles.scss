@@ -144,9 +144,9 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 .hero-content-wrap {
     @include flex-center();
     width: 100%;
-    gap: 4vw;
+    gap: 3vw;
     img {
-        flex: 3;
+        flex: 2;
         width: 300px;
         height: 300px;
         border-radius: 0.5vw;
@@ -157,12 +157,20 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
         @include flex-center(column);
         align-items: flex-start;
         gap: 1.5vh;
-        flex: 7;
+        flex: 8;
     }
     li {
+        width: 100%;
+        @include flex-center();
+        justify-content: space-between;
+        gap: 5px;
         font-family: $nunito;
         font-size: $--16px;
         font-weight: 700;
+
+        a:hover {
+            color: $pri-col;
+        }
     }
     @media (max-width: 768px) {
         flex-direction: column;

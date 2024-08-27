@@ -10,7 +10,7 @@ import DatePickerComponent from "@/components/dataPicker/datePicker";
 import moment from "moment";
 import { DateRange } from "react-day-picker";
 import { useToast } from "@/components/ui/use-toast";
-import { FaExternalLinkAlt } from "react-icons/fa";
+import { FaExternalLinkAlt, FaEye } from "react-icons/fa";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Footer from "@/components/footer/footer";
 
@@ -201,12 +201,7 @@ const Page: NextPage<Props> = ({}) => {
               <DatePickerComponent onDateChange={handleDateChange} />
             </div>
             {filteredData.map((val, index) => (
-              <Link
-                className="hero-container"
-                href={"/article/" + val._id.toString()}
-                target="_blank"
-                key={val._id}
-              >
+              <div className="hero-container" key={val._id}>
                 <div className="hero-container-head">
                   <h2>{val.title}</h2>
                   <span>
@@ -223,12 +218,30 @@ const Page: NextPage<Props> = ({}) => {
                   />
                   <ul>
                     {val.headlines.map((h, hindex) => (
-                      <li key={hindex}>{h}</li>
+                      <li key={hindex}>
+                        {h}
+                        <Link
+                          key={hindex}
+                          href={"https://" + val.source[hindex]}
+                          target="_blank"
+                          rel="noreferrer nofollow noopener"
+                          title="view"
+                        >
+                          {" "}
+                          <FaEye />
+                        </Link>
+                      </li>
                     ))}
                   </ul>
                 </div>
-                <p className="view-in-full">Read Full Article</p>
-              </Link>
+                <Link
+                  href={"/article/" + val._id.toString()}
+                  target="_blank"
+                  className="view-in-full"
+                >
+                  Read Full Article
+                </Link>
+              </div>
             ))}
           </div>
           <div className="hero-container-fixed" ref={heroContainerFixedRef}>
