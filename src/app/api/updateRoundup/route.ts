@@ -234,8 +234,6 @@ const generateFeaturedImage = async (content: any) => {
       prompt: prompt,
       n: 1,
       size: "1024x1024",
-      quality: "hd",
-      style: "vivid",
     }),
     cache: "no-store",
   });
