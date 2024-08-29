@@ -48,7 +48,7 @@ const Page: NextPage<Props> = ({}) => {
     const fetchData = async () => {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`,
-        { next: { revalidate: 3600 }, cache: "force-cache" }
+        { next: { revalidate: 3600 }, cache: "default" }
       );
       const data: dataprop[] = await res.json();
       setLoading(false);
