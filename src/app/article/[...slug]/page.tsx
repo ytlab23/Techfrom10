@@ -4,7 +4,7 @@ import { NextPage } from "next";
 import Footer from "@/components/footer/footer";
 
 interface Props {
-  slug: string[];
+  params: any;
 }
 
 const Page: NextPage<Props> = async ({ params }) => {
