@@ -9,7 +9,7 @@ import "./footer.scss";
 import SubscribeNewsletter from "../newsletter/subscribeNewsletter";
 import { MutableRefObject } from "react";
 interface Props {
-  footerRef: MutableRefObject<HTMLDivElement | null>;
+  footerRef?: MutableRefObject<HTMLDivElement | null>;
 }
 
 const Footer: NextPage<Props> = ({ footerRef }) => {
