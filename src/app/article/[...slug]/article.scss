@@ -1,0 +1,60 @@
+@import "@/styles/styles.scss";
+
+.article-container {
+    padding: 0 2vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 85vh;
+    gap: 10vh;
+}
+
+.article-content {
+    @include flex-center(column);
+    gap: 5vh;
+    width: 55%;
+    border-radius: 1vw;
+    border-radius: 1vw;
+    border: 2px solid $pri-col;
+    padding: 2vh 2vw;
+    background-color: white;
+    box-shadow: 10px 10px black;
+
+    h1 {
+        font-size: 3rem;
+        font-family: $bebas;
+        color: $pri-col;
+        text-align: center;
+        line-height: 60px;
+    }
+
+    p {
+        text-align: justify;
+        font-family: $nunito;
+        font-size: $--18px;
+        font-weight: 600;
+    }
+
+    .article-content-sub {
+        @include flex-center(column);
+        gap: 1vh;
+    }
+}
+
+.article-extra {
+    width: 100%;
+    @include flex-center();
+    justify-content: space-between;
+    p,
+    a {
+        font-family: $josefin;
+        font-weight: 700;
+        color: $pri-col;
+    }
+}
+
+.article-footer {
+    position: relative;
+    bottom: 0;
+}

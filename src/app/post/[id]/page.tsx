@@ -1,5 +1,6 @@
 import RenderBlog from "@/components/renderBlog/renderBlog";
 import { NextPage } from "next";
+import Footer from "@/components/footer/footer";
 
 interface Props {
   params: {
@@ -38,6 +39,7 @@ const Page: NextPage<Props> = async ({ params }) => {
         source={data.source}
         time={data.published}
       />
+      <Footer />
     </div>
   );
 };

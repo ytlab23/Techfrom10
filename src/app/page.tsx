@@ -219,15 +219,21 @@ const Page: NextPage<Props> = ({}) => {
                   <ul>
                     {val.headlines.map((h, hindex) => (
                       <li key={hindex}>
-                        <li>
+                        <Link
+                          key={hindex}
+                          href={`/article/${h}/${val._id.toString()}/${hindex}`}
+                          target="_blank"
+                          rel="noreferrer nofollow noopener"
+                          title="view article"
+                        >
                           {hindex + 1}. {h}
-                        </li>
+                        </Link>
                         <Link
                           key={hindex}
                           href={"https://" + val.source[hindex]}
                           target="_blank"
                           rel="noreferrer nofollow noopener"
-                          title="view"
+                          title="view full info"
                         >
                           {" "}
                           <FaEye />
@@ -237,7 +243,7 @@ const Page: NextPage<Props> = ({}) => {
                   </ul>
                 </div>
                 <Link
-                  href={"/article/" + val._id.toString()}
+                  href={"/post/" + val._id.toString()}
                   target="_blank"
                   className="view-in-full"
                 >
@@ -301,7 +307,7 @@ const Page: NextPage<Props> = ({}) => {
               <h3>Recent Posts</h3>
               <div className="hero-card-items2">
                 {data.slice(-3).map((element) => (
-                  <Link href={"/article/" + element._id} target="_blank">
+                  <Link href={"/post/" + element._id} target="_blank">
                     {element.title} <FaExternalLinkAlt className="link-icon" />
                   </Link>
                 ))}
