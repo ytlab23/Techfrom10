@@ -8,6 +8,10 @@
     justify-content: center;
     height: 85vh;
     gap: 10vh;
+
+    @media (max-width: 468px) {
+        padding: 0 5vw;
+    }
 }
 
 .article-content {
@@ -39,6 +43,19 @@
     .article-content-sub {
         @include flex-center(column);
         gap: 1vh;
+    }
+
+    @media (max-width: 468px) {
+        width: 100%;
+        padding: 2vh 5vw;
+        border-radius: 5vw;
+        h1 {
+            font-size: $--38px;
+            line-height: 40px;
+        }
+        p {
+            font-size: $--16px;
+        }
     }
 }
 
