@@ -105,18 +105,19 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
         font-size: $--14px;
     }
     .hero-container-head {
-        @include flex-center();
-        align-items: flex-start;
-        justify-content: space-between;
-        width: 100%;
         span {
             font-family: $nunito;
             font-weight: 700;
             font-size: $--12px;
             flex: 2;
-            color: slategrey;
+            color: $pri-col;
             @include flex-center();
             gap: 5px;
+            text-align: start;
+            border: 2px solid slategrey;
+            padding: 0.5vh 0.5vw;
+            border-radius: 1vw;
+            box-shadow: 2px 2px black;
         }
 
         h2 {

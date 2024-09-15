@@ -203,7 +203,6 @@ const Page: NextPage<Props> = ({}) => {
             {filteredData.map((val, index) => (
               <div className="hero-container" key={val._id}>
                 <div className="hero-container-head">
-                  <h2>{val.title}</h2>
                   <span>
                     <FaClock className="text-base" />
                     {val.date}
@@ -221,23 +220,37 @@ const Page: NextPage<Props> = ({}) => {
                       <li key={hindex}>
                         <Link
                           key={hindex}
-                          href={`/article/${h}/${val._id.toString()}/${hindex}`}
+                          href={`/article/${decodeURI(
+                            h
+                          )}/${val._id.toString()}/${hindex}`}
                           target="_blank"
                           rel="noreferrer nofollow noopener"
                           title="view article"
                         >
                           {hindex + 1}. {h}
                         </Link>
-                        <Link
-                          key={hindex}
-                          href={"https://" + val.source[hindex]}
-                          target="_blank"
-                          rel="noreferrer nofollow noopener"
-                          title="view full info"
-                        >
-                          {" "}
-                          <FaEye />
-                        </Link>
+                        <div className="flex gap-2 items-center">
+                          <Link
+                            key={hindex}
+                            href={`/article/${h}/${val._id.toString()}/${hindex}`}
+                            target="_blank"
+                            rel="noreferrer nofollow noopener"
+                            title="view article"
+                          >
+                            {" "}
+                            <FaEye />
+                          </Link>
+                          <Link
+                            key={hindex}
+                            href={"https://" + val.source[hindex]}
+                            target="_blank"
+                            rel="noreferrer nofollow noopener"
+                            title="view full info"
+                          >
+                            {" "}
+                            <FaExternalLinkAlt fontSize={"12px"} />
+                          </Link>
+                        </div>
                       </li>
                     ))}
                   </ul>
