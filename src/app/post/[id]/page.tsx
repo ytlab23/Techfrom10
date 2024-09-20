@@ -18,7 +18,7 @@ export const generateMetadata = async ({ params }: { params: string }) => {
   );
   const data = await res.json();
   return {
-    title: `TechRoundup | ${data.title}`,
+    title: `${data.date} - ${data.title} | TechFrom10`,
   };
 };
 const Page: NextPage<Props> = async ({ params }) => {

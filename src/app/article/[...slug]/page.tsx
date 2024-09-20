@@ -1,10 +1,27 @@
 import "./article.scss";
 import Link from "next/link";
-import { NextPage } from "next";
+import { NextPage, Metadata } from "next";
 import Footer from "@/components/footer/footer";
 
 interface Props {
   params: any;
+}
+
+export async function generateMetadata({ params }) {
+  const title = params.slug[0];
+  const id = params.slug[1];
+  const articleId = params.slug[2];
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/fetchRoundup",
+    {
+      method: "POST",
+      body: JSON.stringify({ id: id }),
+    }
+  );
+  const data = await res.json();
+  return {
+    title: `${data.headlines[articleId]} | TechFrom10`,
+  };
 }
 
 const Page: NextPage<Props> = async ({ params }) => {

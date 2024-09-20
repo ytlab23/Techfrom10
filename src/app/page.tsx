@@ -220,8 +220,9 @@ const Page: NextPage<Props> = ({}) => {
                       <li key={hindex}>
                         <Link
                           key={hindex}
-                          href={`/article/${decodeURI(
-                            h
+                          href={`/article/${h.replace(
+                            /\s+/g,
+                            "-"
                           )}/${val._id.toString()}/${hindex}`}
                           target="_blank"
                           rel="noreferrer nofollow noopener"
@@ -232,7 +233,10 @@ const Page: NextPage<Props> = ({}) => {
                         <div className="flex gap-2 items-center">
                           <Link
                             key={hindex}
-                            href={`/article/${h}/${val._id.toString()}/${hindex}`}
+                            href={`/article/${h.replace(
+                              /\s+/g,
+                              "-"
+                            )}/${val._id.toString()}/${hindex}`}
                             target="_blank"
                             rel="noreferrer nofollow noopener"
                             title="view article"
