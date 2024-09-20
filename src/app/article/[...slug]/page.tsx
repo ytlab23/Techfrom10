@@ -7,7 +7,7 @@ interface Props {
   params: any;
 }
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }: Props) {
   const title = params.slug[0];
   const id = params.slug[1];
   const articleId = params.slug[2];

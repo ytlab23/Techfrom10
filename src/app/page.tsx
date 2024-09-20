@@ -292,7 +292,7 @@ const Page: NextPage<Props> = ({}) => {
             </div>
 
             <div className="hero-card1">
-              <h3>Hashtags</h3>
+              <h3>Topics</h3>
               <div className="hero-card1-items">
                 <Badge
                   key="uncategorized"
