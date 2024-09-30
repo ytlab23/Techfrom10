@@ -303,7 +303,7 @@ const Page: NextPage<Props> = ({}) => {
                       : "unselected-hashtag"
                   }
                 >
-                  #Uncategorized
+                  #Others
                 </Badge>
                 {uniqueHashtags.map((hashtag, index) => (
                   <Badge
@@ -321,7 +321,7 @@ const Page: NextPage<Props> = ({}) => {
               </div>
             </div>
             <div className="hero-card2">
-              <h3>Recent Posts</h3>
+              <h3>Today's News</h3>
               <div className="hero-card-items2">
                 {data.slice(-3).map((element) => (
                   <Link href={"/post/" + element._id} target="_blank">
