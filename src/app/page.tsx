@@ -195,7 +195,7 @@ const Page: NextPage<Props> = ({}) => {
   };
 
   const renderUnifiedView = () => (
-    <div className="unified-view">
+    <div className="hero-content-wrap hero-container unified-view">
       <ul>
         {filteredData.flatMap((val) =>
           val.headlines.map((h, hindex) => (
