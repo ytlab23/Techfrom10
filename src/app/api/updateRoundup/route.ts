@@ -91,7 +91,7 @@ const updateDB = async (
   const db = await getDB();
   const collections = db.collection(`${process.env.mongo_collec}`);
   const now = new Date();
-  const ttlInSeconds = 5 * 24 * 60 * 60;
+  const ttlInSeconds = 50 * 24 * 60 * 60;
   const expireAt = new Date(now.getTime() + ttlInSeconds * 1000);
   const data = {
     title: content.title[0],
