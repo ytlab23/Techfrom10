@@ -26,10 +26,11 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 
 .hero-parent {
     padding-left: 5vw;
+    padding-right: 5vw;
     padding-top: 16vh;
     padding-bottom: 5vh;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
     gap: 2vw;
     min-height: 90vh;
@@ -41,6 +42,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 }
 
 .hero-container-wrap {
+    flex: 2;
     @include flex-center(column);
     align-items: flex-start;
     gap: 2.5vh;
@@ -197,11 +199,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 }
 
 .hero-container-fixed {
-    position: fixed;
-    right: 0;
-    top: auto;
-    width: 35vw;
-    padding-right: 5vw;
+    flex: 1;
     @include flex-center(column);
     justify-content: space-around;
     gap: 2vh;
@@ -261,7 +259,6 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
             font-size: 1.4rem;
             font-weight: 900;
             line-height: 5vh;
-            border-bottom: 2px solid black;
             border-radius: 2vw;
             width: 100%;
             text-align: center;
