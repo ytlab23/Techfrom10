@@ -13,6 +13,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { FaExternalLinkAlt, FaEye } from "react-icons/fa";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Footer from "@/components/footer/footer";
+import { Switch } from "@/components/ui/switch";
 
 interface Props {}
 
@@ -35,10 +36,16 @@ const Page: NextPage<Props> = ({}) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [filteredDate, setFilteredDate] = useState<DateRange | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [unifiedView, setUnifiedView] = useState<boolean>(false);
+
   const { toast } = useToast();
   const hasReset = useRef(false);
   const heroContainerFixedRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef(null);
+
+  const handleViewChange = (checked: boolean) => {
+    setUnifiedView(checked);
+  };
 
   const handleDateChange = (date: DateRange | null) => {
     setFilteredDate(date);
@@ -187,6 +194,119 @@ const Page: NextPage<Props> = ({}) => {
     setFilteredData(data);
   };
 
+  const renderUnifiedView = () => (
+    <div className="unified-view">
+      <ul>
+        {filteredData.flatMap((val) =>
+          val.headlines.map((h, hindex) => (
+            <li key={`${val._id}-${hindex}`}>
+              <Link
+                href={`/article/${h.replace(
+                  /\s+/g,
+                  "-"
+                )}/${val._id.toString()}/${hindex}`}
+                target="_blank"
+                rel="noreferrer nofollow noopener"
+                title="view article"
+              >
+                {h}
+              </Link>
+              <div className="flex gap-2 items-center">
+                <Link
+                  href={`/article/${h.replace(
+                    /\s+/g,
+                    "-"
+                  )}/${val._id.toString()}/${hindex}`}
+                  target="_blank"
+                  rel="noreferrer nofollow noopener"
+                  title="view article"
+                >
+                  <FaEye />
+                </Link>
+                <Link
+                  href={"https://" + val.source[hindex]}
+                  target="_blank"
+                  rel="noreferrer nofollow noopener"
+                  title="view full info"
+                >
+                  <FaExternalLinkAlt fontSize={"12px"} />
+                </Link>
+              </div>
+            </li>
+          ))
+        )}
+      </ul>
+    </div>
+  );
+
+  const renderDefaultView = (val: dataprop) => (
+    <div className="hero-container" key={val._id}>
+      <div className="hero-container-head">
+        <span>
+          <FaClock className="text-base" />
+          {val.date}
+        </span>
+      </div>
+      <div className="hero-content-wrap">
+        <Image
+          src={val.imgUrl ? `${val.imgUrl}` : "/test.jpg"}
+          width={250}
+          height={1024}
+          alt={val.title}
+        />
+        <ul>
+          {val.headlines.map((h, hindex) => (
+            <li key={hindex}>
+              <Link
+                key={hindex}
+                href={`/article/${h.replace(
+                  /\s+/g,
+                  "-"
+                )}/${val._id.toString()}/${hindex}`}
+                target="_blank"
+                rel="noreferrer nofollow noopener"
+                title="view article"
+              >
+                {hindex + 1}. {h}
+              </Link>
+              <div className="flex gap-2 items-center">
+                <Link
+                  key={hindex}
+                  href={`/article/${h.replace(
+                    /\s+/g,
+                    "-"
+                  )}/${val._id.toString()}/${hindex}`}
+                  target="_blank"
+                  rel="noreferrer nofollow noopener"
+                  title="view article"
+                >
+                  {" "}
+                  <FaEye />
+                </Link>
+                <Link
+                  key={hindex}
+                  href={"https://" + val.source[hindex]}
+                  target="_blank"
+                  rel="noreferrer nofollow noopener"
+                  title="view full info"
+                >
+                  {" "}
+                  <FaExternalLinkAlt fontSize={"12px"} />
+                </Link>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Link
+        href={"/post/" + val._id.toString()}
+        target="_blank"
+        className="view-in-full"
+      >
+        Read Full Article
+      </Link>
+    </div>
+  );
   return (
     <div>
       {loading ? (
@@ -198,76 +318,18 @@ const Page: NextPage<Props> = ({}) => {
               <Link href="/#">
                 <h3>Your Tech Round-Up!</h3>
               </Link>
+              <div className="flex items-center gap-1">
+                <h3>Unified View </h3>
+                <Switch
+                  checked={unifiedView}
+                  onCheckedChange={handleViewChange}
+                />
+              </div>
               <DatePickerComponent onDateChange={handleDateChange} />
             </div>
-            {filteredData.map((val, index) => (
-              <div className="hero-container" key={val._id}>
-                <div className="hero-container-head">
-                  <span>
-                    <FaClock className="text-base" />
-                    {val.date}
-                  </span>
-                </div>
-                <div className="hero-content-wrap">
-                  <Image
-                    src={val.imgUrl ? `${val.imgUrl}` : "/test.jpg"}
-                    width={250}
-                    height={1024}
-                    alt={val.title}
-                  />
-                  <ul>
-                    {val.headlines.map((h, hindex) => (
-                      <li key={hindex}>
-                        <Link
-                          key={hindex}
-                          href={`/article/${h.replace(
-                            /\s+/g,
-                            "-"
-                          )}/${val._id.toString()}/${hindex}`}
-                          target="_blank"
-                          rel="noreferrer nofollow noopener"
-                          title="view article"
-                        >
-                          {hindex + 1}. {h}
-                        </Link>
-                        <div className="flex gap-2 items-center">
-                          <Link
-                            key={hindex}
-                            href={`/article/${h.replace(
-                              /\s+/g,
-                              "-"
-                            )}/${val._id.toString()}/${hindex}`}
-                            target="_blank"
-                            rel="noreferrer nofollow noopener"
-                            title="view article"
-                          >
-                            {" "}
-                            <FaEye />
-                          </Link>
-                          <Link
-                            key={hindex}
-                            href={"https://" + val.source[hindex]}
-                            target="_blank"
-                            rel="noreferrer nofollow noopener"
-                            title="view full info"
-                          >
-                            {" "}
-                            <FaExternalLinkAlt fontSize={"12px"} />
-                          </Link>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <Link
-                  href={"/post/" + val._id.toString()}
-                  target="_blank"
-                  className="view-in-full"
-                >
-                  Read Full Article
-                </Link>
-              </div>
-            ))}
+            {unifiedView
+              ? renderUnifiedView()
+              : filteredData.map(renderDefaultView)}
           </div>
           <div className="hero-container-fixed" ref={heroContainerFixedRef}>
             <div className="hero-search">
