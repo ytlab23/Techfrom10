@@ -194,12 +194,23 @@ const Page: NextPage<Props> = ({}) => {
     setFilteredData(data);
   };
 
-  const renderUnifiedView = () => (
+  const renderUnifiedView = (val: dataprop) => (
     <div className="hero-content-wrap hero-container unified-view">
       <ul>
-        {filteredData.flatMap((val) =>
-          val.headlines.map((h, hindex) => (
-            <li key={`${val._id}-${hindex}`}>
+        {val.headlines.map((h, hindex) => (
+          <li key={`${val._id}-${hindex}`}>
+            <Link
+              href={`/article/${h.replace(
+                /\s+/g,
+                "-"
+              )}/${val._id.toString()}/${hindex}`}
+              target="_blank"
+              rel="noreferrer nofollow noopener"
+              title="view article"
+            >
+              {h}
+            </Link>
+            <div className="flex gap-2 items-center">
               <Link
                 href={`/article/${h.replace(
                   /\s+/g,
@@ -209,32 +220,19 @@ const Page: NextPage<Props> = ({}) => {
                 rel="noreferrer nofollow noopener"
                 title="view article"
               >
-                {h}
+                <FaEye />
               </Link>
-              <div className="flex gap-2 items-center">
-                <Link
-                  href={`/article/${h.replace(
-                    /\s+/g,
-                    "-"
-                  )}/${val._id.toString()}/${hindex}`}
-                  target="_blank"
-                  rel="noreferrer nofollow noopener"
-                  title="view article"
-                >
-                  <FaEye />
-                </Link>
-                <Link
-                  href={"https://" + val.source[hindex]}
-                  target="_blank"
-                  rel="noreferrer nofollow noopener"
-                  title="view full info"
-                >
-                  <FaExternalLinkAlt fontSize={"12px"} />
-                </Link>
-              </div>
-            </li>
-          ))
-        )}
+              <Link
+                href={"https://" + val.source[hindex]}
+                target="_blank"
+                rel="noreferrer nofollow noopener"
+                title="view full info"
+              >
+                <FaExternalLinkAlt fontSize={"12px"} />
+              </Link>
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );
@@ -328,7 +326,7 @@ const Page: NextPage<Props> = ({}) => {
               <DatePickerComponent onDateChange={handleDateChange} />
             </div>
             {unifiedView
-              ? renderUnifiedView()
+              ? filteredData.map(renderUnifiedView)
               : filteredData.map(renderDefaultView)}
           </div>
           <div className="hero-container-fixed" ref={heroContainerFixedRef}>
