@@ -82,3 +82,19 @@
         }
     }
 }
+
+
+.ant-dropdown-menu {
+    max-height: 150px; 
+    overflow-y: auto; 
+    ::-webkit-scrollbar {
+        width: 0px; }
+        scrollbar-width: none;
+    background-color: black;
+    }
+  
+  
+  .ant-dropdown-placement-bottomCenter {
+    left: 50%;
+    transform: translateX(-50%);
+  }
