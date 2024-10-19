@@ -7,47 +7,45 @@ interface Props {
   params: any;
 }
 
-export async function generateMetadata({ params }: Props) {
-  const title = params.slug[0];
-  const id = params.slug[1];
-  const articleId = params.slug[2];
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/fetchRoundup",
-    {
-      method: "POST",
-      body: JSON.stringify({ id: id }),
-    }
-  );
-  const data = await res.json();
-  return {
-    title: `${data.headlines[articleId]} | TechFrom10`,
-  };
-}
+// export async function generateMetadata({ params }: Props) {
+//   const headline = decodeURIComponent(params.headline.replaceAll("-", " "));
+//   const res = await fetch(
+//     process.env.NEXT_PUBLIC_API_BASE_URL + "/api/fetchRoundup",
+//     {
+//       method: "POST",
+//       body: JSON.stringify({ headline }),
+//     }
+//   );
+//   const data = await res.json();
+//   return {
+//     title: `| TechFrom10`,
+//   };
+// }
 
 const Page: NextPage<Props> = async ({ params }) => {
-  const id = params.slug[1];
-  const articleId = params.slug[2];
+  const headline = decodeURIComponent(params.headline.replaceAll("-", " "));
 
   const res = await fetch(
     process.env.NEXT_PUBLIC_API_BASE_URL + "/api/fetchRoundup",
     {
       method: "POST",
-      body: JSON.stringify({ id: id }),
+      body: JSON.stringify({ headline: headline }),
     }
   );
   const data = await res.json();
+
   return (
     <div className="article-main">
       <div className="article-container">
         <div className="article-content">
           <div className="article-content-sub">
-            <h1>{data.headlines[articleId]}</h1>
-            <p>{data.summary[articleId]}</p>
+            <h1>{data.headline}</h1>
+            <p>{data.summary}</p>
           </div>
           <div className="article-extra">
-            <p>{data.published[articleId]}</p>
+            <p>{data.published}</p>
             <Link
-              href={"https://" + data.source[articleId]}
+              href={"https://" + data.source}
               target="_blank"
               rel="noreferrer nofollow noopener"
             >
