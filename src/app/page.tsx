@@ -22,7 +22,7 @@ interface dataprop {
   title: string;
   headlines: string[];
   summary: string[];
-  source: string[];
+  sources: string[];
   published: string[];
   hashtags: string[];
   imgUrl: string;
@@ -54,7 +54,7 @@ const Page: NextPage<Props> = ({}) => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`
       );
       const data: dataprop[] = await res.json();
       setLoading(false);
@@ -223,7 +223,7 @@ const Page: NextPage<Props> = ({}) => {
                   <FaEye />
                 </Link>
                 <Link
-                  href={"https://" + val.source[hindex]}
+                  href={"https://" + val.sources[hindex]}
                   target="_blank"
                   rel="noreferrer nofollow noopener"
                   title="view full info"
@@ -284,7 +284,7 @@ const Page: NextPage<Props> = ({}) => {
                 </Link>
                 <Link
                   key={hindex}
-                  href={"https://" + val.source[hindex]}
+                  href={"https://" + val.sources[hindex]}
                   target="_blank"
                   rel="noreferrer nofollow noopener"
                   title="view full info"
