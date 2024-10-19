@@ -86,7 +86,7 @@ const Header: NextPage<Props> = ({}) => {
               })),
             }}
             // trigger={["click"]}
-            placement="bottomCenter"
+            placement="bottom"
           >
             <Button>
               Categories <DownOutlined />
