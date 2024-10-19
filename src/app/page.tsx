@@ -22,10 +22,10 @@ interface dataprop {
   title: string;
   headlines: string[];
   summary: string[];
-  source: string[];
+  sources: string[];
   published: string[];
   hashtags: string[];
-  imgUrl: string;
+  img_url: string;
   date: string;
 }
 
@@ -54,7 +54,7 @@ const Page: NextPage<Props> = ({}) => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`
       );
       const data: dataprop[] = await res.json();
       setLoading(false);
@@ -194,45 +194,50 @@ const Page: NextPage<Props> = ({}) => {
   };
 
   const renderUnifiedView = (val: dataprop) => (
-    <div className="hero-content-wrap hero-container unified-view">
-      <ul>
-        {val.headlines.map((h, hindex) => (
-          <li key={`${val._id}-${hindex}`}>
-            <Link
-              href={`/article/${h.replace(
-                /\s+/g,
-                "-"
-              )}/${val._id.toString()}/${hindex}`}
-              target="_blank"
-              rel="noreferrer nofollow noopener"
-              title="view article"
-            >
-              {h}
-            </Link>
-            <div className="flex gap-2 items-center">
+    <div className="hero-container unified-view">
+      <div className="hero-content-wrap">
+        <ul>
+          {val.headlines.map((h, hindex) => (
+            <li key={`${val._id}-${hindex}`}>
               <Link
-                href={`/article/${h.replace(
-                  /\s+/g,
-                  "-"
-                )}/${val._id.toString()}/${hindex}`}
+                href={`/article/${encodeURIComponent(h.replaceAll(" ", "-"))}`}
                 target="_blank"
                 rel="noreferrer nofollow noopener"
                 title="view article"
               >
-                <FaEye />
+                {h}
               </Link>
-              <Link
-                href={"https://" + val.source[hindex]}
-                target="_blank"
-                rel="noreferrer nofollow noopener"
-                title="view full info"
-              >
-                <FaExternalLinkAlt fontSize={"12px"} />
-              </Link>
-            </div>
-          </li>
-        ))}
-      </ul>
+              <div className="flex gap-2 items-center">
+                <Link
+                  href={`/article/${encodeURIComponent(
+                    h.replaceAll(" ", "-")
+                  )}`}
+                  target="_blank"
+                  rel="noreferrer nofollow noopener"
+                  title="view article"
+                >
+                  <FaEye />
+                </Link>
+                <Link
+                  href={"https://" + val.sources[hindex]}
+                  target="_blank"
+                  rel="noreferrer nofollow noopener"
+                  title="view full info"
+                >
+                  <FaExternalLinkAlt fontSize={"12px"} />
+                </Link>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Link
+        href={"/post/" + encodeURIComponent(val.title.replaceAll(" ", "-"))}
+        target="_blank"
+        className="view-in-full"
+      >
+        Read Full Article
+      </Link>
     </div>
   );
 
@@ -246,7 +251,7 @@ const Page: NextPage<Props> = ({}) => {
       </div>
       <div className="hero-content-wrap">
         <Image
-          src={val.imgUrl ? `${val.imgUrl}` : "/test.jpg"}
+          src={val.img_url ? `${val.img_url}` : "/test.jpg"}
           width={250}
           height={1024}
           alt={val.title}
@@ -256,10 +261,7 @@ const Page: NextPage<Props> = ({}) => {
             <li key={hindex}>
               <Link
                 key={hindex}
-                href={`/article/${h.replace(
-                  /\s+/g,
-                  "-"
-                )}/${val._id.toString()}/${hindex}`}
+                href={`/article/${encodeURIComponent(h.replace(/\s+/g, "-"))}`}
                 target="_blank"
                 rel="noreferrer nofollow noopener"
                 title="view article"
@@ -269,10 +271,9 @@ const Page: NextPage<Props> = ({}) => {
               <div className="flex gap-2 items-center">
                 <Link
                   key={hindex}
-                  href={`/article/${h.replace(
-                    /\s+/g,
-                    "-"
-                  )}/${val._id.toString()}/${hindex}`}
+                  href={`/article/${encodeURIComponent(
+                    h.replace(/\s+/g, "-")
+                  )}`}
                   target="_blank"
                   rel="noreferrer nofollow noopener"
                   title="view article"
@@ -282,7 +283,7 @@ const Page: NextPage<Props> = ({}) => {
                 </Link>
                 <Link
                   key={hindex}
-                  href={"https://" + val.source[hindex]}
+                  href={"https://" + val.sources[hindex]}
                   target="_blank"
                   rel="noreferrer nofollow noopener"
                   title="view full info"
@@ -296,7 +297,7 @@ const Page: NextPage<Props> = ({}) => {
         </ul>
       </div>
       <Link
-        href={"/post/" + val._id.toString()}
+        href={"/post/" + encodeURIComponent(val.title.replaceAll(" ", "-"))}
         target="_blank"
         className="view-in-full"
       >

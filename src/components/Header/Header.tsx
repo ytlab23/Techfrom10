@@ -2,9 +2,6 @@
 import "./Header.scss";
 import { NextPage } from "next";
 import Link from "next/link";
-import { Avatar, AvatarImage } from "../ui/avatar";
-import Image from "next/image";
-import msgIcon from "@/assets/icons/msg.svg";
 import { useEffect, useState } from "react";
 import NewsletterPopup from "../newsletter/newsletterPopup";
 
@@ -68,7 +65,6 @@ const Header: NextPage<Props> = ({}) => {
           </ul>
         </div>
         <div className="nav-right">
-
           <Dropdown
             menu={{
               items: categories.map((category) => ({
@@ -86,7 +82,7 @@ const Header: NextPage<Props> = ({}) => {
               })),
             }}
             // trigger={["click"]}
-            placement="bottomCenter"
+            placement="bottom"
           >
             <Button>
               Categories <DownOutlined />
