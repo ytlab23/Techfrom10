@@ -196,14 +196,10 @@ const Page: NextPage<Props> = ({}) => {
   const renderUnifiedView = (val: dataprop) => (
     <div className="hero-content-wrap hero-container unified-view">
       <ul>
-        {/* {filteredData.flatMap((val) => */}
         {val.headlines.map((h, hindex) => (
           <li key={`${val._id}-${hindex}`}>
             <Link
-              href={`/article/${h.replace(
-                /\s+/g,
-                "-"
-              )}/${val._id.toString()}/${hindex}`}
+              href={`/article/${encodeURIComponent(h.replaceAll(" ", "-"))}`}
               target="_blank"
               rel="noreferrer nofollow noopener"
               title="view article"
@@ -212,10 +208,7 @@ const Page: NextPage<Props> = ({}) => {
             </Link>
             <div className="flex gap-2 items-center">
               <Link
-                href={`/article/${h.replace(
-                  /\s+/g,
-                  "-"
-                )}/${val._id.toString()}/${hindex}`}
+                href={`/article/${encodeURIComponent(h.replaceAll(" ", "-"))}`}
                 target="_blank"
                 rel="noreferrer nofollow noopener"
                 title="view article"
@@ -233,7 +226,6 @@ const Page: NextPage<Props> = ({}) => {
             </div>
           </li>
         ))}
-        {/* )} */}
       </ul>
     </div>
   );
@@ -258,10 +250,7 @@ const Page: NextPage<Props> = ({}) => {
             <li key={hindex}>
               <Link
                 key={hindex}
-                href={`/article/${h.replace(
-                  /\s+/g,
-                  "-"
-                )}/${val._id.toString()}/${hindex}`}
+                href={`/article/${encodeURIComponent(h.replace(/\s+/g, "-"))}`}
                 target="_blank"
                 rel="noreferrer nofollow noopener"
                 title="view article"
@@ -271,10 +260,9 @@ const Page: NextPage<Props> = ({}) => {
               <div className="flex gap-2 items-center">
                 <Link
                   key={hindex}
-                  href={`/article/${h.replace(
-                    /\s+/g,
-                    "-"
-                  )}/${val._id.toString()}/${hindex}`}
+                  href={`/article/${encodeURIComponent(
+                    h.replace(/\s+/g, "-")
+                  )}`}
                   target="_blank"
                   rel="noreferrer nofollow noopener"
                   title="view article"
