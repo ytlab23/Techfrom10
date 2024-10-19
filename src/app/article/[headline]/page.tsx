@@ -7,20 +7,21 @@ interface Props {
   params: any;
 }
 
-// export async function generateMetadata({ params }: Props) {
-//   const headline = decodeURIComponent(params.headline.replaceAll("-", " "));
-//   const res = await fetch(
-//     process.env.NEXT_PUBLIC_API_BASE_URL + "/api/fetchRoundup",
-//     {
-//       method: "POST",
-//       body: JSON.stringify({ headline }),
-//     }
-//   );
-//   const data = await res.json();
-//   return {
-//     title: `| TechFrom10`,
-//   };
-// }
+export async function generateMetadata({ params }: Props) {
+  const headline = decodeURIComponent(params.headline.replaceAll("-", " "));
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/fetchRoundup",
+    {
+      method: "POST",
+      body: JSON.stringify({ headline }),
+    }
+  );
+  const data = await res.json();
+  return {
+    title: `${data.headline} - TechFrom10`,
+    description: data.summary,
+  };
+}
 
 const Page: NextPage<Props> = async ({ params }) => {
   const headline = decodeURIComponent(params.headline.replaceAll("-", " "));
@@ -29,7 +30,7 @@ const Page: NextPage<Props> = async ({ params }) => {
     process.env.NEXT_PUBLIC_API_BASE_URL + "/api/fetchRoundup",
     {
       method: "POST",
-      body: JSON.stringify({ headline: headline }),
+      body: JSON.stringify({ headline }),
     }
   );
   const data = await res.json();
