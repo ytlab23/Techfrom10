@@ -98,10 +98,12 @@ const updateDB = async (
   formattedDate: string
 ) => {
   const client = await getDB();
-
+  const updatedHeadlines = content.headline.map((headline: string) =>
+    headline.replaceAll("-", " ")
+  );
   const data = {
-    title: content.title[0],
-    headlines: content.headline.replaceAll("-", " "),
+    title: content.title[0].replaceAll("-", " "),
+    headlines: updatedHeadlines,
     summary: content.summary,
     source: content.source,
     hashtags: content.tag,
