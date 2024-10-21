@@ -334,10 +334,10 @@ const fetchNews = async (prompt: string) => {
     },
 
     body: JSON.stringify({
-      model: "llama-3.1-sonar-small-128k-online",
+      model: "llama-3.1-sonar-large-128k-online",
       messages: [
         {
-          role: "system",
+          role: "user",
           content: prompt,
         },
       ],
@@ -347,7 +347,7 @@ const fetchNews = async (prompt: string) => {
   });
 
   const data = await res.json();
-
+  console.log(data);
   return data.choices[0].message.content;
 };
 
