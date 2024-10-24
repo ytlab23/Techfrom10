@@ -359,7 +359,7 @@ const Page: NextPage<Props> = ({}) => {
                   <Link
                     href={
                       "/post/" +
-                      encodeURIComponent(element.title.replaceAll(" ", "-"))
+                      encodeURIComponent(element.slugtitle.replaceAll(" ", "-"))
                     }
                     target="_blank"
                   >
