@@ -19,7 +19,7 @@ export const generateMetadata = async ({ params }: Props) => {
   );
   const data = await res.json();
   return {
-    title: `${data.title} - TechFrom10`,
+    title: `${data.slugtitle} - TechFrom10`,
   };
 };
 
@@ -30,6 +30,7 @@ const Page: NextPage<Props> = async ({ params }) => {
     {
       method: "POST",
       body: JSON.stringify({ title }),
+      cache: "no-cache",
     }
   );
   const data = await res.json();

@@ -20,6 +20,7 @@ interface Props {}
 interface dataprop {
   _id: string;
   title: string;
+  slugtitle: string;
   headlines: string[];
   summary: string[];
   sources: string[];
@@ -232,7 +233,7 @@ const Page: NextPage<Props> = ({}) => {
         </ul>
       </div>
       <Link
-        href={"/post/" + encodeURIComponent(val.title.replaceAll(" ", "-"))}
+        href={"/post/" + encodeURIComponent(val.slugtitle.replaceAll(" ", "-"))}
         target="_blank"
         className="view-in-full"
       >
@@ -297,7 +298,7 @@ const Page: NextPage<Props> = ({}) => {
         </ul>
       </div>
       <Link
-        href={"/post/" + encodeURIComponent(val.title.replaceAll(" ", "-"))}
+        href={"/post/" + encodeURIComponent(val.slugtitle.replaceAll(" ", "-"))}
         target="_blank"
         className="view-in-full"
       >
