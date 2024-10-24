@@ -355,7 +355,13 @@ const Page: NextPage<Props> = ({}) => {
               <h3>Today's News</h3>
               <div className="hero-card-items2">
                 {data.slice(-10).map((element) => (
-                  <Link href={"/post/" + element._id} target="_blank">
+                  <Link
+                    href={
+                      "/post/" +
+                      encodeURIComponent(element.title.replaceAll(" ", "-"))
+                    }
+                    target="_blank"
+                  >
                     {element.title} <FaExternalLinkAlt className="link-icon" />
                   </Link>
                 ))}

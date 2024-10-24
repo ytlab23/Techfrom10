@@ -103,6 +103,7 @@ const updateDB = async (
   );
   const data = {
     title: content.title[0].replaceAll("-", " "),
+    slugTitle: formattedDate + content.title[0].replaceAll("-", " "),
     headlines: updatedHeadlines,
     summary: content.summary,
     source: content.source,
@@ -113,12 +114,13 @@ const updateDB = async (
   };
 
   const query = `
-      INSERT INTO tech_trends (title, headlines, summaries, sources, hashtags, published, img_url, date)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      INSERT INTO tech_trends (title, slugTitle, headlines, summaries, sources, hashtags, published, img_url, date)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       RETURNING *;`;
 
   const values = [
     data.title,
+    data.slugTitle,
     data.headlines,
     data.summary,
     data.source,
