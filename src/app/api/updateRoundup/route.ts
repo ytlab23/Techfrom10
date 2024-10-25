@@ -101,13 +101,16 @@ const updateDB = async (
   const updatedHeadlines = content.headline.map((headline: string) =>
     headline.replaceAll("-", " ")
   );
+  const updatedHashtags = content.tag.map((tag: string) =>
+    tag.replaceAll(" ", "")
+  );
   const data = {
     title: content.title[0].replaceAll("-", " "),
     slugTitle: formattedDate + content.title[0].replaceAll("-", " "),
     headlines: updatedHeadlines,
     summary: content.summary,
     source: content.source,
-    hashtags: content.tag,
+    hashtags: updatedHashtags,
     published: content.time,
     imgUrl: image,
     date: formattedDate,
