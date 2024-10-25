@@ -15,7 +15,7 @@
     align-items: center;
     justify-content: center;
     gap: 10vh;
-    padding-bottom: 10vh;
+    padding-bottom: 5vh;
 
     @media (max-width: 468px) {
         padding: 0 5vw;
@@ -87,7 +87,7 @@
 
 .news-border {
     border-top: 3px solid violet;
-    width: 85%;
+    width: 78%;
 }
 .news-latest{
     @include flex-center();
@@ -95,13 +95,13 @@
     gap: 3vh;
     .news-latest-link{
         color: #fd79a8 !important;
-        font-size: $--48px;
+        font-size: 58px;
         color: black;
         font-family: $bebas;
         text-decoration: underline;
     }
     h3{
-        font-size: $--48px;
+        font-size: 58px;
         font-family: $bebas;
     }
 }

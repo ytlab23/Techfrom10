@@ -20,7 +20,7 @@ interface CategoryParams {
 
 const CategoryPage = async ({ params }: CategoryParams) => {
   const response = await fetch(
-    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/fetchCategory",
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchCategory`,
     {
       method: "POST",
       headers: {
@@ -30,8 +30,11 @@ const CategoryPage = async ({ params }: CategoryParams) => {
       cache: "no-cache",
     }
   );
-  if (response.status != 200) redirect("/");
-  const data = await response.json();
+
+  if (response.status !== 200) redirect("/");
+
+  const data: NewsItem[] = await response.json();
+
   return (
     <div className="category-parent">
       <div className="category-title">
@@ -40,14 +43,16 @@ const CategoryPage = async ({ params }: CategoryParams) => {
       <div className="category-parent-container">
         <div className="category-parent-left">
           <div className="category-hero-container-wrap">
-            {data.map((value, index) => (
+            {data.map((value) => (
               <div className="category-container-wrap" key={value.headline}>
-                <Image
-                  src={value.img_url}
-                  alt={value.headline}
-                  width={250}
-                  height={300}
-                />
+                {value.img_url && (
+                  <Image
+                    src={value.img_url}
+                    alt={value.headline}
+                    width={250}
+                    height={300}
+                  />
+                )}
                 <div className="category-right">
                   <ul>
                     <li>
@@ -74,14 +79,16 @@ const CategoryPage = async ({ params }: CategoryParams) => {
                     >
                       <FaEye />
                     </Link>
-                    <Link
-                      href={"https://" + value.source}
-                      target="_blank"
-                      rel="noreferrer nofollow noopener"
-                      title="view full info"
-                    >
-                      <FaExternalLinkAlt fontSize={"12px"} />
-                    </Link>
+                    {value.source && (
+                      <Link
+                        href={`https://${value.source}`}
+                        target="_blank"
+                        rel="noreferrer nofollow noopener"
+                        title="view full info"
+                      >
+                        <FaExternalLinkAlt fontSize={"12px"} />
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
@@ -90,7 +97,6 @@ const CategoryPage = async ({ params }: CategoryParams) => {
         </div>
 
         <div className="category-parent-right">
-          
           <div className="hero-category-search-container">
             <div className="category-search-container">
               <div className="category-search">
@@ -100,23 +106,20 @@ const CategoryPage = async ({ params }: CategoryParams) => {
                 </form>
               </div>
             </div>
-
-            <div className="category-hero-card2">
-              <h3>Today's News</h3>
-              <div className="category-hero-card-items2">
-                {data.slice(-10).map((element) => (
-                  <Link
-                    key={element.title}
-                    href={
-                      "/post/" +
-                      encodeURIComponent(element.title.replaceAll(" ", "-"))
-                    }
-                    target="_blank"
-                  >
-                    {element.title} <FaExternalLinkAlt className="link-icon" />
-                  </Link>
-                ))}
-              </div>
+          </div>
+          <div className="category-hero-card2">
+            <h3>Today's News</h3>
+            <div className="category-hero-card-items2">
+              {data.slice(-10).map((element) => (
+                <Link
+                  key={element.headline} // Use headline as a unique key
+                  href={`/article/${encodeURIComponent(element.headline.replaceAll(" ", "-"))}`}
+                  target="_blank"
+                >
+                  {element.headline} {/* Changed from element.title to element.headline */}
+                  <FaExternalLinkAlt className="link-icon" />
+                </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -124,4 +127,5 @@ const CategoryPage = async ({ params }: CategoryParams) => {
     </div>
   );
 };
+
 export default CategoryPage;
