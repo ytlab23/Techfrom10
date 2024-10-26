@@ -1,58 +1,121 @@
-import { redirect } from "next/navigation";
+"use client";
+import { useEffect, useState, useRef } from "react";
 import "./category.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { FaExternalLinkAlt, FaEye } from "react-icons/fa";
+import DatePickerComponent from "@/components/dataPicker/datePicker";
+import moment from "moment";
+import { useToast } from "@/components/ui/use-toast";
 
 interface NewsItem {
   headline: string;
+  title: string;
+  slugtitle: string;
+  headlines: string;
   summary: string;
-  published: string;
+  date: string; // Ensure this is a date string
   img_url?: string;
   source?: string;
 }
 
-interface CategoryParams {
-  params: {
-    category: string;
-  };
+interface CategoryProps {
+  params: { category: string }; // Adjusted to match expected structure
 }
 
 const latestNewsData = async () => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`
   );
-
   const data: NewsItem[] = await response.json();
   return data;
 };
 
-const CategoryPage = async ({ params }: CategoryParams) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchCategory`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ category: params.category }),
-      cache: "no-cache",
+const CategoryPage = ({ params }: CategoryProps) => {
+  const [data, setData] = useState<NewsItem[]>([]);
+  const [filteredData, setFilteredData] = useState<NewsItem[]>([]);
+  const [latestData, setLatestData] = useState<NewsItem[]>([]);
+  const [filteredDate, setFilteredDate] = useState<{
+    from: Date | null;
+    to: Date | null;
+  } | null>(null);
+  const { toast } = useToast();
+  const hasReset = useRef(false);
+
+  const category = params.category;
+
+  const handleDateChange = (
+    date: { from: Date | null; to: Date | null } | null
+  ) => {
+    setFilteredDate(date);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchCategory`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ category }),
+        }
+      );
+
+      if (response.status === 200) {
+        const categoryData: NewsItem[] = await response.json();
+        setData(categoryData);
+        setFilteredData(categoryData); // Initialize filtered data
+      } else {
+        console.error("Failed to fetch category data");
+      }
+    };
+
+    const fetchLatestNews = async () => {
+      const latestNews = await latestNewsData();
+      setLatestData(latestNews);
+    };
+
+    fetchData();
+    fetchLatestNews();
+  }, [category]);
+
+  useEffect(() => {
+    if (!filteredDate) {
+      setFilteredData(data);
+      return;
     }
-  );
 
-  if (response.status !== 200) redirect("/");
+    const from = moment(filteredDate.from).startOf("day");
+    const to = filteredDate.to
+      ? moment(filteredDate.to).endOf("day")
+      : from.endOf("day");
 
-  const data: NewsItem[] = await response.json();
-  const latestData = await latestNewsData();
+    const newFilteredData = data.filter((item) =>
+      moment(item.date).isBetween(from, to, null, "[]")
+    );
+
+    if (newFilteredData.length === 0) {
+      toast({
+        title: "No results found for the selected Filter.",
+      });
+      setFilteredData(data); // Reset to original data if no results
+    } else {
+      setFilteredData(newFilteredData);
+    }
+  }, [filteredDate, data]);
+
   return (
     <div className="category-parent">
-      <div className="category-title">
-        <h1>{params.category} News</h1>
-      </div>
       <div className="category-parent-container">
         <div className="category-parent-left">
+          <div className="hero-container-title">
+            <Link href="/#">
+              <h3>Your Tech Round-Up!</h3>
+            </Link>
+            <DatePickerComponent onDateChange={handleDateChange} />
+          </div>
           <div className="category-hero-container-wrap">
-            {data.map((value) => (
+            {filteredData.map((value) => (
               <div className="category-container-wrap" key={value.headline}>
                 {value.img_url && (
                   <Image
@@ -125,8 +188,7 @@ const CategoryPage = async ({ params }: CategoryParams) => {
                   )}`}
                   target="_blank"
                 >
-                  {element.title}{" "}
-                  {/* Changed from element.title to element.headline */}
+                  {element.title}
                   <FaExternalLinkAlt className="link-icon" />
                 </Link>
               ))}

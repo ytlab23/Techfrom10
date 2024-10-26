@@ -32,6 +32,7 @@ export const POST = async (req: Request) => {
           img_url: newsItem.img_url,
           source: newsItem.sources[index],
           hashtags: newsItem.hashtags[index],
+          date: newsItem.date,
         };
       });
 
