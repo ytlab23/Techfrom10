@@ -21,10 +21,11 @@ export const POST = async (req: Request) => {
 
     if (res.rows.length > 0) {
       // Prepare an array to hold all matching news items
-      const responseData = res.rows.map(newsItem => {
+      const responseData = res.rows.map((newsItem) => {
         const index = newsItem.hashtags.indexOf(category);
         return {
           title: newsItem.title,
+          slugtitle: newsItem.slugtitle,
           headline: newsItem.headlines[index],
           summary: newsItem.summaries[index],
           published: newsItem.published[index],
@@ -36,10 +37,10 @@ export const POST = async (req: Request) => {
 
       return new Response(JSON.stringify(responseData));
     } else {
-      return new Response("", { status: 404 })
+      return new Response("", { status: 404 });
     }
   } catch (error) {
-    return new Response("", { status: 500 })
+    return new Response("", { status: 500 });
   } finally {
     client.release();
   }

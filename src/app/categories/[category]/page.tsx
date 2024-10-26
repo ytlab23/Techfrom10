@@ -18,6 +18,15 @@ interface CategoryParams {
   };
 }
 
+const latestNewsData = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`
+  );
+
+  const data: NewsItem[] = await response.json();
+  return data;
+};
+
 const CategoryPage = async ({ params }: CategoryParams) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchCategory`,
@@ -34,7 +43,7 @@ const CategoryPage = async ({ params }: CategoryParams) => {
   if (response.status !== 200) redirect("/");
 
   const data: NewsItem[] = await response.json();
-
+  const latestData = await latestNewsData();
   return (
     <div className="category-parent">
       <div className="category-title">
@@ -108,15 +117,15 @@ const CategoryPage = async ({ params }: CategoryParams) => {
           <div className="category-hero-card2">
             <h3>More News</h3>
             <div className="category-hero-card-items2">
-              {data.slice(-10).map((element) => (
+              {latestData.slice(-10).map((element) => (
                 <Link
-                  key={element.headline} // Use headline as a unique key
-                  href={`/article/${encodeURIComponent(
-                    element.headline.replaceAll(" ", "-")
+                  key={element.headlines}
+                  href={`/post/${encodeURIComponent(
+                    element.slugtitle.replaceAll(" ", "-")
                   )}`}
                   target="_blank"
                 >
-                  {element.headline}{" "}
+                  {element.title}{" "}
                   {/* Changed from element.title to element.headline */}
                   <FaExternalLinkAlt className="link-icon" />
                 </Link>
