@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import "./category.scss";
 import Image from "next/image";
 import Link from "next/link";
-import { FaExternalLinkAlt, FaEye } from "react-icons/fa";
+import { FaExternalLinkAlt, FaEye, FaClock } from "react-icons/fa";
 import DatePickerComponent from "@/components/dataPicker/datePicker";
 import moment from "moment";
 import { useToast } from "@/components/ui/use-toast";
@@ -116,18 +116,32 @@ const CategoryPage = ({ params }: CategoryProps) => {
           </div>
           <div className="category-hero-container-wrap">
             {filteredData.map((value) => (
-              <div className="category-container-wrap" key={value.headline}>
-                {value.img_url && (
-                  <Image
-                    src={value.img_url}
-                    alt={value.headline}
-                    width={250}
-                    height={300}
-                  />
-                )}
-                <div className="category-right">
-                  <ul>
-                    <li>
+              <div>
+                <div className="category-container-wrap" key={value.headline}>
+                  {value.img_url && (
+                    <Image
+                      src={value.img_url}
+                      alt={value.headline}
+                      width={250}
+                      height={300}
+                    />
+                  )}
+                  <div className="category-right">
+                    <ul>
+                      <li>
+                        <Link
+                          href={`/article/${encodeURIComponent(
+                            value.headline.replaceAll(" ", "-")
+                          )}`}
+                          target="_blank"
+                          rel="noreferrer nofollow noopener"
+                          title="view article"
+                        >
+                          {value.headline}
+                        </Link>
+                      </li>
+                    </ul>
+                    <div className="flex gap-2 items-center">
                       <Link
                         href={`/article/${encodeURIComponent(
                           value.headline.replaceAll(" ", "-")
@@ -136,31 +150,19 @@ const CategoryPage = ({ params }: CategoryProps) => {
                         rel="noreferrer nofollow noopener"
                         title="view article"
                       >
-                        {value.headline}
+                        <FaEye />
                       </Link>
-                    </li>
-                  </ul>
-                  <div className="flex gap-2 items-center">
-                    <Link
-                      href={`/article/${encodeURIComponent(
-                        value.headline.replaceAll(" ", "-")
-                      )}`}
-                      target="_blank"
-                      rel="noreferrer nofollow noopener"
-                      title="view article"
-                    >
-                      <FaEye />
-                    </Link>
-                    {value.source && (
-                      <Link
-                        href={`${value.source}`}
-                        target="_blank"
-                        rel="noreferrer nofollow noopener"
-                        title="view full info"
-                      >
-                        <FaExternalLinkAlt fontSize={"12px"} />
-                      </Link>
-                    )}
+                      {value.source && (
+                        <Link
+                          href={`${value.source}`}
+                          target="_blank"
+                          rel="noreferrer nofollow noopener"
+                          title="view full info"
+                        >
+                          <FaExternalLinkAlt fontSize={"12px"} />
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
