@@ -81,7 +81,7 @@ const CategoryPage = async ({ params }: CategoryParams) => {
                     </Link>
                     {value.source && (
                       <Link
-                        href={`https://${value.source}`}
+                        href={`${value.source}`}
                         target="_blank"
                         rel="noreferrer nofollow noopener"
                         title="view full info"

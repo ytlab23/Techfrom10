@@ -220,7 +220,7 @@ const Page: NextPage<Props> = ({}) => {
                   <FaEye />
                 </Link>
                 <Link
-                  href={"https://" + val.sources[hindex]}
+                  href={val.sources[hindex]}
                   target="_blank"
                   rel="noreferrer nofollow noopener"
                   title="view full info"
@@ -284,7 +284,7 @@ const Page: NextPage<Props> = ({}) => {
                 </Link>
                 <Link
                   key={hindex}
-                  href={"https://" + val.sources[hindex]}
+                  href={val.sources[hindex]}
                   target="_blank"
                   rel="noreferrer nofollow noopener"
                   title="view full info"
