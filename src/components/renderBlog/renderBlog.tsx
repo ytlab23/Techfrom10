@@ -34,7 +34,7 @@ const RenderBlog: NextPage<Props> = ({
               <p>
                 {" "}
                 <Link
-                  href={"https://" + source[index]}
+                  href={source[index]}
                   target="_blank"
                   rel="noreferrer nofollow noopener"
                 >
