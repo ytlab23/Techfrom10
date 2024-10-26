@@ -1,13 +1,11 @@
 @import "@/styles/styles.scss";
 
 .category-parent {
-  padding: 0 5vw;
-  padding-top: 14vh;
+  padding: 14vh 5vw;
   font-family: $josefin;
   height: 100%;
   display: flex;
   flex-direction: column;
-
 }
 
 .category-parent-container {
@@ -21,6 +19,9 @@
 
 .category-parent-right {
   flex: 3;
+  @include flex-center(column);
+  justify-content: flex-start;
+  gap: 2vh;
 }
 
 .category-hero-container-wrap {
@@ -29,7 +30,6 @@
   gap: 5vh;
   height: 100%;
   width: 100%;
-
 }
 
 .category-container-wrap {
@@ -40,7 +40,10 @@
   width: 100%;
   border-radius: 1vw;
   background-color: rgba(255, 255, 255, 0.3);
-  transition: scale 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  backdrop-filter: blur(2px);
+  transition:
+    scale 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
 
   &:hover {
     backdrop-filter: blur(4px);
@@ -57,7 +60,6 @@
     border: 5px solid violet;
   }
 }
-
 
 .category-title {
   width: 100%;
@@ -78,9 +80,7 @@
     padding: 6px 60px;
     background: $grady-color;
   }
-
 }
-
 
 .category-right {
   display: flex;
@@ -165,37 +165,31 @@
   }
 }
 
-.hero-category-search-container{
+.hero-category-search-container {
   @include flex-center(column);
   gap: 3vh;
   width: 100%;
 }
-.category-search-container{
-  display: flex;
-  flex: 1;
-  justify-content: space-around;
-  gap: 2vh;
-  transition: all 0.2s linear;
-}
-.category-search{
+
+.category-search {
   width: 100%;
-  form{
+  form {
     @include flex-center();
     justify-content: flex-end;
     gap: 0.5vw;
   }
-  input{
+  input {
     border: 2px solid black;
     width: 100%;
     border-radius: 2vw;
     padding: 0 1vw;
 
-    &::placeholder{
+    &::placeholder {
       text-align: center;
     }
   }
 
-  button{
+  button {
     border: 2px solid black;
     padding: 0 1vw;
     color: white;
@@ -204,9 +198,10 @@
     border-radius: 2vw;
     width: 6vw;
     transition: all 0.2s ease-in-out;
-    &:hover{
+
+    &:hover {
       width: 8vw;
-      background-color: $grady-color;
+      background: $grady-color;
     }
   }
 }

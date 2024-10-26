@@ -98,25 +98,26 @@ const CategoryPage = async ({ params }: CategoryParams) => {
 
         <div className="category-parent-right">
           <div className="hero-category-search-container">
-            <div className="category-search-container">
-              <div className="category-search">
-                <form>
-                  <input type="text" placeholder="Search News..." />
-                  <button type="submit">Search</button>
-                </form>
-              </div>
+            <div className="category-search">
+              <form>
+                <input type="text" placeholder="Search News..." />
+                <button type="submit">Search</button>
+              </form>
             </div>
           </div>
           <div className="category-hero-card2">
-            <h3>Today's News</h3>
+            <h3>More News</h3>
             <div className="category-hero-card-items2">
               {data.slice(-10).map((element) => (
                 <Link
                   key={element.headline} // Use headline as a unique key
-                  href={`/article/${encodeURIComponent(element.headline.replaceAll(" ", "-"))}`}
+                  href={`/article/${encodeURIComponent(
+                    element.headline.replaceAll(" ", "-")
+                  )}`}
                   target="_blank"
                 >
-                  {element.headline} {/* Changed from element.title to element.headline */}
+                  {element.headline}{" "}
+                  {/* Changed from element.title to element.headline */}
                   <FaExternalLinkAlt className="link-icon" />
                 </Link>
               ))}
