@@ -107,6 +107,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
   return (
     <div className="category-parent">
       <div className="category-parent-container">
+
         <div className="category-parent-left">
           <div className="hero-container-title">
             <Link href="/#">
@@ -117,15 +118,34 @@ const CategoryPage = ({ params }: CategoryProps) => {
           <div className="category-hero-container-wrap">
             {filteredData.map((value) => (
               <div>
-                <div className="category-container-wrap" key={value.headline}>
-                  {value.img_url && (
-                    <Image
-                      src={value.img_url}
-                      alt={value.headline}
-                      width={250}
-                      height={300}
-                    />
-                  )}
+
+                <div className="category-container-head" key={value.headline}>
+                  <div className="category-dir">
+                    <div className="category-date">
+                      <span>
+                        <FaClock className="text-base" />
+                        {value.date}
+                      </span>
+                    </div>
+                    <div className="category-image">
+                      {value.img_url && (
+                        <Image
+                          src={value.img_url}
+                          alt={value.headline}
+                          width={250}
+                          height={300}
+                        />
+                      )}
+                    </div>
+                    <div className="category-read-more">
+                      <Link
+                        href={"/post/" + encodeURIComponent(value.slugtitle.replaceAll(" ", "-"))}
+                        target="_blank"
+                      >
+                        Read Full Article
+                      </Link>
+                    </div>
+                  </div>
                   <div className="category-right">
                     <ul>
                       <li>
