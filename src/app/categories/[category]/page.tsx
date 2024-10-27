@@ -7,6 +7,8 @@ import { FaExternalLinkAlt, FaEye, FaClock } from "react-icons/fa";
 import DatePickerComponent from "@/components/dataPicker/datePicker";
 import moment from "moment";
 import { useToast } from "@/components/ui/use-toast";
+import Footer from "@/components/footer/footer";
+import Loading from "../../loading";
 
 interface NewsItem {
   headline: string;
@@ -32,6 +34,7 @@ const latestNewsData = async () => {
 };
 
 const CategoryPage = ({ params }: CategoryProps) => {
+  const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<NewsItem[]>([]);
   const [filteredData, setFilteredData] = useState<NewsItem[]>([]);
   const [latestData, setLatestData] = useState<NewsItem[]>([]);
@@ -68,6 +71,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
       } else {
         console.error("Failed to fetch category data");
       }
+      setLoading(false);
     };
 
     const fetchLatestNews = async () => {
@@ -105,50 +109,67 @@ const CategoryPage = ({ params }: CategoryProps) => {
   }, [filteredDate, data]);
 
   return (
-    <div className="category-parent">
-      <div className="category-parent-container">
-
-        <div className="category-parent-left">
-          <div className="hero-container-title">
-            <Link href="/#">
-              <h3>Your Tech Round-Up!</h3>
-            </Link>
-            <DatePickerComponent onDateChange={handleDateChange} />
-          </div>
-          <div className="category-hero-container-wrap">
-            {filteredData.map((value) => (
-              <div>
-
-                <div className="category-container-head" key={value.headline}>
-                  <div className="category-dir">
-                    <div className="category-date">
-                      <span>
-                        <FaClock className="text-base" />
-                        {value.date}
-                      </span>
+    <div>
+      {loading ? (
+        <Loading />
+      ):(
+        <div className="category-parent">
+        <div className="category-parent-container">
+  
+          <div className="category-parent-left">
+            <div className="hero-container-title">
+              <Link href="/#">
+                <h3>Your Tech Round-Up!</h3>
+              </Link>
+              <DatePickerComponent onDateChange={handleDateChange} />
+            </div>
+            <div className="category-hero-container-wrap">
+              {filteredData.map((value) => (
+                <div>
+  
+                  <div className="category-container-head" key={value.headline}>
+                    <div className="category-dir">
+                      <div className="category-date">
+                        <span>
+                          <FaClock className="text-base" />
+                          {value.date}
+                        </span>
+                      </div>
+                      <div className="category-image">
+                        {value.img_url && (
+                          <Image
+                            src={value.img_url}
+                            alt={value.headline}
+                            width={250}
+                            height={300}
+                          />
+                        )}
+                      </div>
+                      <div className="category-read-more">
+                        <Link
+                          href={"/post/" + encodeURIComponent(value.slugtitle.replaceAll(" ", "-"))}
+                          target="_blank"
+                        >
+                          Read Full Article
+                        </Link>
+                      </div>
                     </div>
-                    <div className="category-image">
-                      {value.img_url && (
-                        <Image
-                          src={value.img_url}
-                          alt={value.headline}
-                          width={250}
-                          height={300}
-                        />
-                      )}
-                    </div>
-                    <div className="category-read-more">
-                      <Link
-                        href={"/post/" + encodeURIComponent(value.slugtitle.replaceAll(" ", "-"))}
-                        target="_blank"
-                      >
-                        Read Full Article
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="category-right">
-                    <ul>
-                      <li>
+                    <div className="category-right">
+                      <ul>
+                        <li>
+                          <Link
+                            href={`/article/${encodeURIComponent(
+                              value.headline.replaceAll(" ", "-")
+                            )}`}
+                            target="_blank"
+                            rel="noreferrer nofollow noopener"
+                            title="view article"
+                          >
+                            {value.headline}
+                          </Link>
+                        </li>
+                      </ul>
+                      <div className="flex gap-2 items-center">
                         <Link
                           href={`/article/${encodeURIComponent(
                             value.headline.replaceAll(" ", "-")
@@ -157,67 +178,57 @@ const CategoryPage = ({ params }: CategoryProps) => {
                           rel="noreferrer nofollow noopener"
                           title="view article"
                         >
-                          {value.headline}
+                          <FaEye />
                         </Link>
-                      </li>
-                    </ul>
-                    <div className="flex gap-2 items-center">
-                      <Link
-                        href={`/article/${encodeURIComponent(
-                          value.headline.replaceAll(" ", "-")
-                        )}`}
-                        target="_blank"
-                        rel="noreferrer nofollow noopener"
-                        title="view article"
-                      >
-                        <FaEye />
-                      </Link>
-                      {value.source && (
-                        <Link
-                          href={`${value.source}`}
-                          target="_blank"
-                          rel="noreferrer nofollow noopener"
-                          title="view full info"
-                        >
-                          <FaExternalLinkAlt fontSize={"12px"} />
-                        </Link>
-                      )}
+                        {value.source && (
+                          <Link
+                            href={`${value.source}`}
+                            target="_blank"
+                            rel="noreferrer nofollow noopener"
+                            title="view full info"
+                          >
+                            <FaExternalLinkAlt fontSize={"12px"} />
+                          </Link>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="category-parent-right">
-          <div className="hero-category-search-container">
-            <div className="category-search">
-              <form>
-                <input type="text" placeholder="Search News..." />
-                <button type="submit">Search</button>
-              </form>
-            </div>
-          </div>
-          <div className="category-hero-card2">
-            <h3>More News</h3>
-            <div className="category-hero-card-items2">
-              {latestData.slice(-10).map((element) => (
-                <Link
-                  key={element.headlines}
-                  href={`/post/${encodeURIComponent(
-                    element.slugtitle.replaceAll(" ", "-")
-                  )}`}
-                  target="_blank"
-                >
-                  {element.title}
-                  <FaExternalLinkAlt className="link-icon" />
-                </Link>
               ))}
             </div>
           </div>
+  
+          <div className="category-parent-right">
+            <div className="hero-category-search-container">
+              <div className="category-search">
+                <form>
+                  <input type="text" placeholder="Search News..." />
+                  <button type="submit">Search</button>
+                </form>
+              </div>
+            </div>
+            <div className="category-hero-card2">
+              <h3>More News</h3>
+              <div className="category-hero-card-items2">
+                {latestData.slice(-10).map((element) => (
+                  <Link
+                    key={element.headlines}
+                    href={`/post/${encodeURIComponent(
+                      element.slugtitle.replaceAll(" ", "-")
+                    )}`}
+                    target="_blank"
+                  >
+                    {element.title}
+                    <FaExternalLinkAlt className="link-icon" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </div>  
+      )}
+      <Footer />
     </div>
   );
 };
