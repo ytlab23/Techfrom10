@@ -59,11 +59,11 @@ Act like an API. This data is being displayed on a website, so don't include ** 
       headlines: news.headlines,
     }));
 
-    const data2 = `\n\nExisting Database:
+    const data2 = `\n\nExisting Database (Title and News):
 
     ${JSON.stringify(filteredNews, null, 2)}
 
-   Don't repeat the news from Existing Database`;
+   Don't repeat the Overall title and news from Existing Database`;
 
     response = data + data2;
   } else response = data;
