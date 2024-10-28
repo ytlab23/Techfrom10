@@ -17,11 +17,16 @@
   display: flex;
   flex-direction: column;
   gap: 1vh;
-  flex: 6;
+  gap: 5vh;
+  width: 55vw;
 }
 
 .category-parent-right {
-  flex: 3;
+  position: fixed;
+  right: 0;
+  top: auto;
+  width: 35vw;
+  padding-right: 5vw;
   @include flex-center(column);
   justify-content: flex-start;
   gap: 2vh;
@@ -196,12 +201,12 @@
   }
 }
 
-.category-dir{
+.category-dir {
   @include flex-center(column);
   gap: 2vh;
   align-items: flex-start;
 }
-.category-read-more{
+.category-read-more {
   color: #fd79a8;
   text-decoration: underline;
   cursor: pointer;
@@ -210,8 +215,8 @@
   font-size: 0.875rem;
 }
 
-.category-date{
-  span{
+.category-date {
+  span {
     @include flex-center();
     align-items: center;
     gap: 0.5vw;
