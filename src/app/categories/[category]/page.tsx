@@ -38,6 +38,8 @@ const latestNewsData = async () => {
 };
 
 const CategoryPage = ({ params }: CategoryProps) => {
+  const category = params.category;
+
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<NewsItem[]>([]);
   const [filteredData, setFilteredData] = useState<NewsItem[]>([]);
@@ -47,9 +49,9 @@ const CategoryPage = ({ params }: CategoryProps) => {
     to: Date | null;
   } | null>(null);
   const { toast } = useToast();
-  const hasReset = useRef(false);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const category = params.category;
+  const hasReset = useRef(false);
 
   const handleDateChange = (date: DateRange | null) => {
     if (date) {
@@ -61,6 +63,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
       setFilteredDate(null);
     }
   };
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
@@ -116,6 +119,18 @@ const CategoryPage = ({ params }: CategoryProps) => {
     }
   }, [filteredDate, data]);
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredResults = filteredData.filter((item) =>
+    item.headline.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
+
   return (
     <div>
       {loading ? (
@@ -131,7 +146,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
                 <DatePickerComponent onDateChange={handleDateChange} />
               </div>
               <div className="category-hero-container-wrap">
-                {filteredData.map((value) => (
+                {filteredResults.map((value) => (
                   <div>
                     <div
                       className="category-container-head"
@@ -215,8 +230,13 @@ const CategoryPage = ({ params }: CategoryProps) => {
             <div className="category-parent-right">
               <div className="hero-category-search-container">
                 <div className="category-search">
-                  <form>
-                    <input type="text" placeholder="Search News..." />
+                  <form onSubmit={handleSearchSubmit}>
+                    <input
+                      type="text"
+                      placeholder="Search News..."
+                      value={searchQuery}
+                      onChange={handleSearchChange}
+                    />
                     <button type="submit">Search</button>
                   </form>
                 </div>
