@@ -263,7 +263,9 @@ const CategoryPage = ({ params }: CategoryProps) => {
           </div>
         </div>
       )}
+      <div className="category-footer">
       <Footer />
+      </div>
     </div>
   );
 };

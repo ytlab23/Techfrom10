@@ -21,7 +21,7 @@ interface CategoryNews {
   img_url: string;
   headline: string;
   summary: string;
-  source?: string; // Optional if not always present
+  source?: string;
 }
 
 interface Props {
@@ -37,9 +37,9 @@ export async function generateMetadata({ params }: Props) {
       body: JSON.stringify({ headline }),
     }
   );
-  
+
   const data: ArticleData = await res.json();
-  
+
   return {
     title: `${data.headline} - TechFrom10`,
     description: data.summary,
@@ -64,17 +64,17 @@ const fetchCategoryNews = async (
   );
 
   const categoryData: CategoryNews[] = await categoryResponse.json();
-  
+
   const uniqueLatestData = categoryData.filter(
     (news) => news.source !== currentImgUrl
   );
-  
+
   return uniqueLatestData.slice(0, count);
 };
 
 const Page: NextPage<Props> = async ({ params }) => {
   const headline = decodeURIComponent(params.headline.replaceAll("-", " "));
-  
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`,
     {
@@ -87,7 +87,7 @@ const Page: NextPage<Props> = async ({ params }) => {
   const data: ArticleData = await res.json();
 
   const categoryNewsData = await fetchCategoryNews(data, data.source);
-  
+
   return (
     <div className="article-main">
       <div className="article-container">
@@ -99,7 +99,7 @@ const Page: NextPage<Props> = async ({ params }) => {
           <div className="article-extra">
             <p>{data.published}</p>
             <Link
-              href={`https://${data.source}`}
+              href={data.source}
               target="_blank"
               rel="noreferrer nofollow noopener"
             >
@@ -112,8 +112,8 @@ const Page: NextPage<Props> = async ({ params }) => {
       <div className="news-border" />
       <div className="news-latest">
         <h3>More{" "}
-        <Link className="news-latest-link" href={`/categories/${data.hashtags}`}>{data.hashtags}</Link>
-        {" "}News
+          <Link className="news-latest-link" href={`/categories/${data.hashtags}`}>{data.hashtags}</Link>
+          {" "}News
         </h3>
         <div className="parent-latest-news-container">
           {categoryNewsData.map((value, index) => (
@@ -129,7 +129,15 @@ const Page: NextPage<Props> = async ({ params }) => {
                 <h3>{value.headline.replaceAll("-", " ")}</h3>
                 <p>{value.summary}</p>
                 <div className="news-read-more">
+                  <Link
+                    href={
+                      "/article/" +
+                      encodeURIComponent(value.headline.replaceAll(" ", "-"))
+                    }
+                    target="_blank"
+                  >
                     Continue Reading
+                  </Link>
                 </div>
               </div>
             </div>
