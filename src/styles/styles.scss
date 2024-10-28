@@ -42,10 +42,9 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 }
 
 .hero-container-wrap {
-    flex: 2;
     @include flex-center(column);
     align-items: flex-start;
-    gap: 2.5vh;
+    gap: 5vh;
     width: 55vw;
     div:nth-child(2) {
         margin-top: -1vh;
@@ -155,8 +154,8 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     gap: 2vw;
     img {
         flex: 2;
-        width: 300px;
-        height: 300px;
+        width: 250px;
+        height: 250px;
         border-radius: 0.5vw;
         border: 5px solid violet;
     }
@@ -174,6 +173,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
         gap: 5px;
         font-family: $nunito;
         font-size: $--16px;
+        text-wrap: pretty;
         font-weight: 700;
 
         a:hover {
@@ -199,7 +199,11 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 }
 
 .hero-container-fixed {
-    flex: 1;
+    position: fixed;
+    right: 0;
+    top: auto;
+    width: 35vw;
+    padding-right: 5vw;
     @include flex-center(column);
     justify-content: space-around;
     gap: 2vh;
@@ -391,5 +395,5 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 }
 
 .scrolled-to-bottom {
-    transform: translateY(-25vh);
+    transform: translateY(-35vh);
 }
