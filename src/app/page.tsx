@@ -68,21 +68,33 @@ const Page: NextPage<Props> = ({}) => {
   useEffect(() => {
     const footerElement = footerRef.current;
     const heroContainerFixed = heroContainerFixedRef.current;
-    if (!footerElement || !heroContainerFixed) return;
+    const lastHeroContainer = document.querySelector(
+      ".hero-container-wrap > .hero-container:last-child"
+    ) as HTMLElement;
+
+    if (!footerElement || !heroContainerFixed || !lastHeroContainer) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          heroContainerFixed?.classList.add("scrolled-to-bottom");
+          const lastHeroRect = lastHeroContainer.getBoundingClientRect();
+          const footerRect = (
+            footerElement as HTMLElement
+          ).getBoundingClientRect();
+          const difference = footerRect.top - lastHeroRect.top;
+
+          heroContainerFixed.style.transform = `translateY(${-difference}px)`;
         } else {
-          heroContainerFixed?.classList.remove("scrolled-to-bottom");
+          heroContainerFixed.style.transform = "none";
         }
       },
       {
-        threshold: 0.9,
+        threshold: 0.1,
+        rootMargin: "0px",
       }
     );
 
-    if (footerElement) observer.observe(footerElement);
+    observer.observe(footerElement);
     return () => {
       observer.disconnect();
     };
