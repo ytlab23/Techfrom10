@@ -51,6 +51,7 @@ Use tags from this collection:
 AI, Space, Mobile, Videogames, Biotechnology, Robotics, Nanotechnology, Social Media, Cybersecurity, Gadgets, Software, Startups, Reviews, Coding, Hardware, Innovations, Tutorial.
 add relavant company tags like amazon, google etc.
 
+Make title unique and different. Don't use general title like "Latest news" or "Latest Tech News and Updates"
 Act like an API. This data is being displayed on a website, so don't include ** or wrap links inside text. Follow the above format exactly. Use only one tag for each news item and try to use a variety of tags. Make sure the Title is catchy and includes an emoji.`;
 
   if (existingNews) {
@@ -62,8 +63,8 @@ Act like an API. This data is being displayed on a website, so don't include ** 
     const data2 = `\n\nExisting Database (Title and News):
 
     ${JSON.stringify(filteredNews, null, 2)}
-
-   Don't repeat the Overall title and news from Existing Database`;
+   Don't repeat same title from Existing Database
+   Don't repeat news from Existing Database`;
 
     response = data + data2;
   } else response = data;
