@@ -9,6 +9,7 @@ import moment from "moment";
 import { useToast } from "@/components/ui/use-toast";
 import Footer from "@/components/footer/footer";
 import Loading from "../../loading";
+import { useRouter } from "next/navigation";
 
 interface NewsItem {
   headline: string;
@@ -39,7 +40,7 @@ const latestNewsData = async () => {
 
 const CategoryPage = ({ params }: CategoryProps) => {
   const category = params.category;
-
+  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<NewsItem[]>([]);
   const [filteredData, setFilteredData] = useState<NewsItem[]>([]);
@@ -80,7 +81,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
         setData(categoryData);
         setFilteredData(categoryData); // Initialize filtered data
       } else {
-        console.error("Failed to fetch category data");
+        router.push("/");
       }
       setLoading(false);
     };
