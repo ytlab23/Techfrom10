@@ -6,6 +6,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 .category-parent-container {
@@ -230,4 +231,9 @@
     font-size: $--12px;
     font-family: $nunito;
   }
+}
+.category-footer{
+  position: relative;
+  bottom: 0;
+  width: 100%;
 }
