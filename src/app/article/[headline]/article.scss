@@ -7,6 +7,9 @@
     height: 100%;
     padding-top: 15vh;
     min-height: 100vh;
+    @media (max-width: 768px) {
+        padding-top: 12vh;
+    }
 }
 
 .article-container {
@@ -90,6 +93,7 @@
     border-top: 3px solid violet;
     width: 78%;
 }
+
 .news-latest{
     @include flex-center();
     flex-direction: column;
@@ -100,10 +104,16 @@
         color: black;
         font-family: $bebas;
         text-decoration: underline;
+        @media (max-width: 768px) {
+            font-size: $--48px;
+        }
     }
     h3{
         font-size: 58px;
         font-family: $bebas;
+        @media (max-width: 768px) {
+            font-size: $--48px;
+        }
     }
 }
 
@@ -118,6 +128,14 @@
     padding: 2vh 2vw;
     border-radius: 2vw;
     background-color: white;
+    @media (max-width: 768px) {
+        display: grid;
+        grid-template-columns: 1fr;
+        padding: 2vh 4vw;
+        font-size: $--32px;
+        margin: 0vh 5vw;
+        box-shadow: 10px 10px black;
+    }
 }
 
 .news-latest-left-container {
@@ -126,6 +144,12 @@
     gap:3vh;
     img{
         border-radius: 1vw;
+    }
+    @media (max-width: 768px) {
+        img{
+            border: 3px solid violet;
+            border-radius: 0.5vw;
+        }
     }
 }
 
@@ -143,6 +167,9 @@
         -webkit-line-clamp: 1;
         text-overflow: ellipsis;
         overflow: hidden;
+        @media (max-width: 768px) {
+            font-size: $--26px;
+        }
     }
 
     p{
@@ -155,6 +182,9 @@
         -webkit-line-clamp: 2;
         text-overflow: ellipsis;
         overflow: hidden;
+        @media (max-width: 768px) {
+            font-size: $--14px;
+        }
     }
 }
 
@@ -167,5 +197,8 @@
     margin-bottom: 4vh;
     &:hover{
         color: black;
+    }
+    @media (max-width: 768px) {
+        font-size: 1.25rem;
     }
 }
