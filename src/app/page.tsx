@@ -41,8 +41,6 @@ const Page: NextPage<Props> = ({}) => {
 
   const { toast } = useToast();
   const hasReset = useRef(false);
-  const heroContainerFixedRef = useRef<HTMLDivElement>(null);
-  const footerRef = useRef(null);
 
   const handleViewChange = (checked: boolean) => {
     setUnifiedView(checked);
@@ -65,43 +63,8 @@ const Page: NextPage<Props> = ({}) => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const footerElement = footerRef.current;
-    const heroContainerFixed = heroContainerFixedRef.current;
-    const lastHeroContainer = document.querySelector(
-      ".hero-container-wrap > .hero-container:last-child"
-    ) as HTMLElement;
-
-    if (!footerElement || !heroContainerFixed || !lastHeroContainer) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          const lastHeroRect = lastHeroContainer.getBoundingClientRect();
-          const footerRect = (
-            footerElement as HTMLElement
-          ).getBoundingClientRect();
-          const difference = footerRect.top - lastHeroRect.top;
-
-          heroContainerFixed.style.transform = `translateY(${-difference}px)`;
-        } else {
-          heroContainerFixed.style.transform = "none";
-        }
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "0px",
-      }
-    );
-
-    observer.observe(footerElement);
-    return () => {
-      observer.disconnect();
-    };
-  }, [filteredData]);
-
   const handleTagSelection = (hashtag: string) => {
-    if (hashtag === "uncategorized") {
+    if (hashtag === "others") {
       if (!selectedTags.includes("uncategorized")) {
         setSelectedTags(["uncategorized"]);
       }
@@ -342,7 +305,7 @@ const Page: NextPage<Props> = ({}) => {
               ? filteredData.map(renderUnifiedView)
               : filteredData.map(renderDefaultView)}
           </div>
-          <div className="hero-container-fixed" ref={heroContainerFixedRef}>
+          <div className="hero-container-fixed">
             <div className="hero-search">
               <form onSubmit={handleSearch}>
                 <input
@@ -413,7 +376,7 @@ const Page: NextPage<Props> = ({}) => {
           </div>
         </div>
       )}
-      <Footer footerRef={footerRef} />
+      <Footer />
     </div>
   );
 };
