@@ -65,8 +65,8 @@ const Page: NextPage<Props> = ({}) => {
 
   const handleTagSelection = (hashtag: string) => {
     if (hashtag === "others") {
-      if (!selectedTags.includes("uncategorized")) {
-        setSelectedTags(["uncategorized"]);
+      if (!selectedTags.includes("others")) {
+        setSelectedTags(["others"]);
       }
     } else {
       setSelectedTags((prevTags) =>
