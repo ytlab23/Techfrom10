@@ -17,8 +17,7 @@
 .category-parent-left {
   display: flex;
   flex-direction: column;
-  gap: 1vh;
-  gap: 5vh;
+  gap: 2vh;
   width: 55vw;
 }
 
@@ -232,7 +231,7 @@
     font-family: $nunito;
   }
 }
-.category-footer{
+.category-footer {
   position: relative;
   bottom: 0;
   width: 100%;

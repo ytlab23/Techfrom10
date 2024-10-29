@@ -44,7 +44,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 .hero-container-wrap {
     @include flex-center(column);
     align-items: flex-start;
-    gap: 5vh;
+    gap: 3vh;
     width: 55vw;
     div:nth-child(2) {
         margin-top: -1vh;
@@ -84,7 +84,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
     padding: 3vh 1vw;
     @include flex-center(column);
     align-items: flex-start;
-    gap: 5vh;
+    gap: 3vh;
     border: 2px solid black;
     box-shadow: 0.5vw 1vh 0 black;
     width: 100%;
