@@ -269,7 +269,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
         <div className="category-parent">
           <div className="category-parent-container">
             <div className="category-parent-left">
-              <div className="hero-container-title">
+              <div className="category-container-title">
                 <Link href="/#">
                   <h3>Your Tech Round-Up!</h3>
                 </Link>

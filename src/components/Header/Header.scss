@@ -9,19 +9,24 @@
     color: white;
     transition: background-color 0.3s ease;
     border-bottom: 2px solid black;
+
     @media (max-width: 767px) {
         padding: 1vh 3vw;
     }
 }
+
 .nav-parent-default {
     background-color: rgba(0, 0, 0, 1);
 }
+
 .nav-parent-scrolled {
     background-color: rgba(0, 0, 0, 0.7);
 }
+
 .nav-container {
     @include flex-center();
     justify-content: space-between;
+
     .nav-left {
         @include flex-center();
         gap: 3vw;
@@ -30,6 +35,7 @@
         @media (max-width: 768px) {
             gap: 5vw;
         }
+
         ul {
             @include flex-center();
             gap: 1vw;
@@ -37,17 +43,21 @@
             @media (max-width: 768px) {
                 gap: 2vw;
             }
+
             a,
             li {
                 font-weight: 700;
                 font-size: 1.2rem;
                 cursor: pointer;
+
                 @media (max-width: 768px) {
-                    font-size: $--14px;
+                    font-size: 0.813rem;
                 }
+
                 &:hover {
                     animation: bottomLine 0.3s ease-in forwards;
                 }
+
                 @keyframes bottomLine {
                     100% {
                         border-bottom: 3px solid $pri-col;
@@ -60,8 +70,9 @@
         h1 {
             font-weight: 800;
             font-size: $--42px;
+
             @media (max-width: 768px) {
-                font-size: 1.8rem;
+                font-size: 1.25rem;
             }
         }
     }
@@ -75,35 +86,40 @@
             border-radius: 100%;
             background-color: black;
             cursor: pointer;
+        }
 
-            @media (max-width: 768px) {
-                display: none;
+        @media (max-width: 768px) {
+            Button {
+                font-size: 0.813rem;
+
             }
         }
     }
 }
 
 .ant-dropdown-trigger {
-    font-family: $poppins; 
-    font-size: 1.1rem ;
+    font-family: $poppins;
+    font-size: 1.1rem;
     font-weight: 700;
-    background-color: black ;
+    background-color: black;
     color: white !important;
-    border: none ;
+    border: none;
 
     &:hover {
         background-color: rgba(255, 255, 255, 0.4) !important;
     }
+    @media (max-width: 768px) {
+    }
 }
 
 .ant-dropdown-menu {
-    max-height: 150px; 
-    overflow-y: auto; 
+    max-height: 150px;
+    overflow-y: auto;
     background-color: black !important;
-    color: white ;
+    color: white;
 
     ::-webkit-scrollbar {
-        width: 0px; 
+        width: 0px;
     }
 
     scrollbar-width: none;

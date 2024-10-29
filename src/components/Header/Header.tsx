@@ -88,16 +88,6 @@ const Header: NextPage<Props> = ({}) => {
               Categories <DownOutlined />
             </Button>
           </Dropdown>
-
-          {/* <Image
-            src={msgIcon}
-            alt="Get in Touch"
-            className="nav-msg"
-            width={40}
-          />
-          <Avatar>
-            <AvatarImage src={"https://github.com/shadcn.png"} />
-          </Avatar> */}
         </div>
       </div>
       {isNewsletterOpen && (
