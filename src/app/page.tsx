@@ -4,16 +4,27 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState, useMemo, useRef } from "react";
-import Loading from "./loading.js";
 import { FaClock } from "react-icons/fa";
-import DatePickerComponent from "@/components/dataPicker/datePicker";
 import moment from "moment";
 import { DateRange } from "react-day-picker";
 import { useToast } from "@/components/ui/use-toast";
 import { FaExternalLinkAlt, FaEye } from "react-icons/fa";
 import CancelIcon from "@mui/icons-material/Cancel";
-import Footer from "@/components/footer/footer";
 import { Switch } from "@/components/ui/switch";
+import dynamic from "next/dynamic";
+
+const Footer = dynamic(() => import("@/components/footer/footer"), {
+  loading: () => <div>Loading...</div>,
+});
+const DatePickerComponent = dynamic(
+  () => import("@/components/dataPicker/datePicker"),
+  {
+    ssr: false,
+  }
+);
+const Loading = dynamic(() => import("./loading.js"), {
+  loading: () => <div>Loading...</div>,
+});
 
 interface Props {}
 
