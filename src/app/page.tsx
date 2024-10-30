@@ -67,7 +67,14 @@ const Page: NextPage<Props> = ({}) => {
     const updateHeight = () => {
       if (containerWrapRef.current && containerFixedRef.current) {
         const wrapHeight = containerWrapRef.current.offsetHeight;
-        containerFixedRef.current.style.height = `${wrapHeight}px`;
+        const viewportHeight = window.innerHeight;
+
+        // If wrap height is less than 2 viewport heights (200vh)
+        if (wrapHeight < viewportHeight * 1) {
+          containerFixedRef.current.style.height = "100%";
+        } else {
+          containerFixedRef.current.style.height = `${wrapHeight}px`;
+        }
       }
     };
 
