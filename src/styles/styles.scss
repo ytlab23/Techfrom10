@@ -201,6 +201,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 .hero-container-fixed {
     flex: 3;
     @include flex-center(column);
+    justify-content: flex-start;
     gap: 2vh;
     transition: all 0.2s linear;
     .hero-search {
@@ -241,6 +242,8 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
         }
     }
     .hero-card1 {
+        position: sticky;
+        top: 12vh;
         border-radius: 1vw;
         width: 100%;
         @include flex-center(column);

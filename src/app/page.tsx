@@ -38,6 +38,8 @@ const Page: NextPage<Props> = ({}) => {
   const [filteredDate, setFilteredDate] = useState<DateRange | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [unifiedView, setUnifiedView] = useState<boolean>(false);
+  const containerWrapRef = useRef<HTMLDivElement>(null);
+  const containerFixedRef = useRef<HTMLDivElement>(null);
 
   const { toast } = useToast();
   const hasReset = useRef(false);
@@ -49,6 +51,31 @@ const Page: NextPage<Props> = ({}) => {
   const handleDateChange = (date: DateRange | null) => {
     setFilteredDate(date);
   };
+
+  useEffect(() => {
+    const updateHeight = () => {
+      if (containerWrapRef.current && containerFixedRef.current) {
+        const wrapHeight = containerWrapRef.current.offsetHeight;
+        containerFixedRef.current.style.height = `${wrapHeight}px`;
+      }
+    };
+
+    // Initial height set
+    updateHeight();
+
+    // Update height when window is resized
+    window.addEventListener("resize", updateHeight);
+
+    // Update height when data changes
+    if (filteredData.length > 0) {
+      updateHeight();
+    }
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, [filteredData]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -286,7 +313,7 @@ const Page: NextPage<Props> = ({}) => {
         <Loading />
       ) : (
         <div className="hero-parent">
-          <div className="hero-container-wrap">
+          <div className="hero-container-wrap" ref={containerWrapRef}>
             <div className="hero-container-title">
               <Link href="/#">
                 <h3>Your Tech Round-Up!</h3>
@@ -304,7 +331,7 @@ const Page: NextPage<Props> = ({}) => {
               ? filteredData.map((item) => renderUnifiedView(item))
               : filteredData.map((item) => renderDefaultView(item))}
           </div>
-          <div className="hero-container-fixed">
+          <div className="hero-container-fixed" ref={containerFixedRef}>
             <div className="hero-search">
               <form onSubmit={handleSearch}>
                 <input
