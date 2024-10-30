@@ -170,11 +170,11 @@ const Page: NextPage<Props> = ({}) => {
   };
 
   const renderUnifiedView = (val: dataprop) => (
-    <div className="hero-container unified-view">
+    <div className="hero-container unified-view" key={val._id}>
       <div className="hero-content-wrap">
         <ul>
           {val.headlines.map((h, hindex) => (
-            <li key={`${val._id}-${hindex}`}>
+            <li key={`headline-${val._id}-${hindex}`}>
               <Link
                 href={`/article/${encodeURIComponent(h.replaceAll(" ", "-"))}`}
                 target="_blank"
@@ -191,6 +191,7 @@ const Page: NextPage<Props> = ({}) => {
                   target="_blank"
                   rel="noreferrer nofollow noopener"
                   title="view article"
+                  key={`view-${val._id}-${hindex}`}
                 >
                   <FaEye />
                 </Link>
@@ -199,6 +200,7 @@ const Page: NextPage<Props> = ({}) => {
                   target="_blank"
                   rel="noreferrer nofollow noopener"
                   title="view full info"
+                  key={`source-${val._id}-${hindex}`}
                 >
                   <FaExternalLinkAlt fontSize={"12px"} />
                 </Link>
@@ -234,9 +236,8 @@ const Page: NextPage<Props> = ({}) => {
         />
         <ul>
           {val.headlines.map((h, hindex) => (
-            <li key={hindex}>
+            <li key={`headline-${val._id}-${hindex}`}>
               <Link
-                key={hindex}
                 href={`/article/${encodeURIComponent(h.replace(/\s+/g, "-"))}`}
                 target="_blank"
                 rel="noreferrer nofollow noopener"
@@ -246,25 +247,23 @@ const Page: NextPage<Props> = ({}) => {
               </Link>
               <div className="flex gap-2 items-center">
                 <Link
-                  key={hindex}
                   href={`/article/${encodeURIComponent(
                     h.replace(/\s+/g, "-")
                   )}`}
                   target="_blank"
                   rel="noreferrer nofollow noopener"
                   title="view article"
+                  key={`view-${val._id}-${hindex}`}
                 >
-                  {" "}
                   <FaEye />
                 </Link>
                 <Link
-                  key={hindex}
                   href={val.sources[hindex]}
                   target="_blank"
                   rel="noreferrer nofollow noopener"
                   title="view full info"
+                  key={`source-${val._id}-${hindex}`}
                 >
-                  {" "}
                   <FaExternalLinkAlt fontSize={"12px"} />
                 </Link>
               </div>
@@ -302,8 +301,8 @@ const Page: NextPage<Props> = ({}) => {
               <DatePickerComponent onDateChange={handleDateChange} />
             </div>
             {unifiedView
-              ? filteredData.map(renderUnifiedView)
-              : filteredData.map(renderDefaultView)}
+              ? filteredData.map((item) => renderUnifiedView(item))
+              : filteredData.map((item) => renderDefaultView(item))}
           </div>
           <div className="hero-container-fixed">
             <div className="hero-search">
@@ -332,6 +331,7 @@ const Page: NextPage<Props> = ({}) => {
               <div className="hero-card-items2">
                 {data.slice(-10).map((element) => (
                   <Link
+                    key={`news-${element._id}`}
                     href={
                       "/post/" +
                       encodeURIComponent(element.slugtitle.replaceAll(" ", "-"))
@@ -358,9 +358,9 @@ const Page: NextPage<Props> = ({}) => {
                 >
                   #Others
                 </Badge>
-                {uniqueHashtags.map((hashtag, index) => (
+                {uniqueHashtags.map((hashtag) => (
                   <Badge
-                    key={index}
+                    key={`hashtag-${hashtag}`}
                     onClick={() => handleTagSelection(hashtag)}
                     className={
                       selectedTags.includes(hashtag)
