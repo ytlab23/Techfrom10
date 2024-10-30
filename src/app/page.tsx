@@ -214,21 +214,13 @@ const Page: NextPage<Props> = ({}) => {
     setFilteredData(data);
   };
 
-  const renderUnifiedView = (val: dataprop) => (
-    <div className="hero-container unified-view" key={val._id}>
+  const renderUnifiedView = () => (
+    <div className="hero-container unified-view">
       <div className="hero-content-wrap">
         <ul>
-          {val.headlines.map((h, hindex) => (
-            <li key={`headline-${val._id}-${hindex}`}>
-              <Link
-                href={`/article/${encodeURIComponent(h.replaceAll(" ", "-"))}`}
-                target="_blank"
-                rel="noreferrer nofollow noopener"
-                title="view article"
-              >
-                {h}
-              </Link>
-              <div className="flex gap-2 items-center">
+          {filteredData.flatMap((val) =>
+            val.headlines.map((h, hindex) => (
+              <li key={`headline-${val._id}-${hindex}`}>
                 <Link
                   href={`/article/${encodeURIComponent(
                     h.replaceAll(" ", "-")
@@ -236,31 +228,36 @@ const Page: NextPage<Props> = ({}) => {
                   target="_blank"
                   rel="noreferrer nofollow noopener"
                   title="view article"
-                  key={`view-${val._id}-${hindex}`}
                 >
-                  <FaEye />
+                  {h}
                 </Link>
-                <Link
-                  href={val.sources[hindex]}
-                  target="_blank"
-                  rel="noreferrer nofollow noopener"
-                  title="view full info"
-                  key={`source-${val._id}-${hindex}`}
-                >
-                  <FaExternalLinkAlt fontSize={"12px"} />
-                </Link>
-              </div>
-            </li>
-          ))}
+                <div className="flex gap-2 items-center">
+                  <Link
+                    href={`/article/${encodeURIComponent(
+                      h.replaceAll(" ", "-")
+                    )}`}
+                    target="_blank"
+                    rel="noreferrer nofollow noopener"
+                    title="view article"
+                    key={`view-${val._id}-${hindex}`}
+                  >
+                    <FaEye />
+                  </Link>
+                  <Link
+                    href={val.sources[hindex]}
+                    target="_blank"
+                    rel="noreferrer nofollow noopener"
+                    title="view full info"
+                    key={`source-${val._id}-${hindex}`}
+                  >
+                    <FaExternalLinkAlt fontSize={"12px"} />
+                  </Link>
+                </div>
+              </li>
+            ))
+          )}
         </ul>
       </div>
-      <Link
-        href={"/post/" + encodeURIComponent(val.slugtitle.replaceAll(" ", "-"))}
-        target="_blank"
-        className="view-in-full"
-      >
-        Read Full Article
-      </Link>
     </div>
   );
 
@@ -346,7 +343,7 @@ const Page: NextPage<Props> = ({}) => {
               <DatePickerComponent onDateChange={handleDateChange} />
             </div>
             {unifiedView
-              ? filteredData.map((item) => renderUnifiedView(item))
+              ? renderUnifiedView()
               : filteredData.map((item) => renderDefaultView(item))}
           </div>
           <div className="hero-container-fixed" ref={containerFixedRef}>
