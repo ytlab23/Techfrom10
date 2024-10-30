@@ -318,7 +318,7 @@ const Page: NextPage<Props> = ({}) => {
               <Link href="/#">
                 <h3>Your Tech Round-Up!</h3>
               </Link>
-              <div className="flex items-center gap-1">
+              <div className="hero-unified-view">
                 <h3>Unified View </h3>
                 <Switch
                   checked={unifiedView}
