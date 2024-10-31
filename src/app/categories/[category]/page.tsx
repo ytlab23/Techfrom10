@@ -25,7 +25,7 @@ interface NewsItem {
   img_url?: string;
   source?: string;
   sources: string[];
-  published: string[];
+  published: string;
   hashtags: string[];
 }
 
@@ -174,7 +174,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
                     data={filteredResults.map((item) => ({
                       _id: item.slugtitle,
                       headlines: [item.headline],
-                      published: [item.date],
+                      published: [item.published],
                       sources: item.source ? [item.source] : [],
                     }))}
                   />
