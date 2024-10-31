@@ -10,6 +10,8 @@ import "./globals.css";
 import "@/styles/styles.scss";
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/Header/Header";
+import ScrollToTop from "@/components/scrollToTop/scrollToTop";
+
 const inter = Inter({ subsets: ["latin"] });
 
 const poppins = Poppins({
@@ -48,7 +50,7 @@ export default function RootLayout({
         className={`${inter.className} ${poppins.variable} ${nunito.variable} ${josefin.variable} ${bebas.variable}`}
       >
         <Header />
-        {children}
+        {children} <ScrollToTop />
         <Toaster />
       </body>
     </html>
