@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState, useMemo, useRef } from "react";
-import { FaClock } from "react-icons/fa";
 import moment from "moment";
 import { DateRange } from "react-day-picker";
 import { useToast } from "@/components/ui/use-toast";
@@ -12,6 +11,7 @@ import { FaExternalLinkAlt, FaEye } from "react-icons/fa";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Switch } from "@/components/ui/switch";
 import dynamic from "next/dynamic";
+import DefaultView from "@/components/defaultView/defaultView";
 
 const Footer = dynamic(() => import("@/components/footer/footer"), {
   loading: () => <div>Loading...</div>,
@@ -264,67 +264,6 @@ const Page: NextPage<Props> = ({}) => {
     </div>
   );
 
-  const renderDefaultView = (val: dataprop) => (
-    <div className="hero-container" key={val._id}>
-      <div className="hero-container-head">
-        <span>
-          <FaClock className="text-base" />
-          {val.date}
-        </span>
-      </div>
-      <div className="hero-content-wrap">
-        <Image
-          src={val.img_url ? `${val.img_url}` : "/test.jpg"}
-          width={250}
-          height={1024}
-          alt={val.title}
-        />
-        <ul>
-          {val.headlines.map((h, hindex) => (
-            <li key={`headline-${val._id}-${hindex}`}>
-              <Link
-                href={`/article/${encodeURIComponent(h.replace(/\s+/g, "-"))}`}
-                target="_blank"
-                rel="noreferrer nofollow noopener"
-                title="view article"
-              >
-                {hindex + 1}. {h}
-              </Link>
-              <div className="flex gap-2 items-center">
-                <Link
-                  href={`/article/${encodeURIComponent(
-                    h.replace(/\s+/g, "-")
-                  )}`}
-                  target="_blank"
-                  rel="noreferrer nofollow noopener"
-                  title="view article"
-                  key={`view-${val._id}-${hindex}`}
-                >
-                  <FaEye />
-                </Link>
-                <Link
-                  href={val.sources[hindex]}
-                  target="_blank"
-                  rel="noreferrer nofollow noopener"
-                  title="view full info"
-                  key={`source-${val._id}-${hindex}`}
-                >
-                  <FaExternalLinkAlt fontSize={"12px"} />
-                </Link>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <Link
-        href={"/post/" + encodeURIComponent(val.slugtitle.replaceAll(" ", "-"))}
-        target="_blank"
-        className="view-in-full"
-      >
-        Read Full Article
-      </Link>
-    </div>
-  );
   return (
     <div>
       {loading ? (
@@ -347,7 +286,9 @@ const Page: NextPage<Props> = ({}) => {
             </div>
             {unifiedView
               ? renderUnifiedView()
-              : filteredData.map((item) => renderDefaultView(item))}
+              : filteredData.map((item) => (
+                  <DefaultView key={item._id} val={item} />
+                ))}
           </div>
           <div className="hero-container-fixed" ref={containerFixedRef}>
             <div className="hero-search">
