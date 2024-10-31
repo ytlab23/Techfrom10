@@ -11,8 +11,11 @@ import { Switch } from "@/components/ui/switch";
 import Footer from "@/components/footer/footer";
 import Loading from "../../loading";
 import { useRouter } from "next/navigation";
+import DefaultView from "@/components/defaultView/defaultView";
+import UnifiedView from "@/components/uniifiedView/unifiedView";
 
 interface NewsItem {
+  _id: string;
   headline: string;
   title: string;
   slugtitle: string;
@@ -21,6 +24,9 @@ interface NewsItem {
   date: string;
   img_url?: string;
   source?: string;
+  sources: string[];
+  published: string[];
+  hashtags: string[];
 }
 
 interface CategoryProps {
@@ -139,128 +145,6 @@ const CategoryPage = ({ params }: CategoryProps) => {
     event.preventDefault();
   };
 
-  const renderUnifiedView = (value: NewsItem) => (
-    <div className="hero-container unified-view" key={value.headline}>
-      <div className="hero-content-wrap">
-        <div className="category-right">
-          <ul>
-            <li>
-              <Link
-                href={`/article/${encodeURIComponent(
-                  value.headline.replaceAll(" ", "-")
-                )}`}
-                target="_blank"
-                rel="noreferrer nofollow noopener"
-                title="view article"
-              >
-                {value.headline}
-              </Link>
-              <div className="flex gap-2 items-center">
-                <Link
-                  href={`/article/${encodeURIComponent(
-                    value.headline.replaceAll(" ", "-")
-                  )}`}
-                  target="_blank"
-                  rel="noreferrer nofollow noopener"
-                  title="view article"
-                >
-                  <FaEye />
-                </Link>
-                {value.source && (
-                  <Link
-                    href={value.source}
-                    target="_blank"
-                    rel="noreferrer nofollow noopener"
-                    title="view full info"
-                  >
-                    <FaExternalLinkAlt fontSize={"12px"} />
-                  </Link>
-                )}
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <Link
-        href={
-          "/post/" + encodeURIComponent(value.slugtitle.replaceAll(" ", "-"))
-        }
-        target="_blank"
-        className="view-in-full"
-      >
-        Read Full Article
-      </Link>
-    </div>
-  );
-
-  const renderDefaultView = (value: NewsItem) => (
-    <div className="hero-container" key={value.headline}>
-      <div className="hero-container-head">
-        <span>
-          <FaClock className="text-base" />
-          {value.date}
-        </span>
-      </div>
-      <div className="hero-content-wrap">
-        {value.img_url && (
-          <Image
-            src={value.img_url}
-            alt={value.headline}
-            width={250}
-            height={300}
-          />
-        )}
-        <div className="category-right">
-          <ul>
-            <li>
-              <Link
-                href={`/article/${encodeURIComponent(
-                  value.headline.replaceAll(" ", "-")
-                )}`}
-                target="_blank"
-                rel="noreferrer nofollow noopener"
-                title="view article"
-              >
-                {value.headline}
-              </Link>
-              <div className="flex gap-2 items-center">
-                <Link
-                  href={`/article/${encodeURIComponent(
-                    value.headline.replaceAll(" ", "-")
-                  )}`}
-                  target="_blank"
-                  rel="noreferrer nofollow noopener"
-                  title="view article"
-                >
-                  <FaEye />
-                </Link>
-                {value.source && (
-                  <Link
-                    href={value.source}
-                    target="_blank"
-                    rel="noreferrer nofollow noopener"
-                    title="view full info"
-                  >
-                    <FaExternalLinkAlt fontSize={"12px"} />
-                  </Link>
-                )}
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <Link
-        href={
-          "/post/" + encodeURIComponent(value.slugtitle.replaceAll(" ", "-"))
-        }
-        target="_blank"
-        className="view-in-full"
-      >
-        Read Full Article
-      </Link>
-    </div>
-  );
-
   return (
     <div>
       {loading ? (
@@ -285,10 +169,33 @@ const CategoryPage = ({ params }: CategoryProps) => {
                 </div>
               </div>
               <div className="category-hero-container-wrap">
-                {filteredResults.map((value) =>
-                  unifiedView
-                    ? renderUnifiedView(value)
-                    : renderDefaultView(value)
+                {unifiedView ? (
+                  <UnifiedView
+                    data={filteredResults.map((item) => ({
+                      _id: item.slugtitle,
+                      headlines: [item.headline],
+                      published: [item.date],
+                      sources: item.source ? [item.source] : [],
+                    }))}
+                  />
+                ) : (
+                  filteredResults.map((value) => (
+                    <DefaultView
+                      key={value.slugtitle}
+                      val={{
+                        _id: value.slugtitle,
+                        title: value.title,
+                        slugtitle: value.slugtitle,
+                        headlines: [value.headline],
+                        summary: [value.summary],
+                        sources: value.source ? [value.source] : [],
+                        published: [value.date],
+                        hashtags: [],
+                        img_url: value.img_url || "",
+                        date: value.date,
+                      }}
+                    />
+                  ))
                 )}
               </div>
             </div>
