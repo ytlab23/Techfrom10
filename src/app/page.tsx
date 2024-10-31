@@ -12,6 +12,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { Switch } from "@/components/ui/switch";
 import dynamic from "next/dynamic";
 import DefaultView from "@/components/defaultView/defaultView";
+import UnifiedView from "@/components/uniifiedView/unifiedView";
 
 const Footer = dynamic(() => import("@/components/footer/footer"), {
   loading: () => <div>Loading...</div>,
@@ -214,56 +215,6 @@ const Page: NextPage<Props> = ({}) => {
     setFilteredData(data);
   };
 
-  const renderUnifiedView = () => (
-    <div className="hero-container unified-view">
-      <div className="hero-content-wrap">
-        <ul>
-          {filteredData.flatMap((val) =>
-            val.headlines.map((h, hindex) => (
-              <li key={`headline-${val._id}-${hindex}`}>
-                <div className="hero-content-headline">
-                  <Link
-                    href={`/article/${encodeURIComponent(
-                      h.replaceAll(" ", "-")
-                    )}`}
-                    target="_blank"
-                    rel="noreferrer nofollow noopener"
-                    title="view article"
-                  >
-                    {h}
-                  </Link>
-                  <span>({val.published[hindex]})</span>
-                </div>
-                <div className="flex gap-2 items-center">
-                  <Link
-                    href={`/article/${encodeURIComponent(
-                      h.replaceAll(" ", "-")
-                    )}`}
-                    target="_blank"
-                    rel="noreferrer nofollow noopener"
-                    title="view article"
-                    key={`view-${val._id}-${hindex}`}
-                  >
-                    <FaEye />
-                  </Link>
-                  <Link
-                    href={val.sources[hindex]}
-                    target="_blank"
-                    rel="noreferrer nofollow noopener"
-                    title="view full info"
-                    key={`source-${val._id}-${hindex}`}
-                  >
-                    <FaExternalLinkAlt fontSize={"12px"} />
-                  </Link>
-                </div>
-              </li>
-            ))
-          )}
-        </ul>
-      </div>
-    </div>
-  );
-
   return (
     <div>
       {loading ? (
@@ -284,11 +235,13 @@ const Page: NextPage<Props> = ({}) => {
               </div>
               <DatePickerComponent onDateChange={handleDateChange} />
             </div>
-            {unifiedView
-              ? renderUnifiedView()
-              : filteredData.map((item) => (
-                  <DefaultView key={item._id} val={item} />
-                ))}
+            {unifiedView ? (
+              <UnifiedView data={filteredData} /> // Pass filteredData to the UnifiedView
+            ) : (
+              filteredData.map((item) => (
+                <DefaultView key={item._id} val={item} />
+              ))
+            )}
           </div>
           <div className="hero-container-fixed" ref={containerFixedRef}>
             <div className="hero-search">
