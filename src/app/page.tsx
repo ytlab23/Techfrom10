@@ -1,7 +1,6 @@
 "use client";
 import { NextPage } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState, useMemo, useRef } from "react";
 import moment from "moment";
