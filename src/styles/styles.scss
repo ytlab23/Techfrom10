@@ -186,6 +186,16 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
         a:hover {
             color: $pri-col;
         }
+
+        .hero-content-headline {
+            @include flex-center();
+            gap: 5px;
+
+            span {
+                font-size: $--12px;
+                color: rgba(112, 128, 144, 0.7);
+            }
+        }
     }
     @media (max-width: 768px) {
         flex-direction: column;
@@ -286,7 +296,7 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
                 font-weight: 700;
                 transition: all 0.1s ease-in-out;
                 &:hover {
-                    scale: 1.1;
+                    scale: 1.03;
                     cursor: pointer;
                     background-color: $pri-col;
                 }

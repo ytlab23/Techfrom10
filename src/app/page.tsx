@@ -221,16 +221,19 @@ const Page: NextPage<Props> = ({}) => {
           {filteredData.flatMap((val) =>
             val.headlines.map((h, hindex) => (
               <li key={`headline-${val._id}-${hindex}`}>
-                <Link
-                  href={`/article/${encodeURIComponent(
-                    h.replaceAll(" ", "-")
-                  )}`}
-                  target="_blank"
-                  rel="noreferrer nofollow noopener"
-                  title="view article"
-                >
-                  {h}
-                </Link>
+                <div className="hero-content-headline">
+                  <Link
+                    href={`/article/${encodeURIComponent(
+                      h.replaceAll(" ", "-")
+                    )}`}
+                    target="_blank"
+                    rel="noreferrer nofollow noopener"
+                    title="view article"
+                  >
+                    {h}
+                  </Link>
+                  <span>({val.published[hindex]})</span>
+                </div>
                 <div className="flex gap-2 items-center">
                   <Link
                     href={`/article/${encodeURIComponent(
