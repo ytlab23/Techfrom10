@@ -1,19 +1,20 @@
 "use client";
-
 import "./scrollToTop.scss";
 import React, { useEffect, useState } from "react";
-import { FaArrowUp } from "react-icons/fa";
+import { RiArrowUpSFill } from "react-icons/ri";
 
 const ScrollToTop: React.FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const handleScroll = () => {
     const scrolled = document.documentElement.scrollTop;
-    if (scrolled > window.innerHeight) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
+    const windowHeight = window.innerHeight;
+    const totalHeight = document.documentElement.scrollHeight;
+    const bottomThreshold = totalHeight - windowHeight * 1.1; // 10vh from bottom
+
+    // Show button when scrolled past 1 viewport height AND not near bottom
+    const shouldShow = scrolled > windowHeight && scrolled < bottomThreshold;
+    setIsVisible(shouldShow);
   };
 
   const handleScrollToTop = () => {
@@ -36,7 +37,7 @@ const ScrollToTop: React.FC = () => {
       className={`scrollToTop ${isVisible ? "" : "scrollToTop-hidden"}`}
       aria-label="Scroll to top"
     >
-      <FaArrowUp size={24} />
+      <RiArrowUpSFill size={28} />
     </button>
   );
 };
