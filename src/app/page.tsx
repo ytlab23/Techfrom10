@@ -93,7 +93,7 @@ const Page: NextPage<Props> = ({}) => {
     return () => {
       window.removeEventListener("resize", updateHeight);
     };
-  }, [filteredData]);
+  }, [filteredData, unifiedView]);
 
   useEffect(() => {
     const fetchData = async () => {
