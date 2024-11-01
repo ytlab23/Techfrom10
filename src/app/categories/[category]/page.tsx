@@ -215,7 +215,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
                 </div>
               </div>
               <div className="category-hero-card2">
-                <h3>More News</h3>
+                <h3>Latest News</h3>
                 <div className="category-hero-card-items2">
                   {latestData.slice(-10).map((element) => (
                     <Link
