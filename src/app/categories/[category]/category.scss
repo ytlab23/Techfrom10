@@ -278,3 +278,18 @@
   bottom: 0;
   width: 100%;
 }
+
+.load-more-button{
+  display: flex;
+  justify-content: center;
+  Button{
+    border: 2px solid $pri-col;
+    border-radius: 4vw;
+    color: $pri-col;
+    font-weight: 800;
+    font-size: $--18px;
+    padding: 1vh 2vw;
+    width: fit-content;
+    
+  }
+}

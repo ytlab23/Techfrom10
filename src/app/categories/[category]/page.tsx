@@ -13,6 +13,7 @@ import Loading from "../../loading";
 import { useRouter } from "next/navigation";
 import DefaultView from "@/components/defaultView/defaultView";
 import UnifiedView from "@/components/uniifiedView/unifiedView";
+import { Button } from "@/components/ui/button";
 
 interface NewsItem {
   _id: string;
@@ -38,6 +39,8 @@ interface DateRange {
   to?: Date;
 }
 
+const ITEMS_PER_PAGE=3;
+
 const latestNewsData = async () => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`
@@ -60,12 +63,18 @@ const CategoryPage = ({ params }: CategoryProps) => {
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [unifiedView, setUnifiedView] = useState<boolean>(false);
+  const [visibleItems, setVisibleItems] = useState<number>(ITEMS_PER_PAGE);
 
   const hasReset = useRef(false);
 
   const handleViewChange = (checked: boolean) => {
     setUnifiedView(checked);
+    setVisibleItems(ITEMS_PER_PAGE);
   };
+
+  const handleLoadMore = () => {
+    setVisibleItems((prev)=> prev + ITEMS_PER_PAGE);
+  }
 
   const handleDateChange = (date: DateRange | null) => {
     if (date) {
@@ -76,6 +85,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
     } else {
       setFilteredDate(null);
     }
+    setVisibleItems(ITEMS_PER_PAGE);
   };
 
   useEffect(() => {
@@ -131,10 +141,12 @@ const CategoryPage = ({ params }: CategoryProps) => {
     } else {
       setFilteredData(newFilteredData);
     }
+    setVisibleItems(ITEMS_PER_PAGE);//----
   }, [filteredDate, data]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
+    setVisibleItems(ITEMS_PER_PAGE);//-----
   };
 
   const filteredResults = filteredData.filter((item) =>
@@ -144,6 +156,9 @@ const CategoryPage = ({ params }: CategoryProps) => {
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
+
+  const visibleResults = unifiedView ? filteredData : filteredResults.slice(0, visibleItems);
+  const hasMoreItems = !unifiedView && visibleItems < filteredResults.length;
 
   return (
     <div>
@@ -179,7 +194,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
                     }))}
                   />
                 ) : (
-                  filteredResults.map((value) => (
+                  visibleResults.map((value) => (
                     <DefaultView
                       key={value.slugtitle}
                       val={{
@@ -196,6 +211,11 @@ const CategoryPage = ({ params }: CategoryProps) => {
                       }}
                     />
                   ))
+                )}
+                {hasMoreItems && (
+                  <div className="load-more-button">
+                    <Button onClick={handleLoadMore}>Load More</Button>
+                  </div>
                 )}
               </div>
             </div>

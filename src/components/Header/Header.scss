@@ -26,6 +26,7 @@
 .nav-container {
     @include flex-center();
     justify-content: space-between;
+    height: 100%;
 
     .nav-left {
         @include flex-center();
@@ -69,7 +70,7 @@
 
         h1 {
             font-weight: 800;
-            font-size: $--42px;
+            font-size: $--38px;
 
             @media (max-width: 768px) {
                 font-size: 1.25rem;
@@ -108,8 +109,8 @@
     &:hover {
         background-color: rgba(255, 255, 255, 0.4) !important;
     }
-    @media (max-width: 768px) {
-    }
+
+    @media (max-width: 768px) {}
 }
 
 .ant-dropdown-menu {
@@ -139,4 +140,38 @@
 .ant-dropdown-placement-bottomCenter {
     left: 50%;
     transform: translateX(-50%);
+}
+
+.nav-items {
+    ul {
+        display: flex;
+        justify-content: space-around;
+        // background-color: white;
+        // color: black;
+        padding: 1vh 2vw 2vh 2vw;
+        // margin: 1vh 0vw;
+        font-family: $poppins;
+        font-weight: 700;
+        font-size: 1.1rem;
+        li{
+            list-style: none;
+            &:hover {
+                animation: bottomLine 0.3s ease-in forwards;
+            }
+    
+            @keyframes bottomLine {
+                100% {
+                    border-bottom: 3px solid $pri-col;
+                    border-width: 100%;
+                }
+            }
+    
+        }
+        }
+        
+}
+.border-line{
+    border: 1px solid white;
+    width: 100vw;
+    
 }

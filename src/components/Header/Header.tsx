@@ -40,16 +40,16 @@ const Header: NextPage<Props> = ({}) => {
     { key: "6", label: "Gadgets" },
     { key: "7", label: "Video Games" },
     { key: "8", label: "Innovations" },
-    { key: "9", label: "Coding" },
-    { key: "10", label: "Mobile" },
-    { key: "11", label: "Robotics" },
-    { key: "12", label: "Cybersecurity" },
-    { key: "13", label: "Virtual Reality" },
-    { key: "14", label: "Quantum Computing" },
-    { key: "15", label: "Hardware" },
-    { key: "16", label: "Tutorials" },
-    { key: "17", label: "Smart Home" },
-    { key: "18", label: "Startups" },
+    // { key: "9", label: "Coding" },
+    // { key: "10", label: "Mobile" },
+    // { key: "11", label: "Robotics" },
+    // { key: "12", label: "Cybersecurity" },
+    // { key: "13", label: "Virtual Reality" },
+    // { key: "14", label: "Quantum Computing" },
+    // { key: "15", label: "Hardware" },
+    // { key: "16", label: "Tutorials" },
+    // { key: "17", label: "Smart Home" },
+    // { key: "18", label: "Startups" },
   ];
 
   return (
@@ -64,6 +64,7 @@ const Header: NextPage<Props> = ({}) => {
             <li onClick={() => setIsNewsletterOpen(true)}>Newsletter</li>
           </ul>
         </div>
+
         <div className="nav-right">
           <Dropdown
             menu={{
@@ -97,6 +98,19 @@ const Header: NextPage<Props> = ({}) => {
           setIsNewsletterOpen={setIsNewsletterOpen}
         />
       )}
+      {/* <div className="border-line"></div> */}
+      <div className="nav-items">
+        <ul>
+          {categories.map((category)=>(
+            <li key={category.key}>
+              <Link href={`/categories/${category.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                {category.label}
+              </Link>
+            </li>
+          ))}
+
+        </ul>
+      </div>
     </div>
   );
 };
