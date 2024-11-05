@@ -285,10 +285,16 @@
   Button {
     border: 2px solid $pri-col;
     border-radius: 4vw;
-    color: $pri-col;
+    color: white;
+    background-color: black;
     font-weight: 800;
-    font-size: $--18px;
-    padding: 1vh 2vw;
+    font-size: $--16px;
+    line-height: 16px;
+    padding: 1vh 1vw;
     width: fit-content;
+
+    &:hover {
+      color: black;
+    }
   }
 }
