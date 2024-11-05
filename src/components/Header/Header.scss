@@ -1,15 +1,15 @@
 @import "@/styles/styles.scss";
 
 .nav-parent {
-    padding: 0vh 2vw;
     backdrop-filter: blur(10px);
     position: fixed;
     z-index: 1000;
     width: 100%;
     color: white;
     transition: background-color 0.3s ease;
-    border-bottom: 2px solid black;
-
+    border-radius: 0 0 1vw 1vw;
+    // border-bottom: 3px solid $pri-col;
+    box-shadow: 0 1px 2vw 0vw black;
     @media (max-width: 767px) {
         padding: 1vh 3vw;
     }
@@ -27,10 +27,12 @@
     @include flex-center();
     justify-content: space-between;
     height: 100%;
+    padding: 0vh 2vw;
 
     .nav-left {
         @include flex-center();
         gap: 3vw;
+        width: 100%;
         font-family: $poppins;
 
         @media (max-width: 768px) {
@@ -92,7 +94,6 @@
         @media (max-width: 768px) {
             Button {
                 font-size: 0.813rem;
-
             }
         }
     }
@@ -110,7 +111,8 @@
         background-color: rgba(255, 255, 255, 0.4) !important;
     }
 
-    @media (max-width: 768px) {}
+    @media (max-width: 768px) {
+    }
 }
 
 .ant-dropdown-menu {
@@ -126,7 +128,7 @@
     scrollbar-width: none;
 
     .ant-dropdown-menu-item {
-        font-family: $poppins ;
+        font-family: $poppins;
         font-size: 1rem !important;
         font-weight: 500;
         color: white !important;
@@ -148,30 +150,31 @@
         justify-content: space-around;
         // background-color: white;
         // color: black;
-        padding: 1vh 2vw 2vh 2vw;
+        padding: 2vh 1vw;
         // margin: 1vh 0vw;
         font-family: $poppins;
         font-weight: 700;
         font-size: 1.1rem;
-        li{
+        li {
             list-style: none;
             &:hover {
                 animation: bottomLine 0.3s ease-in forwards;
             }
-    
+
             @keyframes bottomLine {
                 100% {
                     border-bottom: 3px solid $pri-col;
                     border-width: 100%;
                 }
             }
-    
         }
-        }
-        
+    }
 }
-.border-line{
-    border: 1px solid white;
+.border-line {
+    border: 1px solid rgb(140, 140, 140);
     width: 100vw;
-    
+}
+
+.hide-navextend {
+    display: none;
 }

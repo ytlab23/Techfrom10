@@ -15,10 +15,14 @@ const Header: NextPage<Props> = ({}) => {
   useEffect(() => {
     const handleScroll = () => {
       const navbar = document.querySelector(".nav-parent");
+      const navExtend = document.querySelector(".nav-container");
+
       if (window.scrollY > 10) {
         navbar?.classList.add("nav-parent-scrolled");
         navbar?.classList.remove("nav-parent-default");
+        navExtend?.classList.add("hide-navextend");
       } else {
+        navExtend?.classList.remove("hide-navextend");
         navbar?.classList.remove("nav-parent-scrolled");
         navbar?.classList.add("nav-parent-default");
       }
@@ -65,7 +69,7 @@ const Header: NextPage<Props> = ({}) => {
           </ul>
         </div>
 
-        <div className="nav-right">
+        {/* <div className="nav-right">
           <Dropdown
             menu={{
               items: categories.map((category) => ({
@@ -89,7 +93,7 @@ const Header: NextPage<Props> = ({}) => {
               Categories <DownOutlined />
             </Button>
           </Dropdown>
-        </div>
+        </div> */}
       </div>
       {isNewsletterOpen && (
         <NewsletterPopup
@@ -98,17 +102,20 @@ const Header: NextPage<Props> = ({}) => {
           setIsNewsletterOpen={setIsNewsletterOpen}
         />
       )}
-      {/* <div className="border-line"></div> */}
+      <div className="border-line" />
       <div className="nav-items">
         <ul>
-          {categories.map((category)=>(
+          {categories.map((category) => (
             <li key={category.key}>
-              <Link href={`/categories/${category.label.toLowerCase().replace(/\s+/g, '-')}`}>
+              <Link
+                href={`/categories/${category.label
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}`}
+              >
                 {category.label}
               </Link>
             </li>
           ))}
-
         </ul>
       </div>
     </div>
