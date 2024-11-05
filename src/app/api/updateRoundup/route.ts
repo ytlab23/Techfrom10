@@ -48,8 +48,8 @@ Time: [X] hours ago
 [Repeat the above format for all 10 news items]
 
 Use tags from this collection:
-AI, Space, Mobile, Videogames, Biotechnology, Robotics, Nanotechnology, Social Media, Cybersecurity, Gadgets, Software, Startups, Reviews, Coding, Hardware, Innovations, Tutorial.
-add relavant company tags like amazon, google etc.
+chrome, apple, AI, Space, Mobile, Videogames, Biotechnology, Robotics, Nanotechnology, Social Media, Cybersecurity, Gadgets, Software, Startups, Reviews, Coding, Hardware, Innovations, Tutorial.
+add relavant individual company tags like amazon, google, apple, samsung etc.
 
 Make title unique and different. Don't use general title like "Latest news" or "Latest Tech News and Updates"
 Act like an API. This data is being displayed on a website, so don't include ** or wrap links inside text. Follow the above format exactly. Use only one tag for each news item and try to use a variety of tags. Make sure the Title is catchy and includes an emoji.`;
