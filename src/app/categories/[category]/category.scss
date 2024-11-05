@@ -2,6 +2,7 @@
 
 .category-parent {
   padding: 14vh 5vw;
+  padding-top: 20vh;
   font-family: $josefin;
   height: 100%;
   display: flex;
@@ -13,10 +14,9 @@
   display: flex;
   gap: 3vw;
 
-  @media (max-width:768px){
+  @media (max-width: 768px) {
     // background-color: black;
   }
-
 }
 
 .category-container-title {
@@ -29,17 +29,17 @@
   justify-content: space-between;
   color: white;
   h3 {
-      font-size: $--16px;
-      font-family: $josefin;
-      @media (max-width: 768px) {
-          font-size: $--14px;
-      }
+    font-size: $--16px;
+    font-family: $josefin;
+    @media (max-width: 768px) {
+      font-size: $--14px;
+    }
   }
   @media (max-width: 768px) {
-      padding: 0.5vh 4vw;
-      justify-content: space-between;
-      gap: 4vw;
-    }
+    padding: 0.5vh 4vw;
+    justify-content: space-between;
+    gap: 4vw;
+  }
 }
 
 .category-parent-left {
@@ -47,7 +47,7 @@
   flex-direction: column;
   gap: 2vh;
   width: 55vw;
-  @media (max-width:768px){
+  @media (max-width: 768px) {
     width: 100%;
   }
 }
@@ -62,7 +62,7 @@
   justify-content: flex-start;
   gap: 2vh;
 
-  @media (max-width:768px){
+  @media (max-width: 768px) {
     display: none;
   }
 }
@@ -74,8 +74,8 @@
   height: 100%;
   width: 100%;
 
-  @media (max-width:768px){
-    li{
+  @media (max-width: 768px) {
+    li {
       color: black;
       font-size: $--12px;
     }
@@ -279,10 +279,10 @@
   width: 100%;
 }
 
-.load-more-button{
+.load-more-button {
   display: flex;
   justify-content: center;
-  Button{
+  Button {
     border: 2px solid $pri-col;
     border-radius: 4vw;
     color: $pri-col;
@@ -290,6 +290,5 @@
     font-size: $--18px;
     padding: 1vh 2vw;
     width: fit-content;
-    
   }
 }
