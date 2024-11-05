@@ -39,7 +39,7 @@ interface DateRange {
   to?: Date;
 }
 
-const ITEMS_PER_PAGE=3;
+const ITEMS_PER_PAGE = 3;
 
 const latestNewsData = async () => {
   const response = await fetch(
@@ -65,6 +65,9 @@ const CategoryPage = ({ params }: CategoryProps) => {
   const [unifiedView, setUnifiedView] = useState<boolean>(false);
   const [visibleItems, setVisibleItems] = useState<number>(ITEMS_PER_PAGE);
 
+  const categoryParentContainerRef = useRef<HTMLDivElement>(null);
+  const categoryParentRightRef = useRef<HTMLDivElement>(null);
+
   const hasReset = useRef(false);
 
   const handleViewChange = (checked: boolean) => {
@@ -73,8 +76,8 @@ const CategoryPage = ({ params }: CategoryProps) => {
   };
 
   const handleLoadMore = () => {
-    setVisibleItems((prev)=> prev + ITEMS_PER_PAGE);
-  }
+    setVisibleItems((prev) => prev + ITEMS_PER_PAGE);
+  };
 
   const handleDateChange = (date: DateRange | null) => {
     if (date) {
@@ -87,6 +90,41 @@ const CategoryPage = ({ params }: CategoryProps) => {
     }
     setVisibleItems(ITEMS_PER_PAGE);
   };
+
+  useEffect(() => {
+    const updateHeight = () => {
+      if (
+        categoryParentContainerRef.current &&
+        categoryParentRightRef.current
+      ) {
+        const containerHeight = categoryParentContainerRef.current.offsetHeight;
+        const viewportHeight = window.innerHeight;
+
+        // If container height is less than 2 viewport heights (200vh)
+        if (containerHeight < viewportHeight * 2) {
+          categoryParentRightRef.current.style.height = "100%";
+        } else {
+          categoryParentRightRef.current.style.height = `${containerHeight}px`;
+        }
+      }
+    };
+
+    // Initial height set
+    updateHeight();
+
+    // Update height when window is resized
+    window.addEventListener("resize", updateHeight);
+
+    // Update height when data changes
+    if (filteredData.length > 0) {
+      updateHeight();
+    }
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, [filteredData, unifiedView]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -141,12 +179,12 @@ const CategoryPage = ({ params }: CategoryProps) => {
     } else {
       setFilteredData(newFilteredData);
     }
-    setVisibleItems(ITEMS_PER_PAGE);//----
+    setVisibleItems(ITEMS_PER_PAGE); //----
   }, [filteredDate, data]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
-    setVisibleItems(ITEMS_PER_PAGE);//-----
+    setVisibleItems(ITEMS_PER_PAGE); //-----
   };
 
   const filteredResults = filteredData.filter((item) =>
@@ -157,7 +195,9 @@ const CategoryPage = ({ params }: CategoryProps) => {
     event.preventDefault();
   };
 
-  const visibleResults = unifiedView ? filteredData : filteredResults.slice(0, visibleItems);
+  const visibleResults = unifiedView
+    ? filteredData
+    : filteredResults.slice(0, visibleItems);
   const hasMoreItems = !unifiedView && visibleItems < filteredResults.length;
 
   return (
@@ -166,7 +206,10 @@ const CategoryPage = ({ params }: CategoryProps) => {
         <Loading />
       ) : (
         <div className="category-parent">
-          <div className="category-parent-container">
+          <div
+            className="category-parent-container"
+            ref={categoryParentContainerRef}
+          >
             <div className="category-parent-left">
               <div className="category-container-title">
                 <Link href="/#">
@@ -220,7 +263,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
               </div>
             </div>
 
-            <div className="category-parent-right">
+            <div className="category-parent-right" ref={categoryParentRightRef}>
               <div className="hero-category-search-container">
                 <div className="category-search">
                   <form onSubmit={handleSearchSubmit}>

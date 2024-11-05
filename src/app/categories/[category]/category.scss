@@ -1,7 +1,7 @@
 @import "@/styles/styles.scss";
 
 .category-parent {
-  padding: 14vh 5vw;
+  padding: 14vh 3vw;
   padding-top: 20vh;
   font-family: $josefin;
   height: 100%;
@@ -12,7 +12,8 @@
 
 .category-parent-container {
   display: flex;
-  gap: 3vw;
+  justify-content: space-between;
+  gap: 2vw;
 
   @media (max-width: 768px) {
     // background-color: black;
@@ -43,23 +44,22 @@
 }
 
 .category-parent-left {
+  flex: 6;
   display: flex;
   flex-direction: column;
   gap: 2vh;
-  width: 55vw;
+  width: 100%;
   @media (max-width: 768px) {
     width: 100%;
   }
 }
 
 .category-parent-right {
-  position: fixed;
-  right: 0;
-  top: auto;
-  width: 35vw;
-  padding-right: 5vw;
+  flex: 3;
+  position: sticky;
+  top: 12vh;
   @include flex-center(column);
-  justify-content: flex-start;
+  justify-content: flex-end;
   gap: 2vh;
 
   @media (max-width: 768px) {
