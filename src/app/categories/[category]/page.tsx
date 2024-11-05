@@ -39,7 +39,7 @@ interface DateRange {
   to?: Date;
 }
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 5;
 
 const latestNewsData = async () => {
   const response = await fetch(
@@ -99,13 +99,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
       ) {
         const containerHeight = categoryParentContainerRef.current.offsetHeight;
         const viewportHeight = window.innerHeight;
-
-        // If container height is less than 2 viewport heights (200vh)
-        if (containerHeight < viewportHeight * 2) {
-          categoryParentRightRef.current.style.height = "100%";
-        } else {
-          categoryParentRightRef.current.style.height = `${containerHeight}px`;
-        }
+        categoryParentRightRef.current.style.height = `100%`;
       }
     };
 

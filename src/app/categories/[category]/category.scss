@@ -59,7 +59,7 @@
   position: sticky;
   top: 12vh;
   @include flex-center(column);
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 2vh;
 
   @media (max-width: 768px) {
