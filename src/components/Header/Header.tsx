@@ -66,6 +66,7 @@ const Header: NextPage<Props> = ({}) => {
           <ul>
             <Link href="/">Home</Link>
             <li onClick={() => setIsNewsletterOpen(true)}>Newsletter</li>
+            <Link href={"/aboutus"}>About Us</Link>
           </ul>
         </div>
 
