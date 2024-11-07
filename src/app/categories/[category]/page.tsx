@@ -121,6 +121,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
   }, [filteredData, unifiedView]);
 
   useEffect(() => {
+    document.title = `latest ${params.category} news - Techfrom10`;
     const fetchData = async () => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchCategory`,
