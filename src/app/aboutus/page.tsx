@@ -91,7 +91,7 @@ const Page: NextPage<Props> = ({}) => {
         </div>
         <div className="about-partners">
           <div className="about-partners-head">
-            <h3>Partners</h3>
+            <h3>Our Partners</h3>
           </div>
 
           <div className="about-partners-list">
