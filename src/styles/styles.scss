@@ -18,396 +18,400 @@ $bebas: var(--font-bebas);
 $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 
 @mixin flex-center($direction: row) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: $direction;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
 }
 
 .hero-parent {
-    padding: 0 3vw;
-    padding-top: 20vh;
-    padding-bottom: 5vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 2vw;
-    min-height: 90vh;
-    @media (max-width: 768px) {
-        padding: 5vw;
-        padding-top: 10vh;
-        @include flex-center(column);
-    }
+  padding: 0 3vw;
+  padding-top: 20vh;
+  padding-bottom: 5vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2vw;
+  min-height: 90vh;
+  @media (max-width: 768px) {
+    padding: 5vw;
+    padding-top: 3vh;
+    @include flex-center(column);
+  }
 }
 
 .hero-container-wrap {
-    flex: 6;
-    @include flex-center(column);
-    align-items: flex-start;
-    gap: 3vh;
+  flex: 6;
+  @include flex-center(column);
+  align-items: flex-start;
+  gap: 3vh;
 
-    @media (max-width: 768px) {
-        width: 100%;
-        gap: 2vh;
+  @media (max-width: 768px) {
+    width: 100%;
+    gap: 2vh;
 
-        div:nth-child(2) {
-            margin-top: -1vh;
-        }
+    div:nth-child(2) {
+      margin-top: -1vh;
     }
+  }
 }
 
 .hero-container-title {
-    background-color: black;
-    width: 100%;
-    padding: 1vh 1vw;
-    border-radius: 10px;
-    box-shadow: 0 0 1vw 0 black;
-    @include flex-center();
-    justify-content: space-between;
-    color: white;
-    h3 {
-        font-size: $--16px;
-        font-family: $josefin;
-        @media (max-width: 768px) {
-            font-size: $--14px;
-        }
-    }
+  background-color: black;
+  width: 100%;
+  padding: 1vh 1vw;
+  border-radius: 10px;
+  box-shadow: 0 0 1vw 0 black;
+  @include flex-center();
+  justify-content: space-between;
+  color: white;
+  a {
+    display: none;
+  }
+  h3 {
+    font-size: $--16px;
+    font-family: $josefin;
     @media (max-width: 768px) {
-        padding: 0.5vh 4vw;
-        justify-content: space-around;
-        gap: 4vw;
+      font-size: $--14px;
     }
+  }
+  @media (max-width: 768px) {
+    padding: 0.5vh 4vw;
+    justify-content: space-between;
+    gap: 4vw;
+  }
 
-    .hero-unified-view {
-        @include flex-center();
-        gap: 5px;
-        h3 {
-            font-size: $--18px;
-        }
+  .hero-unified-view {
+    @include flex-center();
+    gap: 5px;
+    padding-top: 0.5vh;
+    h3 {
+      font-size: $--14px;
     }
+  }
 }
 
 .hero-container {
-    padding: 3vh 1vw;
-    @include flex-center(column);
-    align-items: flex-start;
-    gap: 3vh;
-    border: 2px solid black;
-    box-shadow: 0.5vw 1vh 0 black;
-    width: 100%;
-    border-radius: 1vw;
-    backdrop-filter: blur(2px);
-    background-color: rgba(255, 255, 255, 0.3);
-    transition: all 0.2s ease;
+  padding: 3vh 1vw;
+  @include flex-center(column);
+  align-items: flex-start;
+  gap: 3vh;
+  border: 2px solid black;
+  box-shadow: 0.5vw 1vh 0 black;
+  width: 100%;
+  border-radius: 1vw;
+  backdrop-filter: blur(2px);
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
 
-    &:hover {
-        backdrop-filter: blur(4px);
-        scale: 1.003;
-        box-shadow: 0.5vw 1vh 10px black;
+  &:hover {
+    backdrop-filter: blur(4px);
+    scale: 1.003;
+    box-shadow: 0.5vw 1vh 10px black;
+  }
+  .view-in-full {
+    font-weight: 700;
+    text-decoration: underline;
+    color: $pri-col;
+    font-family: $josefin;
+    font-size: $--14px;
+  }
+  .hero-container-head {
+    span {
+      font-family: $nunito;
+      font-weight: 700;
+      font-size: $--12px;
+      flex: 2;
+      color: $pri-col;
+      @include flex-center();
+      gap: 5px;
+      text-align: start;
+      border: 2px solid slategrey;
+      padding: 0.5vh 0.5vw;
+      border-radius: 1vw;
+      box-shadow: 2px 2px black;
     }
-    .view-in-full {
-        font-weight: 700;
-        text-decoration: underline;
-        color: $pri-col;
-        font-family: $josefin;
-        font-size: $--14px;
-    }
-    .hero-container-head {
-        span {
-            font-family: $nunito;
-            font-weight: 700;
-            font-size: $--12px;
-            flex: 2;
-            color: $pri-col;
-            @include flex-center();
-            gap: 5px;
-            text-align: start;
-            border: 2px solid slategrey;
-            padding: 0.5vh 0.5vw;
-            border-radius: 1vw;
-            box-shadow: 2px 2px black;
-        }
 
-        h2 {
-            flex: 9;
-            font-size: $--34px;
-            font-weight: 800;
-            font-family: var(--font-josefin);
-            color: #fd79a8;
-        }
-
-        @media (max-width: 768px) {
-            flex-direction: column-reverse;
-            gap: 2vh;
-            span {
-                padding-right: 1vw;
-            }
-            h2 {
-                font-size: $--24px;
-            }
-        }
+    h2 {
+      flex: 9;
+      font-size: $--34px;
+      font-weight: 800;
+      font-family: var(--font-josefin);
+      color: #fd79a8;
     }
 
     @media (max-width: 768px) {
-        box-shadow: 2vw 1vh 0 black;
-        border-radius: 3vw;
-        padding: 2vh 2vw;
-        gap: 2vh;
+      flex-direction: column-reverse;
+      gap: 2vh;
+      span {
+        padding-right: 1vw;
+      }
+      h2 {
+        font-size: $--24px;
+      }
     }
+  }
+
+  @media (max-width: 768px) {
+    box-shadow: 2vw 1vh 0 black;
+    border-radius: 3vw;
+    padding: 2vh 2vw;
+    gap: 2vh;
+  }
 }
 .hero-content-wrap {
-    @include flex-center();
+  @include flex-center();
+  width: 100%;
+  gap: 2vw;
+  img {
+    flex: 2;
+    width: 250px;
+    height: 250px;
+    border-radius: 0.5vw;
+    border: 5px solid violet;
+  }
+  ul {
+    list-style-type: decimal;
+    @include flex-center(column);
+    align-items: flex-start;
+    gap: 1.5vh;
+    flex: 8;
+  }
+  li {
     width: 100%;
-    gap: 2vw;
+    @include flex-center();
+    justify-content: space-between;
+    gap: 5px;
+    font-family: $nunito;
+    font-size: $--16px;
+    font-weight: 700;
+
+    a:hover {
+      color: $pri-col;
+    }
+
+    .hero-content-headline {
+      @include flex-center();
+      gap: 5px;
+
+      span {
+        font-size: $--12px;
+        color: rgba(112, 128, 144, 0.7);
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 2vh;
     img {
-        flex: 2;
-        width: 250px;
-        height: 250px;
-        border-radius: 0.5vw;
-        border: 5px solid violet;
+      width: 200px;
+      height: 200px;
+      border-radius: 2vw;
     }
     ul {
-        list-style-type: decimal;
-        @include flex-center(column);
-        align-items: flex-start;
-        gap: 1.5vh;
-        flex: 8;
+      margin: 0 2vw;
+      gap: 1vh;
     }
     li {
-        width: 100%;
-        @include flex-center();
-        justify-content: space-between;
-        gap: 5px;
-        font-family: $nunito;
-        font-size: $--16px;
-        font-weight: 700;
-
-        a:hover {
-            color: $pri-col;
-        }
-
-        .hero-content-headline {
-            @include flex-center();
-            gap: 5px;
-
-            span {
-                font-size: $--12px;
-                color: rgba(112, 128, 144, 0.7);
-            }
-        }
+      font-size: $--14px;
     }
-    @media (max-width: 768px) {
-        flex-direction: column;
-        gap: 2vh;
-        img {
-            width: 200px;
-            height: 200px;
-            border-radius: 2vw;
-        }
-        ul {
-            margin: 0 2vw;
-            gap: 1vh;
-        }
-        li {
-            font-size: $--14px;
-        }
-    }
+  }
 }
 
 .hero-container-fixed {
-    flex: 3;
+  flex: 3;
+  @include flex-center(column);
+  justify-content: flex-start;
+  gap: 2vh;
+  transition: all 0.2s linear;
+  .hero-search {
+    width: 100%;
+    form {
+      @include flex-center();
+      justify-content: flex-end;
+      gap: 0.5vw;
+    }
+    input {
+      border: 2px solid black;
+      width: 100%;
+      border-radius: 2vw;
+      padding: 0 1vw;
+      &::placeholder {
+        text-align: center;
+      }
+    }
+    button {
+      border: 2px solid black;
+      padding: 0 1vw;
+      color: white;
+      background-color: black;
+      font-weight: 700;
+      border-radius: 2vw;
+      width: 6vw;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        width: 8vw;
+        background: $grady-color;
+      }
+    }
+    .cancel-icon {
+      cursor: pointer;
+      &:hover {
+        color: $pri-col;
+      }
+    }
+  }
+  .hero-card1 {
+    position: sticky;
+    top: 12vh;
+    border-radius: 1vw;
+    width: 100%;
     @include flex-center(column);
-    justify-content: flex-start;
     gap: 2vh;
-    transition: all 0.2s linear;
-    .hero-search {
+    padding: 2vh 1vw;
+    background-color: rgb(0, 0, 0, 0.8);
+    backdrop-filter: blur(2px);
+    color: white;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      background-color: black;
+    }
+    h3 {
+      font-size: 1.4rem;
+      font-weight: 900;
+      line-height: 5vh;
+      border-radius: 2vw;
+      width: 100%;
+      text-align: center;
+      background: $grady-color;
+    }
+
+    .hero-card1-items {
+      @include flex-center();
+      gap: 1vw;
+      flex-wrap: wrap;
+      padding: 1vh 0vw;
+      color: black;
+
+      div {
+        font-size: $--14px;
+        font-weight: 700;
+        transition: all 0.1s ease-in-out;
+        &:hover {
+          scale: 1.03;
+          cursor: pointer;
+          background-color: $pri-col;
+        }
+      }
+    }
+  }
+  .hero-card2 {
+    border-radius: 1vw;
+    width: 100%;
+    @include flex-center(column);
+    gap: 2vh;
+    padding: 2vh 1vw;
+    background-color: rgb(0, 0, 0, 0.8);
+    backdrop-filter: blur(2px);
+    color: white;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      background-color: black;
+    }
+    h3 {
+      font-size: 1.4rem;
+      font-weight: 900;
+      line-height: 5vh;
+      border-bottom: 2px solid black;
+      border-radius: 2vw;
+      width: 100%;
+      text-align: center;
+      background: $grady-color;
+    }
+
+    .hero-card-items2 {
+      @include flex-center(column);
+      align-items: flex-start;
+      gap: 2vh;
+      width: 100%;
+      padding: 1vh 1vw;
+      a {
+        font-family: $josefin;
+        display: flex;
         width: 100%;
-        form {
-            @include flex-center();
-            justify-content: flex-end;
-            gap: 0.5vw;
-        }
-        input {
-            border: 2px solid black;
-            width: 100%;
-            border-radius: 2vw;
-            padding: 0 1vw;
-            &::placeholder {
-                text-align: center;
-            }
-        }
-        button {
-            border: 2px solid black;
-            padding: 0 1vw;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5vw;
+        &:hover {
+          color: $pri-col;
+          .link-icon {
             color: white;
-            background-color: black;
-            font-weight: 700;
-            border-radius: 2vw;
-            width: 6vw;
-            transition: all 0.2s ease-in-out;
-            &:hover {
-                width: 8vw;
-                background: $grady-color;
-            }
+          }
         }
-        .cancel-icon {
-            cursor: pointer;
-            &:hover {
-                color: $pri-col;
-            }
+
+        .link-icon {
+          font-size: $--12px;
+          color: $pri-col;
         }
+      }
     }
-    .hero-card1 {
-        position: sticky;
-        top: 12vh;
-        border-radius: 1vw;
-        width: 100%;
-        @include flex-center(column);
-        gap: 2vh;
-        padding: 2vh 1vw;
-        background-color: rgb(0, 0, 0, 0.8);
-        backdrop-filter: blur(2px);
-        color: white;
-        overflow: hidden;
-        transition: all 0.2s ease-in-out;
-        &:hover {
-            background-color: black;
-        }
-        h3 {
-            font-size: 1.4rem;
-            font-weight: 900;
-            line-height: 5vh;
-            border-radius: 2vw;
-            width: 100%;
-            text-align: center;
-            background: $grady-color;
-        }
+  }
 
-        .hero-card1-items {
-            @include flex-center();
-            gap: 1vw;
-            flex-wrap: wrap;
-            padding: 1vh 0vw;
-            color: black;
-
-            div {
-                font-size: $--14px;
-                font-weight: 700;
-                transition: all 0.1s ease-in-out;
-                &:hover {
-                    scale: 1.03;
-                    cursor: pointer;
-                    background-color: $pri-col;
-                }
-            }
-        }
-    }
-    .hero-card2 {
-        border-radius: 1vw;
-        width: 100%;
-        @include flex-center(column);
-        gap: 2vh;
-        padding: 2vh 1vw;
-        background-color: rgb(0, 0, 0, 0.8);
-        backdrop-filter: blur(2px);
-        color: white;
-        overflow: hidden;
-        transition: all 0.2s ease-in-out;
-        &:hover {
-            background-color: black;
-        }
-        h3 {
-            font-size: 1.4rem;
-            font-weight: 900;
-            line-height: 5vh;
-            border-bottom: 2px solid black;
-            border-radius: 2vw;
-            width: 100%;
-            text-align: center;
-            background: $grady-color;
-        }
-
-        .hero-card-items2 {
-            @include flex-center(column);
-            align-items: flex-start;
-            gap: 2vh;
-            width: 100%;
-            padding: 1vh 1vw;
-            a {
-                font-family: $josefin;
-                display: flex;
-                width: 100%;
-                justify-content: space-between;
-                align-items: center;
-                gap: 0.5vw;
-                &:hover {
-                    color: $pri-col;
-                    .link-icon {
-                        color: white;
-                    }
-                }
-
-                .link-icon {
-                    font-size: $--12px;
-                    color: $pri-col;
-                }
-            }
-        }
-    }
-
-    @media (max-width: 768px) {
-        display: none;
-    }
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .unselected-hashtag {
-    background-color: white;
+  background-color: white;
 }
 .selected-hashtag {
-    background-color: $pri-col;
+  background-color: $pri-col;
 }
 
 .toast-parent {
-    background: black;
-    color: white;
-    padding: 2vh 1vw;
-    border-radius: 1vw;
-    border: 2px solid black;
-    @media (max-width: 768px) {
-        position: absolute;
-        top: 10vh;
-        padding: 2vh 2vw;
-    }
+  background: black;
+  color: white;
+  padding: 2vh 1vw;
+  border-radius: 1vw;
+  border: 2px solid black;
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 10vh;
+    padding: 2vh 2vw;
+  }
 }
 
 .success-toast {
-    background: rgb(0, 255, 0, 0.7);
-    backdrop-filter: blur(3px);
-    color: black;
-    padding: 2vh 1vw;
-    border-radius: 1vw;
-    border: 2px solid black;
-    @media (max-width: 768px) {
-        position: absolute;
-        top: 10vh;
-        padding: 0vh 2vw;
-    }
+  background: rgb(0, 255, 0, 0.7);
+  backdrop-filter: blur(3px);
+  color: black;
+  padding: 2vh 1vw;
+  border-radius: 1vw;
+  border: 2px solid black;
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 10vh;
+    padding: 0vh 2vw;
+  }
 }
 
 .destructive-toast {
-    background: rgb(255, 0, 0, 0.7);
-    backdrop-filter: blur(3px);
-    color: white;
-    padding: 2vh 1vw;
-    border-radius: 1vw;
-    border: 2px solid black;
-    @media (max-width: 768px) {
-        position: absolute;
-        top: 10vh;
-        padding: 0vh 2vw;
-    }
+  background: rgb(255, 0, 0, 0.7);
+  backdrop-filter: blur(3px);
+  color: white;
+  padding: 2vh 1vw;
+  border-radius: 1vw;
+  border: 2px solid black;
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 10vh;
+    padding: 0vh 2vw;
+  }
 }
 
 .scrolled-to-bottom {
-    transform: translateY(-50vh);
+  transform: translateY(-50vh);
 }

@@ -49,11 +49,16 @@ const MobHeader: NextPage<Props> = ({}) => {
         </div>
         <div className="navmob-items">
           <div className="navmob-head-items">
-            <h3 onClick={() => setIsNewsletterOpen(true)}>
+            <h3
+              onClick={() => {
+                handleClick();
+                setIsNewsletterOpen(true);
+              }}
+            >
               <MdUnsubscribe size={24} />
               Newsletter
             </h3>
-            <Link href={"/aboutus"}>
+            <Link onClick={handleClick} href={"/aboutus"}>
               <MdContactMail size={20} />
               About Us
             </Link>
@@ -63,7 +68,10 @@ const MobHeader: NextPage<Props> = ({}) => {
             {categories.map((category) => (
               <ul className="navmob-item" key={category.path}>
                 <li>
-                  <Link href={`/categories/${category.path}`}>
+                  <Link
+                    onClick={handleClick}
+                    href={`/categories/${category.path}`}
+                  >
                     {category.label}
                   </Link>
                 </li>

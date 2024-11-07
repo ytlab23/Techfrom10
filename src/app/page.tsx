@@ -13,18 +13,14 @@ import dynamic from "next/dynamic";
 import DefaultView from "@/components/defaultView/defaultView";
 import UnifiedView from "@/components/uniifiedView/unifiedView";
 
-const Footer = dynamic(() => import("@/components/footer/footer"), {
-  loading: () => <div>Loading...</div>,
-});
+const Footer = dynamic(() => import("@/components/footer/footer"));
 const DatePickerComponent = dynamic(
   () => import("@/components/dataPicker/datePicker"),
   {
     ssr: false,
   }
 );
-const Loading = dynamic(() => import("./loading.js"), {
-  loading: () => <div>Loading...</div>,
-});
+const Loading = dynamic(() => import("./loading.js"));
 
 interface Props {}
 
