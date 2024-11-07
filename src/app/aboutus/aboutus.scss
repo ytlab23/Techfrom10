@@ -1,109 +1,163 @@
 @import "@/styles/styles.scss";
 
 .about-parent {
-    padding: 0 5vw;
-    padding-top: 18vh;
-    padding-bottom: 10vh;
-    background-color: rgba(255, 255, 255, 0);
-    color: white;
+  padding: 0 5vw;
+  padding-top: 18vh;
+  padding-bottom: 10vh;
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
 
-    .about-head {
-        font-size: 4rem;
+  .about-head {
+    font-size: 4rem;
+    font-family: $bebas;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 1vw;
+    @media (max-width: 768px) {
+      font-size: 2rem;
+      padding: 1vh 1vh;
+    }
+  }
+
+  .about-container {
+    margin-top: 5vh;
+    @include flex-center();
+    gap: 3vw;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 1vw;
+    padding: 5vh 2vw;
+    @media (max-width: 768px) {
+      @include flex-center(column);
+      margin-top: 2vh;
+      padding: 2vh 1vh 1vh 1vh;
+    }
+
+    .about-content-head {
+      flex: 3;
+      border-radius: inherit;
+      text-align: center;
+      h3 {
         font-family: $bebas;
-        text-align: center;
-        background-color: rgba(0, 0, 0, 0.9);
-        border-radius: 1vw;
+        font-size: $--64px;
+      }
+      @media (max-width: 768px) {
+        h3 {
+          font-size: 2rem;
+        }
+      }
     }
 
-    .about-container {
-        margin-top: 5vh;
+    .about-content {
+      flex: 7;
+      color: black;
+      background-color: rgba(245, 245, 245, 1);
+      border-radius: inherit;
+      padding: 2vh 2vw;
+      p {
+        font-family: $josefin;
+        font-size: $--18px;
+        font-weight: 600;
+      }
+      @media (max-width: 768px) {
+        font-size: $--16px;
         @include flex-center();
-        gap: 3vw;
-        background-color: rgba(0, 0, 0, 0.9);
-        border-radius: 1vw;
-        padding: 5vh 2vw;
-
-        .about-content-head {
-            flex: 3;
-            border-radius: inherit;
-            text-align: center;
-            h3 {
-                font-family: $bebas;
-                font-size: $--64px;
-            }
-        }
-
-        .about-content {
-            flex: 7;
-            color: black;
-            background-color: rgba(245, 245, 245, 1);
-            border-radius: inherit;
-            padding: 2vh 2vw;
-            p {
-                font-family: $josefin;
-                font-size: $--18px;
-                font-weight: 600;
-            }
-        }
+        text-align: justify;
+        padding: 2vh 1vh;
+      }
     }
+  }
 
-    .about-contact {
-        padding-top: 3vh;
-        a {
-            color: $pri-col;
+  .about-contact {
+    padding-top: 3vh;
+    a {
+      color: $pri-col;
 
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-        p {
-            font-family: $poppins;
-        }
+      &:hover {
+        text-decoration: underline;
+      }
     }
+    p {
+      font-family: $poppins;
+    }
+    @media (max-width: 768px) {
+      text-align: justify;
+      margin: 2px;
+      padding: 1vh 0.5vh;
+      word-spacing: 1px;
+    }
+  }
 }
 
 .about-partners {
-    margin-top: 5vh;
+  margin-top: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 1vw;
+  padding: 3vh 2vw;
+  @media (max-width: 768px) {
+    gap: 2vh;
+    padding: 2vh 2vw;
+  }
+
+  .about-partners-head {
+    h3 {
+      font-size: $--64px;
+      font-family: $bebas;
+    }
+    @media (max-width: 768px) {
+      h3 {
+        font-size: 2rem;
+        padding: 1vh 2vw;
+      }
+    }
+  }
+
+  .about-partners-list {
+    display: grid;
+    column-gap: 1vw;
+    row-gap: 3vh;
+    grid-template-columns: repeat(4, 1fr);
+    a {
+      padding: 1vh 1vw;
+    }
+    a:hover {
+      width: fit-content;
+
+      border-radius: 1vw;
+      background-color: black;
+    }
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3vw;
+      padding: 1vh 2vw;
+    }
+  }
+
+  .about-partners-item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 3vh;
-    background-color: rgba(0, 0, 0, 0.9);
-    border-radius: 1vw;
-    padding: 3vh 2vw;
-
-    .about-partners-head {
-        h3 {
-            font-size: $--64px;
-            font-family: $bebas;
-        }
+    @media (max-width: 768px) {
+      img {
+        width: 10vw;
+        height: auto;
+        padding: 1px 2px;
+      }
     }
 
-    .about-partners-list {
-        display: grid;
-        column-gap: 1vw;
-        row-gap: 3vh;
-        grid-template-columns: repeat(4, 1fr);
-        a {
-            padding: 1vh 1vw;
-        }
-        a:hover {
-            width: fit-content;
-
-            border-radius: 1vw;
-            background-color: black;
-        }
+    gap: 2px;
+    h3 {
+      font-size: 1.7rem;
+      font-family: $poppins;
+      text-transform: capitalize;
     }
-
-    .about-partners-item {
-        display: flex;
-        align-items: center;
-
-        gap: 2px;
-        h3 {
-            font-size: 1.7rem;
-            font-family: $poppins;
-            text-transform: capitalize;
-        }
+    @media (max-width: 768px) {
+      h3 {
+        font-size: 1.1rem;
+        padding: 1px 2px;
+      }
     }
+  }
 }

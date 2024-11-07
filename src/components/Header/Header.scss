@@ -1,180 +1,184 @@
 @import "@/styles/styles.scss";
 
 .nav-parent {
-    backdrop-filter: blur(10px);
-    position: fixed;
-    z-index: 1000;
-    width: 100%;
-    color: white;
-    transition: background-color 0.3s ease;
-    border-radius: 0 0 1vw 1vw;
-    // border-bottom: 3px solid $pri-col;
-    box-shadow: 0 1px 2vw 0vw black;
-    @media (max-width: 767px) {
-        padding: 1vh 3vw;
-    }
+  backdrop-filter: blur(10px);
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  color: white;
+  transition: background-color 0.3s ease;
+  border-radius: 0 0 1vw 1vw;
+  // border-bottom: 3px solid $pri-col;
+  box-shadow: 0 1px 2vw 0vw black;
+  @media (max-width: 767px) {
+    padding: 1vh 3vw;
+  }
 }
 
 .nav-parent-default {
-    background-color: rgba(0, 0, 0, 1);
+  background-color: rgba(0, 0, 0, 1);
 }
 
 .nav-parent-scrolled {
-    background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .nav-container {
+  @include flex-center();
+  justify-content: space-between;
+  height: 100%;
+  padding: 0vh 2vw;
+
+  .nav-left {
     @include flex-center();
-    justify-content: space-between;
-    height: 100%;
-    padding: 0vh 2vw;
-
-    .nav-left {
-        @include flex-center();
-        gap: 3vw;
-        width: 100%;
-        font-family: $poppins;
-
-        @media (max-width: 768px) {
-            gap: 5vw;
-        }
-
-        ul {
-            @include flex-center();
-            gap: 1vw;
-
-            @media (max-width: 768px) {
-                gap: 2vw;
-            }
-
-            a,
-            li {
-                font-weight: 700;
-                font-size: 1.1rem;
-                cursor: pointer;
-
-                @media (max-width: 768px) {
-                    font-size: 0.813rem;
-                }
-
-                &:hover {
-                    animation: bottomLine 0.3s ease-in forwards;
-                }
-
-                @keyframes bottomLine {
-                    100% {
-                        border-bottom: 3px solid $pri-col;
-                        border-width: 100%;
-                    }
-                }
-            }
-        }
-
-        h1 {
-            font-weight: 800;
-            font-size: 2.3rem;
-
-            @media (max-width: 768px) {
-                font-size: 1.25rem;
-            }
-        }
-    }
-
-    .nav-right {
-        @include flex-center();
-        gap: 0.5vw;
-
-        .nav-msg {
-            padding: 7px;
-            border-radius: 100%;
-            background-color: black;
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-            Button {
-                font-size: 0.813rem;
-            }
-        }
-    }
-}
-
-.ant-dropdown-trigger {
+    gap: 3vw;
+    width: 100%;
     font-family: $poppins;
-    font-size: 1.1rem;
-    font-weight: 700;
-    background-color: black;
-    color: white !important;
-    border: none;
 
-    &:hover {
-        background-color: rgba(255, 255, 255, 0.4) !important;
+    @media (max-width: 768px) {
+      gap: 5vw;
+    }
+
+    ul {
+      @include flex-center();
+      gap: 1vw;
+
+      @media (max-width: 768px) {
+        gap: 2vw;
+      }
+
+      a,
+      li {
+        font-weight: 700;
+        font-size: 1.1rem;
+        cursor: pointer;
+
+        @media (max-width: 768px) {
+          font-size: 0.813rem;
+        }
+
+        &:hover {
+          animation: bottomLine 0.3s ease-in forwards;
+        }
+
+        @keyframes bottomLine {
+          100% {
+            border-bottom: 3px solid $pri-col;
+            border-width: 100%;
+          }
+        }
+      }
+    }
+
+    h1 {
+      font-weight: 800;
+      font-size: 2.3rem;
+
+      @media (max-width: 768px) {
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  .nav-right {
+    @include flex-center();
+    gap: 0.5vw;
+
+    .nav-msg {
+      padding: 7px;
+      border-radius: 100%;
+      background-color: black;
+      cursor: pointer;
     }
 
     @media (max-width: 768px) {
+      Button {
+        font-size: 0.813rem;
+      }
     }
+  }
+}
+
+.ant-dropdown-trigger {
+  font-family: $poppins;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background-color: black;
+  color: white !important;
+  border: none;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+  }
+
+  @media (max-width: 768px) {
+  }
 }
 
 .ant-dropdown-menu {
-    max-height: 150px;
-    overflow-y: auto;
-    background-color: black !important;
-    color: white;
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: black !important;
+  color: white;
 
-    ::-webkit-scrollbar {
-        width: 0px;
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  scrollbar-width: none;
+
+  .ant-dropdown-menu-item {
+    font-family: $poppins;
+    font-size: 1rem !important;
+    font-weight: 500;
+    color: white !important;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1) !important;
     }
-
-    scrollbar-width: none;
-
-    .ant-dropdown-menu-item {
-        font-family: $poppins;
-        font-size: 1rem !important;
-        font-weight: 500;
-        color: white !important;
-
-        &:hover {
-            background-color: rgba(255, 255, 255, 0.1) !important;
-        }
-    }
+  }
 }
 
 .ant-dropdown-placement-bottomCenter {
-    left: 50%;
-    transform: translateX(-50%);
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .nav-items {
-    ul {
-        display: flex;
-        justify-content: space-around;
-        // background-color: white;
-        // color: black;
-        padding: 2vh 1vw;
-        // margin: 1vh 0vw;
-        font-family: $poppins;
-        font-weight: 700;
-        font-size: 1.1rem;
-        li {
-            list-style: none;
-            &:hover {
-                animation: bottomLine 0.3s ease-in forwards;
-            }
+  @media (max-width: 768px) {
+    display: none;
+  }
 
-            @keyframes bottomLine {
-                100% {
-                    border-bottom: 3px solid $pri-col;
-                    border-width: 100%;
-                }
-            }
+  ul {
+    display: flex;
+    justify-content: space-around;
+    // background-color: white;
+    // color: black;
+    padding: 2vh 1vw;
+    // margin: 1vh 0vw;
+    font-family: $poppins;
+    font-weight: 700;
+    font-size: 1.1rem;
+    li {
+      list-style: none;
+      &:hover {
+        animation: bottomLine 0.3s ease-in forwards;
+      }
+
+      @keyframes bottomLine {
+        100% {
+          border-bottom: 3px solid $pri-col;
+          border-width: 100%;
         }
+      }
     }
+  }
 }
 .border-line {
-    border: 1px solid rgb(140, 140, 140);
-    width: 100vw;
+  border: 1px solid rgb(140, 140, 140);
+  width: 100vw;
 }
 
 .hide-navextend {
-    display: none;
+  display: none;
 }
