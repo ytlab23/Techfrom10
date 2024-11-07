@@ -116,7 +116,7 @@ const Page: NextPage<Props> = ({}) => {
             <p>
               Interested in becoming our partner and being featured on this
               page? Contact us at{" "}
-              <Link href={"mailto:contact@techfrom10.com"}>
+              <Link href={"mailto:contact@techfrom10.com?subject=Partnership"}>
                 {" "}
                 contact@techfrom10.com{" "}
               </Link>{" "}
