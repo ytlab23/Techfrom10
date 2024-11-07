@@ -3,10 +3,13 @@
 .about-parent {
   padding: 0 5vw;
   padding-top: 18vh;
-  padding-bottom: 10vh;
+  padding-bottom: 5vh;
   background-color: rgba(255, 255, 255, 0);
   color: white;
 
+  @media (max-width: 768px) {
+    padding-top: 3vh;
+  }
   .about-head {
     font-size: 4rem;
     font-family: $bebas;
@@ -16,6 +19,7 @@
     @media (max-width: 768px) {
       font-size: 2rem;
       padding: 1vh 1vh;
+      border-radius: 3vw;
     }
   }
 
@@ -30,6 +34,7 @@
       @include flex-center(column);
       margin-top: 2vh;
       padding: 2vh 1vh 1vh 1vh;
+      border-radius: 3vw;
     }
 
     .about-content-head {
@@ -83,6 +88,8 @@
       text-align: justify;
       margin: 2px;
       padding: 1vh 0.5vh;
+      border-radius: 3vw;
+      border-radius: 3vw;
       word-spacing: 1px;
     }
   }
@@ -99,6 +106,8 @@
   padding: 3vh 2vw;
   @media (max-width: 768px) {
     gap: 2vh;
+    border-radius: 3vw;
+    margin-top: 2vh;
     padding: 2vh 2vw;
   }
 
