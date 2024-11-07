@@ -71,32 +71,6 @@ const Header: NextPage<Props> = ({}) => {
               <Link href={"/aboutus"}>About Us</Link>
             </ul>
           </div>
-
-          {/* <div className="nav-right">
-          <Dropdown
-            menu={{
-              items: categories.map((category) => ({
-                key: category.key,
-                label: (
-                  <Link
-                    href={`/categories/${category.label
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}`}
-                    className="dropdown-item"
-                  >
-                    {category.label}
-                  </Link>
-                ),
-              })),
-            }}
-            // trigger={["click"]}
-            placement="bottom"
-          >
-            <Button>
-              Categories <DownOutlined />
-            </Button>
-          </Dropdown>
-        </div> */}
         </div>
         {isNewsletterOpen && (
           <NewsletterPopup

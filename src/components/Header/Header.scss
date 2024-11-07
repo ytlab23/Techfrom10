@@ -99,51 +99,6 @@
   }
 }
 
-.ant-dropdown-trigger {
-  font-family: $poppins;
-  font-size: 1.1rem;
-  font-weight: 700;
-  background-color: black;
-  color: white !important;
-  border: none;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.4) !important;
-  }
-
-  @media (max-width: 768px) {
-  }
-}
-
-.ant-dropdown-menu {
-  max-height: 150px;
-  overflow-y: auto;
-  background-color: black !important;
-  color: white;
-
-  ::-webkit-scrollbar {
-    width: 0px;
-  }
-
-  scrollbar-width: none;
-
-  .ant-dropdown-menu-item {
-    font-family: $poppins;
-    font-size: 1rem !important;
-    font-weight: 500;
-    color: white !important;
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.1) !important;
-    }
-  }
-}
-
-.ant-dropdown-placement-bottomCenter {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 .nav-items {
   @media (max-width: 768px) {
     display: none;
@@ -190,8 +145,8 @@
     color: white;
     padding: 1vh 3vw;
     font-family: $bebas;
-    letter-spacing: 1px;
-    font-size: 28px;
+    letter-spacing: 0.2vw;
+    font-size: 7.2vw;
   }
 }
 
@@ -200,7 +155,7 @@
   align-items: center;
   justify-content: space-between;
   h1 {
-    font-size: $--26px;
+    font-size: 6.68vw;
     font-family: $poppins;
     font-weight: 800;
   }
@@ -215,8 +170,8 @@
   backdrop-filter: blur(5px);
   border-radius: 5vw 0 0 5vw;
   padding: 3vh 5vw;
-  height: 100%;
-  width: 75%;
+  height: 100vh;
+  width: 75vw;
 }
 
 .close-icon {
@@ -225,7 +180,7 @@
 }
 
 .navmob-items {
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 3vh;
@@ -244,7 +199,7 @@
   a {
     font-family: $poppins;
     font-weight: 700;
-    font-size: $--24px;
+    font-size: 6.17vw;
     display: flex;
     align-items: center;
     gap: 2vw;
@@ -255,7 +210,7 @@
   flex-direction: column;
 }
 
-.aaa {
+.navmob-item-head {
   display: flex;
   flex-direction: column;
   margin: auto;
@@ -267,7 +222,7 @@
     text-align: left;
   }
   h3 {
-    font-size: $--38px;
+    font-size: 9.79vw;
     margin: 0 auto;
     text-decoration: underline;
   }

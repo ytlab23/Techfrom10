@@ -63,7 +63,7 @@ const MobHeader: NextPage<Props> = ({}) => {
               About Us
             </Link>
           </div>
-          <div className="aaa">
+          <div className="navmob-item-head">
             <h3>category</h3>
             {categories.map((category) => (
               <ul className="navmob-item" key={category.path}>
