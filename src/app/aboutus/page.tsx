@@ -3,8 +3,15 @@ import "./aboutus.scss";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 
 interface Props {}
+
+export const metadata: Metadata = {
+  title: "About Us - techfrom10",
+  description:
+    "Every day, we pick the 10 most important tech stories from trusted sources, giving you a quick update on what’s happening in the techworld.",
+};
 
 const partnersInfo = [
   {
