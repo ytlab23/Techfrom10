@@ -7,6 +7,7 @@ import NewsletterPopup from "../newsletter/newsletterPopup";
 
 import { Dropdown, Button, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
+import MobHeader from "./mobHeader";
 
 interface Props {}
 
@@ -57,20 +58,21 @@ const Header: NextPage<Props> = ({}) => {
   ];
 
   return (
-    <div className="nav-parent nav-parent-default">
-      <div className="nav-container">
-        <div className="nav-left">
-          <h1>
-            <Link href="/">TechFrom10 </Link>
-          </h1>
-          <ul>
-            <Link href="/">Home</Link>
-            <li onClick={() => setIsNewsletterOpen(true)}>Newsletter</li>
-            <Link href={"/aboutus"}>About Us</Link>
-          </ul>
-        </div>
+    <div className="nav-main">
+      <div className="nav-parent nav-parent-default">
+        <div className="nav-container">
+          <div className="nav-left">
+            <h1>
+              <Link href="/">TechFrom10 </Link>
+            </h1>
+            <ul>
+              <Link href="/">Home</Link>
+              <li onClick={() => setIsNewsletterOpen(true)}>Newsletter</li>
+              <Link href={"/aboutus"}>About Us</Link>
+            </ul>
+          </div>
 
-        {/* <div className="nav-right">
+          {/* <div className="nav-right">
           <Dropdown
             menu={{
               items: categories.map((category) => ({
@@ -95,30 +97,32 @@ const Header: NextPage<Props> = ({}) => {
             </Button>
           </Dropdown>
         </div> */}
+        </div>
+        {isNewsletterOpen && (
+          <NewsletterPopup
+            onClose={() => setIsNewsletterOpen(false)}
+            isOpen={isNewsletterOpen}
+            setIsNewsletterOpen={setIsNewsletterOpen}
+          />
+        )}
+        <div className="border-line" />
+        <div className="nav-items">
+          <ul>
+            {categories.map((category) => (
+              <li key={category.key}>
+                <Link
+                  href={`/categories/${category.label
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}`}
+                >
+                  {category.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      {isNewsletterOpen && (
-        <NewsletterPopup
-          onClose={() => setIsNewsletterOpen(false)}
-          isOpen={isNewsletterOpen}
-          setIsNewsletterOpen={setIsNewsletterOpen}
-        />
-      )}
-      <div className="border-line" />
-      <div className="nav-items">
-        <ul>
-          {categories.map((category) => (
-            <li key={category.key}>
-              <Link
-                href={`/categories/${category.label
-                  .toLowerCase()
-                  .replace(/\s+/g, "-")}`}
-              >
-                {category.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <MobHeader />
     </div>
   );
 };
