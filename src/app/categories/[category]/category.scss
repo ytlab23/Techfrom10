@@ -28,9 +28,6 @@
   @include flex-center();
   justify-content: space-between;
   color: white;
-  a {
-    display: none;
-  }
   h3 {
     font-size: $--16px;
     font-family: $josefin;
@@ -42,6 +39,9 @@
     padding: 0.5vh 4vw;
     justify-content: space-between;
     gap: 4vw;
+    a {
+      display: none;
+    }
   }
 }
 
