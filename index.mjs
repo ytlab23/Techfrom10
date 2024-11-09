@@ -274,7 +274,7 @@ const updateDB = async (content, image, formattedDate) => {
 };
 
 //Ping
-app.get("/api/fetchRoundup", async (req, res) => {
+app.get("/api/ping", async (req, res) => {
   res.status(202).json({
     status:"server running"
   })
