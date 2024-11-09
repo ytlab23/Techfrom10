@@ -273,6 +273,12 @@ const updateDB = async (content, image, formattedDate) => {
   }
 };
 
+//Ping
+app.get("/api/fetchRoundup", async (req, res) => {
+  res.status(202).json({
+    status:"server running"
+  })
+})
 // Express Routes
 app.get("/api/fetchRoundup", async (req, res) => {
   const client = await pool.connect();
