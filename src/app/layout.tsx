@@ -57,5 +57,5 @@ export default function RootLayout({
   );
 }
 
-export const fetchCache = "auto";
+export const fetchCache = "force-cache";
 export const revalidate = 72000;
