@@ -46,7 +46,11 @@ const latestNewsData = async () => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`
   );
   const data: NewsItem[] = await response.json();
-  return data;
+  return data.sort(
+    (a, b) =>
+      moment(b.date, "MMM D, YYYY").valueOf() -
+      moment(a.date, "MMM D, YYYY").valueOf()
+  );
 };
 
 const CategoryPage = ({ params }: CategoryProps) => {
@@ -134,8 +138,13 @@ const CategoryPage = ({ params }: CategoryProps) => {
 
       if (response.status === 200) {
         const categoryData: NewsItem[] = await response.json();
-        setData(categoryData);
-        setFilteredData(categoryData);
+        const sortedData = [...categoryData].sort(
+          (a, b) =>
+            moment(b.date, "MMM D, YYYY").valueOf() -
+            moment(a.date, "MMM D, YYYY").valueOf()
+        );
+        setData(sortedData);
+        setFilteredData(sortedData);
       } else {
         router.push("/");
       }

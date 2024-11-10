@@ -97,9 +97,14 @@ const Page: NextPage<Props> = ({}) => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`
       );
       const data: dataprop[] = await res.json();
+      const sortedData = [...data].sort(
+        (a, b) =>
+          moment(b.date, "MMM D, YYYY").valueOf() -
+          moment(a.date, "MMM D, YYYY").valueOf()
+      );
       setLoading(false);
-      setData(data);
-      setFilteredData(data);
+      setData(sortedData);
+      setFilteredData(sortedData);
     };
     fetchData();
   }, []);
@@ -163,7 +168,12 @@ const Page: NextPage<Props> = ({}) => {
       setFilteredData(data);
     } else {
       hasReset.current = false;
-      setFilteredData(newFilteredData);
+      const sortedFilteredData = [...newFilteredData].sort(
+        (a, b) =>
+          moment(b.date, "MMM D, YYYY").valueOf() -
+          moment(a.date, "MMM D, YYYY").valueOf()
+      );
+      setFilteredData(sortedFilteredData);
     }
   }, [selectedTags, filteredDate, data]);
 
