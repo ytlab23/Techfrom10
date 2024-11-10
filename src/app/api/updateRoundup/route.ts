@@ -269,12 +269,11 @@ const generateFeaturedImage = async (content: any) => {
       Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
     },
     body: JSON.stringify({
-      model: "dall-e-3",
+      model: "dall-e-2",
       prompt,
       n: 1,
-      size: "1024x1024",
+      size: "256x256",
     }),
-    cache: "no-store",
   });
 
   const image = await res.json();
