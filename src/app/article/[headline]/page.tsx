@@ -3,6 +3,7 @@ import Link from "next/link";
 import { NextPage } from "next";
 import Footer from "@/components/footer/footer";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 interface Params {
   headline: string;
@@ -37,7 +38,10 @@ export async function generateMetadata({ params }: Props) {
       body: JSON.stringify({ headline }),
     }
   );
-
+  if (res.status !== 200)
+    return {
+      title: `TechFrom10`,
+    };
   const data: ArticleData = await res.json();
 
   return {
@@ -83,7 +87,7 @@ const Page: NextPage<Props> = async ({ params }) => {
       cache: "no-cache",
     }
   );
-
+  if (res.status !== 200) return redirect("/");
   const data: ArticleData = await res.json();
 
   const categoryNewsData = await fetchCategoryNews(data, data.source);
@@ -111,9 +115,15 @@ const Page: NextPage<Props> = async ({ params }) => {
 
       <div className="news-border" />
       <div className="news-latest">
-        <h3>More{" "}
-          <Link className="news-latest-link" href={`/categories/${data.hashtags}`}>{data.hashtags}</Link>
-          {" "}News
+        <h3>
+          More{" "}
+          <Link
+            className="news-latest-link"
+            href={`/categories/${data.hashtags}`}
+          >
+            {data.hashtags}
+          </Link>{" "}
+          News
         </h3>
         <div className="parent-latest-news-container">
           {categoryNewsData.map((value, index) => (

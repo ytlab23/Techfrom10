@@ -42,6 +42,7 @@ export const POST = async (req: Request) => {
       };
       return new Response(JSON.stringify(responseData));
     }
+    return new Response("Not found", { status: 404 });
   } finally {
     client.release();
   }
