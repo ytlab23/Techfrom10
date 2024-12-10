@@ -269,7 +269,7 @@ const Page: NextPage<Props> = ({}) => {
                 <button>search</button>
               </form>
             </div>
-
+            {""}
             <div className="hero-card2">
               <h3>Today's News</h3>
               <div className="hero-card-items2">
