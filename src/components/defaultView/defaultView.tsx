@@ -40,7 +40,6 @@ const DefaultView: NextPage<Props> = ({ val }) => {
             <li key={`headline-${val._id}-${hindex}`}>
               <Link
                 href={`/article/${encodeURIComponent(h.replace(/\s+/g, "-"))}`}
-                target="_blank"
                 rel="noreferrer nofollow noopener"
                 title="view article"
               >
@@ -74,7 +73,6 @@ const DefaultView: NextPage<Props> = ({ val }) => {
       </div>
       <Link
         href={"/post/" + encodeURIComponent(val.slugtitle.replaceAll(" ", "-"))}
-        target="_blank"
         className="view-in-full"
       >
         Read Full Article

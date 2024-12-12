@@ -1,5 +1,5 @@
 "use client";
-import { NextPage } from "next";
+import next, { NextPage } from "next";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState, useMemo, useRef } from "react";
@@ -94,7 +94,13 @@ const Page: NextPage<Props> = ({}) => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`,
+        {
+          cache: "force-cache",
+          next: {
+            revalidate: 72000,
+          },
+        }
       );
       const data: dataprop[] = await res.json();
       const sortedData = [...data].sort(
