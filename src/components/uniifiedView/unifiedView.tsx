@@ -25,8 +25,6 @@ const UnifiedView: React.FC<UnifiedViewProps> = ({ data }) => {
                     href={`/article/${encodeURIComponent(
                       headline.replaceAll(" ", "-")
                     )}`}
-                    target="_blank"
-                    rel="noreferrer nofollow noopener"
                     title="view article"
                   >
                     {headline}
@@ -38,8 +36,6 @@ const UnifiedView: React.FC<UnifiedViewProps> = ({ data }) => {
                     href={`/article/${encodeURIComponent(
                       headline.replaceAll(" ", "-")
                     )}`}
-                    target="_blank"
-                    rel="noreferrer nofollow noopener"
                     title="view article"
                   >
                     <FaEye />
