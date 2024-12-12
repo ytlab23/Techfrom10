@@ -286,7 +286,6 @@ const Page: NextPage<Props> = ({}) => {
                       "/post/" +
                       encodeURIComponent(element.slugtitle.replaceAll(" ", "-"))
                     }
-                    target="_blank"
                   >
                     {element.title} <FaExternalLinkAlt className="link-icon" />
                   </Link>
