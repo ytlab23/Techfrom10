@@ -37,14 +37,14 @@ const Header: NextPage<Props> = ({}) => {
   }, []);
 
   const categories = [
-    { key: "1", label: "Software" },
-    { key: "2", label: "AI" },
-    { key: "3", label: "Space" },
-    { key: "4", label: "Social Media" },
-    { key: "5", label: "Biotechnology" },
-    { key: "6", label: "Gadgets" },
-    { key: "7", label: "Video Games" },
-    { key: "8", label: "Innovations" },
+    { key: "1", label: "Software", route: "software" },
+    { key: "2", label: "AI", route: "ai" },
+    { key: "3", label: "Space", route: "space" },
+    { key: "4", label: "Social Media", route: "socialmedia" },
+    { key: "5", label: "Biotechnology", route: "biotechnology" },
+    { key: "6", label: "Gadgets", route: "gadgets" },
+    { key: "7", label: "Video Games", route: "videogames" },
+    { key: "8", label: "Innovations", route: "innovations" },
     // { key: "9", label: "Coding" },
     // { key: "10", label: "Mobile" },
     // { key: "11", label: "Robotics" },
@@ -85,7 +85,7 @@ const Header: NextPage<Props> = ({}) => {
             {categories.map((category) => (
               <li key={category.key}>
                 <Link
-                  href={`/categories/${category.label
+                  href={`/categories/${category.route
                     .toLowerCase()
                     .replace(/\s+/g, "-")}`}
                 >

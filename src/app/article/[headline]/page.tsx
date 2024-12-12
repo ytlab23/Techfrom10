@@ -63,7 +63,6 @@ const fetchCategoryNews = async (
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ category: latestData.hashtags }),
-      cache: "no-cache",
     }
   );
 
@@ -84,7 +83,6 @@ const Page: NextPage<Props> = async ({ params }) => {
     {
       method: "POST",
       body: JSON.stringify({ headline }),
-      cache: "no-cache",
     }
   );
   if (res.status !== 200) return redirect("/");

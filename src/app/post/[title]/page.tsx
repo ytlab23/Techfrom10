@@ -1,7 +1,7 @@
 import RenderBlog from "@/components/renderBlog/renderBlog";
 import { NextPage } from "next";
 import Footer from "@/components/footer/footer";
-
+import { redirect } from "next/navigation";
 interface Props {
   params: {
     title: string;
@@ -14,9 +14,12 @@ export const generateMetadata = async ({ params }: Props) => {
     {
       method: "POST",
       body: JSON.stringify({ title }),
-      cache: "no-cache",
     }
   );
+  if (!res.ok)
+    return {
+      title: "Techfrom10",
+    };
   const data = await res.json();
   return {
     title: `${data.slugtitle} - TechFrom10`,
@@ -30,9 +33,10 @@ const Page: NextPage<Props> = async ({ params }) => {
     {
       method: "POST",
       body: JSON.stringify({ title }),
-      cache: "no-cache",
     }
   );
+  if (res.status !== 200) return redirect("/");
+
   const data = await res.json();
   return (
     <div>

@@ -50,8 +50,6 @@ const DefaultView: NextPage<Props> = ({ val }) => {
                   href={`/article/${encodeURIComponent(
                     h.replace(/\s+/g, "-")
                   )}`}
-                  target="_blank"
-                  rel="noreferrer nofollow noopener"
                   title="view article"
                   key={`view-${val._id}-${hindex}`}
                 >
