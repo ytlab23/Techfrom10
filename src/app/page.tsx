@@ -94,13 +94,7 @@ const Page: NextPage<Props> = ({}) => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`,
-        {
-          cache: "force-cache",
-          next: {
-            revalidate: 72000,
-          },
-        }
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`
       );
       const data: dataprop[] = await res.json();
       const sortedData = [...data].sort(
