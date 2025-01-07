@@ -26,12 +26,12 @@ export const POST = async (req: Request) => {
   const { headline } = await req.json();
   try {
     const res = await client.query(
-      "SELECT * FROM tech_trends WHERE $1 = ANY(headlines);",
+      "SELECT * FROM tech_trends WHERE $1 = ANY(slugheadlines);",
       [headline]
     );
     if (res.rows.length > 0) {
       const newsItem = res.rows[0];
-      const index = newsItem.headlines.indexOf(headline);
+      const index = newsItem.slugheadlines.indexOf(headline);
       const responseData = {
         headline: newsItem.headlines[index],
         summary: newsItem.summaries[index],

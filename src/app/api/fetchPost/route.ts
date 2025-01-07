@@ -14,7 +14,7 @@ export const POST = async (req: Request) => {
   const { title } = await req.json();
   try {
     const res = await client.query(
-      "SELECT * FROM tech_trends WHERE slugtitle = $1",
+      "SELECT * FROM tech_trends WHERE slugTitle = $1",
       [title]
     );
 

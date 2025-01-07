@@ -8,7 +8,7 @@ interface Props {
   };
 }
 export const generateMetadata = async ({ params }: Props) => {
-  const title = decodeURIComponent(params.title.replaceAll("-", " "));
+  const title = params.title;
   const res = await fetch(
     process.env.NEXT_PUBLIC_API_BASE_URL + "/api/fetchPost",
     {
@@ -27,7 +27,7 @@ export const generateMetadata = async ({ params }: Props) => {
 };
 
 const Page: NextPage<Props> = async ({ params }) => {
-  const title = decodeURIComponent(params.title.replaceAll("-", " "));
+  const title = params.title;
   const res = await fetch(
     process.env.NEXT_PUBLIC_API_BASE_URL + "/api/fetchPost",
     {

@@ -21,6 +21,7 @@ interface ArticleData {
 interface CategoryNews {
   img_url: string;
   headline: string;
+  slugheadline: string;
   summary: string;
   source?: string;
 }
@@ -30,7 +31,7 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props) {
-  const headline = decodeURIComponent(params.headline.replaceAll("-", " "));
+  const headline = params.headline;
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`,
     {
@@ -52,7 +53,7 @@ export async function generateMetadata({ params }: Props) {
 
 const fetchCategoryNews = async (
   latestData: ArticleData,
-  currentImgUrl: string,
+  currentSrcUrl: string,
   count = 6
 ): Promise<CategoryNews[]> => {
   const categoryResponse = await fetch(
@@ -68,16 +69,14 @@ const fetchCategoryNews = async (
   );
 
   const categoryData: CategoryNews[] = await categoryResponse.json();
-
   const uniqueLatestData = categoryData.filter(
-    (news) => news.source !== currentImgUrl
+    (news) => news.headline !== currentSrcUrl
   );
-
   return uniqueLatestData.slice(0, count);
 };
 
 const Page: NextPage<Props> = async ({ params }) => {
-  const headline = decodeURIComponent(params.headline.replaceAll("-", " "));
+  const headline = params.headline;
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/fetchRoundup`,
@@ -89,7 +88,7 @@ const Page: NextPage<Props> = async ({ params }) => {
   if (res.status !== 200) return redirect("/");
   const data: ArticleData = await res.json();
 
-  const categoryNewsData = await fetchCategoryNews(data, data.source);
+  const categoryNewsData = await fetchCategoryNews(data, data.headline);
 
   return (
     <div className="article-main">
@@ -139,10 +138,7 @@ const Page: NextPage<Props> = async ({ params }) => {
                 <p>{value.summary}</p>
                 <div className="news-read-more">
                   <Link
-                    href={
-                      "/article/" +
-                      encodeURIComponent(value.headline.replaceAll(" ", "-"))
-                    }
+                    href={"/article/" + encodeURIComponent(value.slugheadline)}
                     target="_blank"
                   >
                     Continue Reading

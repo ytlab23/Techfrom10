@@ -7,6 +7,7 @@ interface UnifiedViewProps {
   data: {
     _id: string;
     headlines: string[];
+    slugheadlines: string[];
     published: string[];
     sources: string[];
   }[];
@@ -22,9 +23,7 @@ const UnifiedView: React.FC<UnifiedViewProps> = ({ data }) => {
               <li key={`headline-${val._id}-${hindex}`}>
                 <div className="hero-content-headline">
                   <Link
-                    href={`/article/${encodeURIComponent(
-                      headline.replaceAll(" ", "-")
-                    )}`}
+                    href={`/article/${val.slugheadlines[hindex]}`}
                     title="view article"
                   >
                     {headline}
@@ -33,9 +32,7 @@ const UnifiedView: React.FC<UnifiedViewProps> = ({ data }) => {
                 </div>
                 <div className="flex gap-2 items-center">
                   <Link
-                    href={`/article/${encodeURIComponent(
-                      headline.replaceAll(" ", "-")
-                    )}`}
+                    href={`/article/${val.slugheadlines[hindex]}`}
                     title="view article"
                   >
                     <FaEye />

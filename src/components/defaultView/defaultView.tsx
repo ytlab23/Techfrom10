@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaClock } from "react-icons/fa";
 import { FaExternalLinkAlt, FaEye } from "react-icons/fa";
+import generateSlug from "@/helper/slugFormat";
 
 interface Props {
   val: {
@@ -10,6 +11,7 @@ interface Props {
     title: string;
     slugtitle: string;
     headlines: string[];
+    slugheadlines: string[];
     summary: string[];
     sources: string[];
     published: string[];
@@ -39,7 +41,7 @@ const DefaultView: NextPage<Props> = ({ val }) => {
           {val.headlines.map((h, hindex) => (
             <li key={`headline-${val._id}-${hindex}`}>
               <Link
-                href={`/article/${encodeURIComponent(h.replace(/\s+/g, "-"))}`}
+                href={`/article/${val.slugheadlines[hindex]}`}
                 rel="noreferrer nofollow noopener"
                 title="view article"
               >
@@ -47,9 +49,7 @@ const DefaultView: NextPage<Props> = ({ val }) => {
               </Link>
               <div className="flex gap-2 items-center">
                 <Link
-                  href={`/article/${encodeURIComponent(
-                    h.replace(/\s+/g, "-")
-                  )}`}
+                  href={`/article/${val.slugheadlines[hindex]}`}
                   title="view article"
                   key={`view-${val._id}-${hindex}`}
                 >
@@ -69,10 +69,7 @@ const DefaultView: NextPage<Props> = ({ val }) => {
           ))}
         </ul>
       </div>
-      <Link
-        href={"/post/" + encodeURIComponent(val.slugtitle.replaceAll(" ", "-"))}
-        className="view-in-full"
-      >
+      <Link href={"/post/" + val.slugtitle} className="view-in-full">
         Read Full Article
       </Link>
     </div>
