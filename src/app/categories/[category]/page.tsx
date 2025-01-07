@@ -21,6 +21,7 @@ interface NewsItem {
   title: string;
   slugtitle: string;
   headlines: string;
+  slugheadline: string;
   summary: string;
   date: string;
   img_url?: string;
@@ -239,6 +240,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
                     data={filteredResults.map((item) => ({
                       _id: item.slugtitle,
                       headlines: [item.headline],
+                      slugheadlines: [item.slugheadline],
                       published: [item.published],
                       sources: item.source ? [item.source] : [],
                     }))}
@@ -252,6 +254,7 @@ const CategoryPage = ({ params }: CategoryProps) => {
                         title: value.title,
                         slugtitle: value.slugtitle,
                         headlines: [value.headline],
+                        slugheadlines: [value.slugheadline],
                         summary: [value.summary],
                         sources: value.source ? [value.source] : [],
                         published: [value.date],
