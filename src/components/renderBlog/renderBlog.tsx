@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import "./renderBlog.scss";
 import Link from "next/link";
+import { removeAsterisks } from "@/helper/slugFormat";
 
 interface Props {
   title: string;
@@ -19,13 +20,13 @@ const RenderBlog: NextPage<Props> = ({
 }) => {
   return (
     <div className="renderBlog-parent">
-      <h1>{title}</h1>
+      <h1>{removeAsterisks(title)}</h1>
       <div className="render-wrap">
         {headline.map((title, index) => (
           <div key={index + 3} className="render-container">
             <h2>
               <li>
-                {index + 1}. {title}
+                {index + 1}. {removeAsterisks(title)}
               </li>
             </h2>
             <div>

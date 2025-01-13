@@ -33,6 +33,7 @@ const Page: NextPage<Props> = async ({ params }) => {
     {
       method: "POST",
       body: JSON.stringify({ title }),
+      cache: "no-cache",
     }
   );
   if (res.status !== 200) return redirect("/");

@@ -12,6 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import dynamic from "next/dynamic";
 import DefaultView from "@/components/defaultView/defaultView";
 import UnifiedView from "@/components/uniifiedView/unifiedView";
+import { removeAsterisks } from "@/helper/slugFormat.js";
 
 const Footer = dynamic(() => import("@/components/footer/footer"));
 const DatePickerComponent = dynamic(
@@ -29,6 +30,7 @@ interface dataprop {
   title: string;
   slugtitle: string;
   headlines: string[];
+  slugheadlines: string[];
   summary: string[];
   sources: string[];
   published: string[];
@@ -281,7 +283,8 @@ const Page: NextPage<Props> = ({}) => {
                       encodeURIComponent(element.slugtitle.replaceAll(" ", "-"))
                     }
                   >
-                    {element.title} <FaExternalLinkAlt className="link-icon" />
+                    {removeAsterisks(element.title)}
+                    <FaExternalLinkAlt className="link-icon" />
                   </Link>
                 ))}
               </div>
