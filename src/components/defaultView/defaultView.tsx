@@ -41,7 +41,7 @@ const DefaultView: NextPage<Props> = ({ val }) => {
           {val.headlines.map((h, hindex) => (
             <li key={`headline-${val._id}-${hindex}`}>
               <Link
-                href={`/article/${val.slugheadlines[hindex]}`}
+                href={`/article/${generateSlug(h)}`}
                 rel="noreferrer nofollow noopener"
                 title="view article"
               >
@@ -49,7 +49,7 @@ const DefaultView: NextPage<Props> = ({ val }) => {
               </Link>
               <div className="flex gap-2 items-center">
                 <Link
-                  href={`/article/${val.slugheadlines[hindex]}`}
+                  href={`/article/${generateSlug(h)}`}
                   title="view article"
                   key={`view-${val._id}-${hindex}`}
                 >

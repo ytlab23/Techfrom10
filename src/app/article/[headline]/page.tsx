@@ -139,7 +139,6 @@ const Page: NextPage<Props> = async ({ params }) => {
                 <div className="news-read-more">
                   <Link
                     href={"/article/" + encodeURIComponent(value.slugheadline)}
-                    target="_blank"
                   >
                     Continue Reading
                   </Link>

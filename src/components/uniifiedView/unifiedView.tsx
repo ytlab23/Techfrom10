@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { FaExternalLinkAlt, FaEye } from "react-icons/fa";
+import generateSlug from "@/helper/slugFormat";
 
 interface UnifiedViewProps {
   data: {
@@ -23,7 +24,7 @@ const UnifiedView: React.FC<UnifiedViewProps> = ({ data }) => {
               <li key={`headline-${val._id}-${hindex}`}>
                 <div className="hero-content-headline">
                   <Link
-                    href={`/article/${val.slugheadlines[hindex]}`}
+                    href={`/article/${generateSlug(headline)}`}
                     title="view article"
                   >
                     {headline}
@@ -32,7 +33,7 @@ const UnifiedView: React.FC<UnifiedViewProps> = ({ data }) => {
                 </div>
                 <div className="flex gap-2 items-center">
                   <Link
-                    href={`/article/${val.slugheadlines[hindex]}`}
+                    href={`/article/${generateSlug(headline)}`}
                     title="view article"
                   >
                     <FaEye />
