@@ -17,7 +17,7 @@ export const POST = async (req: Request) => {
       "SELECT * FROM tech_trends WHERE slugTitle = $1",
       [title]
     );
-
+    if (res.rows.length == 0) return new Response("404", { status: 404 });
     return new Response(JSON.stringify(res.rows[0]));
   } finally {
     client.release();
