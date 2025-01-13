@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaClock } from "react-icons/fa";
 import { FaExternalLinkAlt, FaEye } from "react-icons/fa";
-import generateSlug from "@/helper/slugFormat";
+import generateSlug, { removeAsterisks } from "@/helper/slugFormat";
 
 interface Props {
   val: {
@@ -45,7 +45,7 @@ const DefaultView: NextPage<Props> = ({ val }) => {
                 rel="noreferrer nofollow noopener"
                 title="view article"
               >
-                {hindex + 1}. {h}
+                {hindex + 1}. {removeAsterisks(h)}
               </Link>
               <div className="flex gap-2 items-center">
                 <Link

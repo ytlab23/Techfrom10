@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { FaExternalLinkAlt, FaEye } from "react-icons/fa";
-import generateSlug from "@/helper/slugFormat";
+import generateSlug, { removeAsterisks } from "@/helper/slugFormat";
 
 interface UnifiedViewProps {
   data: {
@@ -27,7 +27,7 @@ const UnifiedView: React.FC<UnifiedViewProps> = ({ data }) => {
                     href={`/article/${generateSlug(headline)}`}
                     title="view article"
                   >
-                    {headline}
+                    {removeAsterisks(headline)}
                   </Link>
                   <span>({val.published[hindex]})</span>
                 </div>

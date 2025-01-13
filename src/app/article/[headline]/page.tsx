@@ -4,6 +4,7 @@ import { NextPage } from "next";
 import Footer from "@/components/footer/footer";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { removeAsterisks } from "@/helper/slugFormat";
 
 interface Params {
   headline: string;
@@ -95,7 +96,7 @@ const Page: NextPage<Props> = async ({ params }) => {
       <div className="article-container">
         <div className="article-content">
           <div className="article-content-sub">
-            <h1>{data.headline}</h1>
+            <h1>{removeAsterisks(data.headline)}</h1>
             <p>{data.summary}</p>
           </div>
           <div className="article-extra">
@@ -134,7 +135,7 @@ const Page: NextPage<Props> = async ({ params }) => {
               />
 
               <div className="news-latest-right-container">
-                <h3>{value.headline.replaceAll("-", " ")}</h3>
+                <h3>{removeAsterisks(value.headline.replaceAll("-", " "))}</h3>
                 <p>{value.summary}</p>
                 <div className="news-read-more">
                   <Link

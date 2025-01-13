@@ -9,4 +9,12 @@ const generateSlug = (title) => {
     .replace(/-+$/, ""); // Remove trailing hyphens
 };
 
+export function removeAsterisks(text) {
+  if (!text) return "";
+
+  const str = text.toString();
+
+  return str.replace(/\*/g, "");
+}
+
 export default generateSlug;
