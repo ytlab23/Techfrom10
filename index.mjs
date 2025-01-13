@@ -119,7 +119,7 @@ Include the following for each news item:
 Title: An overall title for all 10 news items (only once at the beginning)
 Headline: A headline for each news item (rephrase it with simple grammar)
 Summary: A summary of minimum 50 words, maximum 100 (simple grammar). Include emojis in the summary.
-Source: <Link to news>
+Source: Link to news
 Tag: One tag for the news (e.g. AI, Cybersecurity, etc.)
 Time: How many hours ago the news is from (circa)
 
@@ -140,7 +140,7 @@ chrome, apple, AI, Space, Mobile, Videogames, Biotechnology, Robotics, Nanotechn
 add relavant individual company tags like amazon, google, apple, samsung etc.
 
 Make title unique and different. Don't use general title like "Latest news" or "Latest Tech News and Updates"
-Act like an API. This data is being displayed on a website, so don't include ** or wrap links inside text. Follow the above format exactly. Use only one tag for each news item and try to use a variety of tags. Make sure the Title is catchy and includes an emoji.`;
+Act like an API. This data is being displayed on a website, so don't include ** or wrap links inside text. Follow the above format exactly. Use only one tag for each news item and try to use a variety of tags. Make sure the Title is catchy and includes an emoji. No link wraps like []()`;
 
     if (existingNews) {
       const filteredNews = existingNews.map((news) => ({
@@ -353,6 +353,24 @@ const fetchNews = async (prompt) => {
         model: "llama-3.1-sonar-large-128k-online",
         messages: [
           {
+            role: "system",
+            content: `You are a tech news API that provides clean, formatted data. Follow these rules strictly:
+1. Never use markdown formatting like ** or * for emphasis
+2. Never wrap links in []() format
+3. Provide direct, raw URLs in the Source field
+4. Maintain exact formatting as specified in the prompt
+5. Ensure each news item follows the exact structure:
+   Headline:
+   Summary:
+   Source:
+   Tag:
+   Time:
+6. No additional formatting or decorations
+7. No explanatory text or meta-commentary
+8. Strictly one tag per news item
+9. Always include emojis in summaries`,
+          },
+          {
             role: "user",
             content: prompt,
           },
@@ -444,105 +462,81 @@ app.get("/api/fetch-news", async (req, res) => {
   // Send immediate response
   res.status(202).json("Request received. Processing in the background...");
 
-  // Process in the background
-  const maxRetries = 3;
+  const maxAttempts = 3;
 
-  const retryOperation = async (
-    operation,
-    description,
-    retries = maxRetries
-  ) => {
+  const notifyFailure = async (error) => {
+    logger.error(
+      "News generation failed completely. Manual intervention required."
+    );
+  };
+
+  const processNews = async (attempt = 1) => {
     try {
-      return await operation();
-    } catch (error) {
-      logger.error(`Error in ${description}: ${error.message}`);
+      logger.log(
+        `Starting news generation process - Attempt ${attempt}/${maxAttempts}`
+      );
 
-      if (retries > 0) {
-        logger.log(`Retrying ${description}. Attempts left: ${retries}`);
-        await new Promise((resolve) => setTimeout(resolve, 5000)); // Wait 5 seconds before retry
-        return retryOperation(operation, description, retries - 1);
+      // Step 1: Fetch previous news
+      logger.log("Step 1: Fetching previous news");
+      const response = await fetch(`${process.env.BASE_URL}/api/fetchRoundup`);
+      const prevNews = await response.json();
+      const existingNews = prevNews.length > 0 ? prevNews : false;
+
+      // Step 2: Generate prompt
+      logger.log("Step 2: Generating prompt");
+      const prompt = await generatePrompt(existingNews);
+
+      // Step 3: Fetch news
+      logger.log("Step 3: Fetching news from API");
+      const messageContent = await fetchNews(prompt);
+
+      // Step 4: Format data
+      logger.log("Step 4: Formatting data");
+      const formattedData = await formatData(messageContent);
+
+      // Step 5: Generate and upload image
+      logger.log("Step 5: Generating and uploading image");
+      const featuredImage = await generateFeaturedImage(formattedData);
+      const s3ImageUrl = await fetchAndUploadImage(
+        featuredImage.url,
+        `featured-images/${formattedData.title[0]}-${getFormattedDate()}.png`
+      );
+
+      // Step 6: Update database
+      logger.log("Step 6: Updating database");
+      await updateDB(formattedData, s3ImageUrl, getFormattedDate());
+
+      logger.log("News generation completed successfully");
+      return true;
+    } catch (error) {
+      logger.error(
+        `Failed at attempt ${attempt}/${maxAttempts}: ${error.message}`
+      );
+
+      if (attempt < maxAttempts) {
+        logger.log(`Waiting 5 seconds before starting over from beginning...`);
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+        return processNews(attempt + 1);
       } else {
-        logger.error(`Failed ${description} after ${maxRetries} attempts`);
-        throw error;
+        logger.error(
+          `All ${maxAttempts} attempts failed. Manual intervention required.`
+        );
+        try {
+          // Implement your notification system here (email, Slack, etc.)
+          await notifyFailure(error);
+        } catch (notificationError) {
+          logger.error(
+            `Failed to send failure notification: ${notificationError.message}`
+          );
+        }
+        return false;
       }
     }
   };
 
-  try {
-    logger.log("Starting news generation process");
-
-    // Fetch previous news with retry
-    const prevNews = await retryOperation(async () => {
-      const response = await fetch(`${process.env.BASE_URL}/api/fetchRoundup`);
-      const data = await response.json();
-      return data.length > 0 ? data : false;
-    }, "fetching previous news");
-
-    // Generate prompt with retry
-    const prompt = await retryOperation(
-      () => generatePrompt(prevNews),
-      "generating prompt"
-    );
-
-    // Fetch news with retry
-    const messageContent = await retryOperation(
-      () => fetchNews(prompt),
-      "fetching news"
-    );
-
-    // Format data with retry
-    const formattedData = await retryOperation(
-      () => formatData(messageContent),
-      "formatting data"
-    );
-
-    // Generate featured image with retry and fallback
-    let s3ImageUrl = null;
-    try {
-      const featuredImage = await retryOperation(
-        () => generateFeaturedImage(formattedData),
-        "generating featured image"
-      );
-
-      s3ImageUrl = await retryOperation(
-        () =>
-          fetchAndUploadImage(
-            featuredImage.url,
-            `featured-images/${
-              formattedData.title[0]
-            }-${getFormattedDate()}.png`
-          ),
-        "uploading featured image"
-      );
-    } catch (imageError) {
-      // Fallback to a default image if image generation fails
-      logger.error(`Failed to generate featured image: ${imageError.message}`);
-      s3ImageUrl = "https://default-tech-news-image-url.com/default.jpg"; // Replace with your default image URL
-    }
-
-    // Update database with retry
-    await retryOperation(
-      () => updateDB(formattedData, s3ImageUrl, getFormattedDate()),
-      "updating database"
-    );
-
-    logger.log("News generation completed successfully");
-  } catch (error) {
-    logger.error(`Comprehensive error in news generation: ${error.message}`);
-
-    // Optional: Send a notification or log to an external error tracking service
-    try {
-      // You could implement a notification mechanism here
-      // For example, sending an email or slack message
-      logger.error(
-        "News generation completely failed. Manual intervention may be required."
-      );
-    } catch (notificationError) {
-      logger.error(
-        `Failed to send error notification: ${notificationError.message}`
-      );
-    }
-  }
+  processNews().catch((error) => {
+    logger.error(`Unexpected error in news processing: ${error.message}`);
+  });
 });
 
 // Error handling middleware
