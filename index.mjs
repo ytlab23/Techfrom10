@@ -9,6 +9,21 @@ import sharp from "sharp";
 
 dotenv.config();
 
+const delay = (minMinutes = 20, maxMinutes = 50) => {
+  try {
+    const minMs = minMinutes * 60 * 1000;
+    const maxMs = maxMinutes * 60 * 1000;
+    const delayMs = Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
+    const minutes = Math.round(delayMs / 1000 / 60);
+
+    logger.log(`Waiting for ${minutes} minutes...`);
+    return new Promise((resolve) => setTimeout(resolve, delayMs));
+  } catch (error) {
+    logger.error(`Error in delay function: ${error.message}`);
+    return new Promise((resolve) => setTimeout(resolve, 5 * 60 * 1000)); // Default 5 minute delay
+  }
+};
+
 // Logging Setup
 const logsDir = path.join(process.cwd(), "logs");
 if (!fs.existsSync(logsDir)) {
@@ -399,40 +414,79 @@ const updateDB = async (content, image, formattedDate) => {
     );
     const updatedHashtags = content.tag.map((tag) => tag.replaceAll(" ", ""));
 
-    const data = {
+    // Create base data without headlines
+    const slugTitle = generateSlug(`${formattedDate} ${content.title[0]}`);
+    const baseData = {
       title: content.title[0].replaceAll("-", " "),
-      slugTitle: generateSlug(`${formattedDate} ${content.title[0]}`),
-      headlines: updatedHeadlines,
-      slugHeadlines: slugHeadlines,
-      summary: content.summary,
-      source: content.source,
-      hashtags: updatedHashtags,
-      published: content.time,
+      slugTitle: slugTitle,
+      headlines: [],
+      slugHeadlines: [],
+      summary: [],
+      source: [],
+      hashtags: [],
+      published: [],
       imgUrl: image,
       date: formattedDate,
     };
 
-    const query = `
-      INSERT INTO tech_trends (title, slugTitle, headlines, slugHeadlines,summaries, sources, hashtags, published, img_url, date)
+    // First insert with empty arrays
+    const initialQuery = `
+      INSERT INTO tech_trends (title, slugTitle, headlines, slugHeadlines, summaries, sources, hashtags, published, img_url, date)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-      RETURNING *;`;
+      RETURNING slugTitle;`;
 
-    const values = [
-      data.title,
-      data.slugTitle,
-      data.headlines,
-      data.slugHeadlines,
-      data.summary,
-      data.source,
-      data.hashtags,
-      data.published,
-      data.imgUrl,
-      data.date,
+    const initialValues = [
+      baseData.title,
+      baseData.slugTitle,
+      baseData.headlines,
+      baseData.slugHeadlines,
+      baseData.summary,
+      baseData.source,
+      baseData.hashtags,
+      baseData.published,
+      baseData.imgUrl,
+      baseData.date,
     ];
 
-    const res = await client.query(query, values);
-    logger.log(`Database updated successfully for: ${data.title}`);
-    return res.rows[0];
+    const initialResult = await client.query(initialQuery, initialValues);
+
+    // Update headlines and related data one by one with delay
+    for (let i = 0; i < updatedHeadlines.length; i++) {
+      // Wait for random delay
+      await delay();
+
+      const updateQuery = `
+        UPDATE tech_trends
+        SET 
+          headlines = array_append(headlines, $1),
+          slugHeadlines = array_append(slugHeadlines, $2),
+          summaries = array_append(summaries, $3),
+          sources = array_append(sources, $4),
+          hashtags = array_append(hashtags, $5),
+          published = array_append(published, $6)
+        WHERE slugTitle = $7
+        RETURNING *;`;
+
+      const updateValues = [
+        updatedHeadlines[i],
+        slugHeadlines[i],
+        content.summary[i],
+        content.source[i],
+        updatedHashtags[i],
+        content.time[i],
+        slugTitle,
+      ];
+
+      await client.query(updateQuery, updateValues);
+      logger.log(
+        `Updated headline ${i + 1}/${updatedHeadlines.length} for: ${
+          baseData.title
+        }`
+      );
+    }
+
+    logger.log(`Database updates completed for: ${baseData.title}`);
+    return slugTitle;
   } catch (error) {
     logger.error(`Database update failed: ${error.message}`);
     throw error;
@@ -440,7 +494,6 @@ const updateDB = async (content, image, formattedDate) => {
     client.release();
   }
 };
-
 // Express Routes
 app.get("/api/fetchRoundup", async (req, res) => {
   const client = await pool.connect();
