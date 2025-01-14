@@ -22,7 +22,9 @@ interface Props {
 }
 
 const DefaultView: NextPage<Props> = ({ val }) => {
-  return (
+  const isComplete = val.headlines.length === 11;
+
+  return isComplete ? (
     <div className="hero-container" key={val._id}>
       <div className="hero-container-head">
         <span>
@@ -37,6 +39,7 @@ const DefaultView: NextPage<Props> = ({ val }) => {
           height={1024}
           alt={val.title}
         />
+
         <ul>
           {val.headlines.map((h, hindex) => (
             <li key={`headline-${val._id}-${hindex}`}>
@@ -73,6 +76,8 @@ const DefaultView: NextPage<Props> = ({ val }) => {
         Read Full Article
       </Link>
     </div>
+  ) : (
+    ""
   );
 };
 
