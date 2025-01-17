@@ -5,6 +5,7 @@ import Footer from "@/components/footer/footer";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { removeAsterisks } from "@/helper/slugFormat";
+import dateFormat from "@/helper/dateFormat";
 
 interface Params {
   headline: string;
@@ -100,7 +101,7 @@ const Page: NextPage<Props> = async ({ params }) => {
             <p>{data.summary}</p>
           </div>
           <div className="article-extra">
-            <p>{data.published}</p>
+            <p>{dateFormat(data.published)}</p>
             <Link
               href={data.source}
               target="_blank"

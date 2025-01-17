@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import "./renderBlog.scss";
 import Link from "next/link";
 import { removeAsterisks } from "@/helper/slugFormat";
+import dateFormat from "@/helper/dateFormat";
 
 interface Props {
   title: string;
@@ -41,7 +42,7 @@ const RenderBlog: NextPage<Props> = ({
                 >
                   Read More
                 </Link>{" "}
-                <span>{time[index]}</span>
+                <span>{dateFormat(time[index])}</span>
               </p>
             </div>
           </div>

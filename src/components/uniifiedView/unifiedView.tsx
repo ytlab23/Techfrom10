@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { FaExternalLinkAlt, FaEye } from "react-icons/fa";
 import generateSlug, { removeAsterisks } from "@/helper/slugFormat";
-
+import dateFormat from "@/helper/dateFormat";
 interface UnifiedViewProps {
   data: {
     _id: string;
@@ -29,7 +29,7 @@ const UnifiedView: React.FC<UnifiedViewProps> = ({ data }) => {
                   >
                     {removeAsterisks(headline)}
                   </Link>
-                  <span>({val.published[hindex]})</span>
+                  <span>{dateFormat(val.published[hindex])}</span>
                 </div>
                 <div className="flex gap-2 items-center">
                   <Link
