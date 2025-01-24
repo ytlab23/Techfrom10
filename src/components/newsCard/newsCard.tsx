@@ -12,17 +12,20 @@ export const NewsCard: React.FC<NewsCardProps> = ({ data }) => {
     <div className="hero-card2">
       <h3>Today's News</h3>
       <div className="hero-card-items2">
-        {data.slice(-10).map((element) => (
-          <Link
-            key={`news-${element._id}`}
-            href={`/post/${encodeURIComponent(
-              element.slugtitle.replaceAll(" ", "-")
-            )}`}
-          >
-            {removeAsterisks(element.title)}
-            <FaExternalLinkAlt className="link-icon" />
-          </Link>
-        ))}
+        {data
+          .reverse()
+          .slice(1, 11)
+          .map((element) => (
+            <Link
+              key={`news-${element._id}`}
+              href={`/post/${encodeURIComponent(
+                element.slugtitle.replaceAll(" ", "-")
+              )}`}
+            >
+              {removeAsterisks(element.title)}
+              <FaExternalLinkAlt className="link-icon" />
+            </Link>
+          ))}
       </div>
     </div>
   );
