@@ -6,6 +6,8 @@ import { FaExternalLinkAlt, FaEye } from "react-icons/fa";
 import generateSlug, { removeAsterisks } from "@/helper/slugFormat";
 
 interface Props {
+  isComplete?: boolean;
+  completeCheck?: boolean;
   val: {
     _id: string;
     title: string;
@@ -21,10 +23,10 @@ interface Props {
   };
 }
 
-const DefaultView: NextPage<Props> = ({ val }) => {
-  const isComplete = val.headlines.length === 11;
+const DefaultView: NextPage<Props> = ({ val, completeCheck = false }) => {
+  const shouldRender = completeCheck ? val.headlines.length === 11 : true;
 
-  return isComplete ? (
+  return shouldRender ? (
     <div className="hero-container" key={val._id}>
       <div className="hero-container-head">
         <span>
@@ -76,9 +78,7 @@ const DefaultView: NextPage<Props> = ({ val }) => {
         Read Full Article
       </Link>
     </div>
-  ) : (
-    ""
-  );
+  ) : null;
 };
 
 export default DefaultView;

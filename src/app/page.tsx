@@ -78,9 +78,9 @@ const Page: NextPage = ({}) => {
   }, [filteredData, unifiedView]);
 
   const handleTagSelection = (hashtag: string) => {
-    if (hashtag === "others") {
-      if (!selectedTags.includes("others")) {
-        setSelectedTags(["others"]);
+    if (hashtag === "uncategorized") {
+      if (!selectedTags.includes("uncategorized")) {
+        setSelectedTags(["uncategorized"]);
       }
     } else {
       setSelectedTags((prevTags) =>
@@ -210,7 +210,14 @@ const Page: NextPage = ({}) => {
               <UnifiedView data={filteredData} /> // Pass filteredData to the UnifiedView
             ) : (
               filteredData.map((item) => (
-                <DefaultView key={item._id} val={item} />
+                <DefaultView
+                  key={item._id}
+                  val={item}
+                  completeCheck={
+                    selectedTags.includes("uncategorized") ||
+                    selectedTags.length === 0
+                  }
+                />
               ))
             )}
           </div>
