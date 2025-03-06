@@ -128,12 +128,12 @@ const Page: NextPage<Props> = async ({ params }) => {
         <div className="parent-latest-news-container">
           {categoryNewsData.map((value, index) => (
             <div key={index} className="news-latest-left-container">
-              <Image
+              {/* <Image
                 src={value.img_url}
                 alt={value.headline}
                 width={125}
                 height={250}
-              />
+              /> */}
 
               <div className="news-latest-right-container">
                 <h3>{removeAsterisks(value.headline.replaceAll("-", " "))}</h3>
