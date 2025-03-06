@@ -2,6 +2,8 @@ import RenderBlog from "@/components/renderBlog/renderBlog";
 import { NextPage } from "next";
 import Footer from "@/components/footer/footer";
 import { redirect } from "next/navigation";
+import { removeAsterisks } from "@/helper/slugFormat";
+
 interface Props {
   params: {
     title: string;
@@ -22,7 +24,7 @@ export const generateMetadata = async ({ params }: Props) => {
     };
   const data = await res.json();
   return {
-    title: `${data.slugtitle} - TechFrom10`,
+    title: removeAsterisks(`${data.title} - TechFrom10`),
   };
 };
 
