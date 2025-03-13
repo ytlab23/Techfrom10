@@ -16,7 +16,7 @@ interface UnifiedViewProps {
 
 const UnifiedView: React.FC<UnifiedViewProps> = ({ data }) => {
   return (
-    <div className="hero-container unified-view">
+    <div className="unified-view">
       <div className="hero-content-wrap">
         <ul>
           {data.map((val) =>

@@ -416,3 +416,23 @@ $grady-color: linear-gradient(100deg, #fd967f 0%, #ee437f 100%);
 .scrolled-to-bottom {
   transform: translateY(-50vh);
 }
+
+.unified-view {
+  padding: 3vh 1vw;
+  @include flex-center(column);
+  align-items: flex-start;
+  gap: 3vh;
+  border: 2px solid black;
+  box-shadow: 0.5vw 1vh 0 black;
+  width: 100%;
+  border-radius: 1vw;
+  backdrop-filter: blur(2px);
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+  &:hover {
+    backdrop-filter: blur(4px);
+    scale: 1.003;
+    transform: translateY(5vh);
+    box-shadow: 0.5vw 1vh 10px black;
+  }
+}
