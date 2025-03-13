@@ -16,15 +16,25 @@ export const NewsCard: React.FC<NewsCardProps> = ({ data }) => {
           .reverse()
           .slice(1, 11)
           .map((element) => (
-            <Link
-              key={`news-${element._id}`}
-              href={`/post/${encodeURIComponent(
-                element.slugtitle.replaceAll(" ", "-")
-              )}`}
-            >
-              {removeAsterisks(element.title)}
-              <FaExternalLinkAlt className="link-icon" />
-            </Link>
+            <div className="flex items-center" key={`news-${element._id}`}>
+              <Link
+                className="!line-clamp-1"
+                href={`/post/${encodeURIComponent(
+                  element.slugtitle.replaceAll(" ", "-")
+                )}`}
+              >
+                {removeAsterisks(element.title)}
+              </Link>
+              <span>
+                <Link
+                  href={`/post/${encodeURIComponent(
+                    element.slugtitle.replaceAll(" ", "-")
+                  )}`}
+                >
+                  <FaExternalLinkAlt className="link-icon" />
+                </Link>
+              </span>
+            </div>
           ))}
       </div>
     </div>
